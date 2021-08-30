@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="mainPane" alignment="CENTER" prefHeight="540.0" prefWidth="438.0" style="-fx-background-color: #005066;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="156.0" layoutY="30.0" text="CUSTOMER NAME:" textFill="WHITE" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Bookman Old Style Bold" size="19.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="companyName" alignment="CENTER" prefHeight="53.0" prefWidth="394.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets left="20.0" right="50.0" />
+         </padding>
+         <font>
+            <Font name="Bookman Old Style Bold" size="22.0" />
+         </font>
+      </JFXTextField>
+      <Label text="TOTAL AMOUNT:" textFill="WHITE" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Bookman Old Style Bold" size="19.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="17.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="totalAmountTextField" alignment="CENTER" prefHeight="53.0" prefWidth="398.0" style="-fx-background-color: white;" text="Label">
+         <font>
+            <Font name="Bookman Old Style Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="143.0" layoutY="30.0" text="AMOUNT PAID:" textFill="WHITE" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Bookman Old Style Bold" size="19.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="16.0" />
+         </VBox.margin>
+      </Label>
+      <AnchorPane>
+         <children>
+            <JFXTextField fx:id="amountPaidTextField" alignment="CENTER" prefHeight="53.0" prefWidth="394.0" style="-fx-background-color: white;">
+               <padding>
+                  <Insets left="20.0" right="50.0" />
+               </padding>
+               <font>
+                  <Font name="Bookman Old Style Bold" size="22.0" />
+               </font>
+            </JFXTextField>
+            <Button fx:id="calculateButton" layoutX="308.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="86.0" text="calculate" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="155.0" layoutY="147.0" text="CHANGE:" textFill="WHITE" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Bookman Old Style Bold" size="19.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="16.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="changeLabel" alignment="CENTER" prefHeight="61.0" prefWidth="390.0" style="-fx-background-color: white;" text="Label">
+         <font>
+            <Font name="Bookman Old Style Bold" size="22.0" />
+         </font>
+      </Label>
+      <VBox spacing="20.0" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER" spacing="17.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <JFXButton fx:id="cancelButton" buttonType="RAISED" prefHeight="75.0" prefWidth="182.0" ripplerFill="#292bbf" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-radius: 10;" text="Cancel" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                  <JFXButton fx:id="makePaymentButton" buttonType="RAISED" prefHeight="75.0" prefWidth="182.0" ripplerFill="#292bbf" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-radius: 10;" text="Make Payment" textFill="WHITE" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="8.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
