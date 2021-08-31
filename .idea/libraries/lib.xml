@@ -1,31 +1,10 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/lib/jfreechart-1.0.19.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/commons-lang-2.6.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/commons-beanutils-1.9.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/coyote-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/fontawesomefx-8.9.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/jasper-el-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/jasper-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/itext-2.1.7.js5.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/ecj-4.3.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/servlet-api-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/com.lowagie.text-2.1.7.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/mysql-connector-java-8.0.11.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/juli-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/annotations-api-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/commons-collections-3.2.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/commons-logging-1.1.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/catalina-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/el-api-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/jsp-api-6.0.53.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/commons-digester-2.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/controlsfx-8.40.12.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/jfoenix-8.0.5.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/TrayNotification.jar!/" />
+      <root url="file://$PROJECT_DIR$/src/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/src/lib" recursive="false" />
   </library>
 </component>
