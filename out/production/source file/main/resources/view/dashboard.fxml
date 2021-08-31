@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" style="-fx-background-color: #F5F5F5;" stylesheets="/main/resources/css/dashboard.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.AdminDashboardController">
+   <children>
+      <AnchorPane prefHeight="46.0" prefWidth="1117.0" style="-fx-background-color: #253238;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="dashboardDateLabel" layoutX="14.0" layoutY="1.0" prefHeight="46.0" prefWidth="253.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <HBox alignment="CENTER" layoutX="82.0" layoutY="413.0" prefHeight="208.0" prefWidth="523.0" spacing="81.0" />
+      <VBox layoutX="34.0" layoutY="253.0" prefHeight="314.0" prefWidth="339.0" style="-fx-background-color: WHITE;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="339.0">
+               <children>
+                  <FontAwesomeIconView glyphName="LIST" size="30" wrappingWidth="30.571430206298828" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin></FontAwesomeIconView>
+                  <Label prefHeight="47.0" prefWidth="308.0" text="HIGHEST SELLING PRODUCTS" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefHeight="4.0" prefWidth="339.0" style="-fx-background-color: #143D59;" VBox.vgrow="ALWAYS" />
+            <TableView fx:id="highestSellingTableView" prefHeight="266.0" prefWidth="339.0">
+              <columns>
+                <TableColumn fx:id="highestSellingNameColumn" prefWidth="194.0" text="Name" />
+                <TableColumn fx:id="highestSellingAmountColumn" prefWidth="72.0" text="Amount" />
+                  <TableColumn fx:id="highestSellingQuantityColumn" prefWidth="71.0" text="Quantity" />
+              </columns>
+            </TableView>
+         </children></VBox>
+      <VBox layoutX="398.0" layoutY="253.0" prefHeight="314.0" prefWidth="339.0" style="-fx-background-color: WHITE;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="339.0">
+               <children>
+                  <FontAwesomeIconView glyphName="LIST" size="30" wrappingWidth="30.571430206298828" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label prefHeight="47.0" prefWidth="308.0" text="RECENTLY ADDED PRODUCTS" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefHeight="4.0" prefWidth="339.0" style="-fx-background-color: #143D59;" VBox.vgrow="ALWAYS" />
+            <TableView fx:id="recentlyAddedProductsTableView" prefHeight="266.0" prefWidth="339.0">
+               <columns>
+                  <TableColumn fx:id="recentlyAddedProductNameColumn" prefWidth="194.0" text="Name" />
+                  <TableColumn fx:id="recentlyAddedProductsDateColumn" prefWidth="72.0" text="Date" />
+                  <TableColumn fx:id="recentlyAddedProductsQuantityColumn" prefWidth="71.0" text="Quantity" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <VBox layoutX="761.0" layoutY="254.0" prefHeight="314.0" prefWidth="339.0" style="-fx-background-color: WHITE;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="339.0">
+               <children>
+                  <FontAwesomeIconView glyphName="LIST" size="30" wrappingWidth="30.571430206298828" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label prefHeight="47.0" prefWidth="308.0" text="OUT OF STOCK PRODUCTS" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefHeight="4.0" prefWidth="339.0" style="-fx-background-color: #143D59;" VBox.vgrow="ALWAYS" />
+            <TableView fx:id="outOfStockTableView" prefHeight="266.0" prefWidth="339.0">
+               <columns>
+                  <TableColumn fx:id="outOfStockNameColumn" prefWidth="241.0" text="Name" />
+                  <TableColumn fx:id="outOfStockQuantityColumn" prefWidth="97.0" text="Quantity" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <HBox layoutX="34.0" layoutY="72.0" prefHeight="131.0" prefWidth="1065.0">
+         <children>
+            <AnchorPane prefHeight="146.0" prefWidth="303.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="129.0" prefWidth="218.0">
+                     <children>
+                        <Label prefHeight="132.0" prefWidth="81.0" style="-fx-background-color: #143D59;" HBox.hgrow="ALWAYS" />
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="129.0" prefWidth="138.0" style="-fx-background-color: white; -fx-border-color: #FDFDFD;" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="279.0" prefHeight="129.0" prefWidth="218.0">
+                     <children>
+                        <Label prefHeight="132.0" prefWidth="81.0" style="-fx-background-color: #143D59;" HBox.hgrow="ALWAYS" />
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="129.0" prefWidth="138.0" style="-fx-background-color: white; -fx-border-color: #FDFDFD;" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="567.0" prefHeight="129.0" prefWidth="218.0">
+                     <children>
+                        <Label prefHeight="132.0" prefWidth="81.0" style="-fx-background-color: #143D59;" HBox.hgrow="ALWAYS" />
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="129.0" prefWidth="138.0" style="-fx-background-color: white; -fx-border-color: #FDFDFD;" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="847.0" prefHeight="129.0" prefWidth="218.0">
+                     <children>
+                        <Label prefHeight="132.0" prefWidth="81.0" style="-fx-background-color: #143D59;" HBox.hgrow="ALWAYS" />
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="129.0" prefWidth="138.0" style="-fx-background-color: white; -fx-border-color: #FDFDFD;" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <FontAwesomeIconView fill="WHITE" glyphName="DOLLAR" layoutX="870.0" layoutY="76.0" size="40" wrappingWidth="30.571430206298828" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_CART" layoutX="589.0" layoutY="78.0" size="40" wrappingWidth="30.571430206298828" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="LIST" layoutX="303.0" layoutY="82.0" size="40" wrappingWidth="30.571430206298828" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="22.0" layoutY="82.0" size="40" wrappingWidth="30.571430206298828" />
+                  <Label fx:id="totalUsersLabel" alignment="CENTER" layoutX="102.0" layoutY="28.0" prefHeight="31.0" prefWidth="99.0" text="200">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalCategoriesLabel" alignment="CENTER" layoutX="384.0" layoutY="26.0" prefHeight="31.0" prefWidth="99.0" text="503">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="382.0" layoutY="74.0" prefHeight="31.0" prefWidth="99.0" text="Categories">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalProductsLabel" alignment="CENTER" layoutX="667.0" layoutY="36.0" prefHeight="31.0" prefWidth="99.0" text="105">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="665.0" layoutY="84.0" prefHeight="31.0" prefWidth="99.0" text="Products">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalSalesLabel" alignment="CENTER" layoutX="952.0" layoutY="34.0" prefHeight="31.0" prefWidth="99.0" text="105">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="100.0" layoutY="76.0" prefHeight="31.0" prefWidth="99.0" text="Users">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="950.0" layoutY="82.0" prefHeight="31.0" prefWidth="99.0" text="Sales">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+
+   </children>
+</AnchorPane>

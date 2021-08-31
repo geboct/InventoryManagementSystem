@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.19" maxHeight="700.0" maxWidth="1197.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1197.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.adminBaseController">
+  <items>
+    <AnchorPane fx:id="paneLeft" maxWidth="280.0" minHeight="0.0" minWidth="75.0" prefHeight="687.0" prefWidth="226.0" style="-fx-background-color: #143D59;">
+         <children>
+            <AnchorPane fx:id="paneMenuHolder" layoutY="46.0" prefHeight="652.0" prefWidth="226.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="46.0">
+               <children>
+                  <VBox layoutY="1.0" prefHeight="444.0" prefWidth="224.0" spacing="5.0" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <JFXButton fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="40.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="264.0" ripplerFill="WHITE" style="border-radius: 10; -fx-background-radius: 10;" text="Dashboard" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <MaterialDesignIconView fill="WHITE" glyphName="HOME" size="30" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="View Summery of Everything" />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnInventoryItem" alignment="BASELINE_LEFT" graphicTextGap="40.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="264.0" ripplerFill="WHITE" text="User Management" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <MaterialDesignIconView fill="WHITE" glyphName="ACCOUNT" size="30" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Add, Delete, Update User" />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnSells" alignment="BASELINE_LEFT" graphicTextGap="40.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="266.0" ripplerFill="WHITE" text="Categories" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="LIST_ALT" size="30" wrappingWidth="32.28571319580078" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Add, Update" />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnAccounts" alignment="BASELINE_LEFT" graphicTextGap="40.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="267.0" ripplerFill="WHITE" text="Products" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PRODUCT_HUNT" size="30" wrappingWidth="30.571430206298828" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Add, update, delete product" />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnAdmin" alignment="BASELINE_LEFT" graphicTextGap="40.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="268.0" ripplerFill="WHITE" text="Sales" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <MaterialDesignIconView fill="#ffffff" glyphName="PLUS" size="30" textAlignment="JUSTIFY" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="View Sales ,Make new Sale" />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnHelp11" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="11.0" layoutY="308.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="267.0" ripplerFill="WHITE" text="Purchases" textFill="WHITE">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="30" wrappingWidth="30.571430206298828" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Change account details" />
+                           </tooltip>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnAdmin11" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="10.0" layoutY="247.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="268.0" ripplerFill="WHITE" text="Report" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <MaterialDesignIconView fill="#ffffff" glyphName="BOOK" size="30" textAlignment="JUSTIFY" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Show Report" />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnHelp1" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="11.0" layoutY="341.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="267.0" ripplerFill="WHITE" text="Accounts" textFill="WHITE">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="USER" size="30" wrappingWidth="30.571430206298828" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Change account details" />
+                           </tooltip>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnHelp" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="10.0" layoutY="175.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="267.0" ripplerFill="WHITE" text="Help" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="QUESTION_CIRCLE" size="30" wrappingWidth="30.571430206298828" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Need Help? " />
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="newPurchase" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="10.0" layoutY="118.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="266.0" ripplerFill="WHITE" text="New Purchase" textFill="WHITE" visible="false">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="30" wrappingWidth="32.28571319580078" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="New Purchase" />
+                           </tooltip>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <AnchorPane fx:id="paneAccountSection" layoutX="-1.0" layoutY="443.0" prefHeight="208.0" prefWidth="224.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER" layoutX="21.0" layoutY="101.0">
+                           <children>
+                              <Label fx:id="lblClock" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="168.0" text="Clock" textAlignment="CENTER" textFill="#03d1ff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="100.0" text="Logged in as:" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblUsername" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="180.0" text="username" textAlignment="CENTER" textFill="#00ff22">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="157.0" text="Access Level:" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblAccessLevel" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="178.0" text="Level" textAlignment="CENTER" textFill="#00ff22">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <JFXButton alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="54.0" layoutY="124.0" onAction="#logOut" prefHeight="50.0" prefWidth="50.0" ripplerFill="WHITE" style="-fx-background-radius: 30 30 30 30; -fx-border-radius: 30 30 30 30;" AnchorPane.leftAnchor="7.0">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="30" wrappingWidth="24.28571319580078" />
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Click to log out" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <Circle fx:id="circle" fill="#3f464d" layoutX="108.0" layoutY="66.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+                        <Label fx:id="cameraLabel" layoutX="113.0" layoutY="71.0" onMouseClicked="#updateUserImage" prefHeight="28.0" prefWidth="31.0" style="-fx-border-radius: 50; -fx-border-color: white; -fx-background-color: transparent; -fx-background-radius: 50;">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
+                        <FontAwesomeIconView fx:id="camera" fill="DODGERBLUE" glyphName="CAMERA" layoutX="120.0" layoutY="90.0" onMouseClicked="#updateUserImage" size="15" wrappingWidth="30.571430206298828">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></FontAwesomeIconView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <AnchorPane fx:id="paneRight" layoutX="6.0" prefHeight="698.0" prefWidth="1169.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

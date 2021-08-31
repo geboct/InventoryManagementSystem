@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib__2_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Inventory.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Inventory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Inventory.jnlp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/TrayNotification.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/aopalliance-1.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/com.lowagie.text-2.1.7.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/commons-beanutils-1.9.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/commons-collections-3.2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/commons-digester-2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/commons-logging-1.1.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/commons-logging-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/controlsfx-8.40.12.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/fontawesomefx-8.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/itext-2.1.7.js5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/jasper-6.0.53.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/jasperreports-6.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/jasperreports-6.3.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/jfoenix-8.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/mysql-connector-java-8.0.11.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/Inventory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/Inventory.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/Inventory.jnlp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/aopalliance-1.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/controlsfx-8.40.12.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/fontawesomefx-8.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/jasperreports-6.3.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/jfoenix-8.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/mysql-connector-java-8.0.11.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/dtjava.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/get_java.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/get_javafx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/javafx-chrome.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/javafx-loading-100x100.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/javafx-loading-25x25.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/upgrade_java.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/upgrade_javafx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/dtjava.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/get_java.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/get_javafx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/javafx-chrome.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/javafx-loading-100x100.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/javafx-loading-25x25.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/upgrade_java.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/web-files/upgrade_javafx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source file.iml" beforeDir="false" afterPath="$PROJECT_DIR$/source file.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/TotalPurchaseList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/TotalPurchaseList.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1xUykuWVZN4NheKTT3brqQUtwuo" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/lib" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem\src\lib" />
+      <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
+      <module name="source file" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="" />
+      <created>1630424109417</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1630424109417</updated>
+      <workItem from="1630424180306" duration="2480000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="513" y="57" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1630426489524">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="513" y="57" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.0.1366.728@0.0.1366.728" timestamp="1630426489524" />
+    <state x="389" y="105" key="FileChooserDialogImpl" timestamp="1630426715931">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="389" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1630426715931" />
+    <state x="163" y="0" key="SettingsEditor" timestamp="1630426721986">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1630426721986" />
+    <state x="492" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630424937426">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="492" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1630424937426" />
+  </component>
+</project>
