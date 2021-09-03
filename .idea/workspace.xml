@@ -19,57 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib__2_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Inventory.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Inventory.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Inventory.jnlp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/TrayNotification.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/aopalliance-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/com.lowagie.text-2.1.7.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/commons-beanutils-1.9.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/commons-collections-3.2.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/commons-digester-2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/commons-logging-1.1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/commons-logging-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/controlsfx-8.40.12.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/fontawesomefx-8.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/itext-2.1.7.js5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/jasper-6.0.53.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/jasperreports-6.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/jasperreports-6.3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/jfoenix-8.0.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/lib/mysql-connector-java-8.0.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/Inventory.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/Inventory.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/Inventory.jnlp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/aopalliance-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/controlsfx-8.40.12.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/fontawesomefx-8.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/jasperreports-6.3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/jfoenix-8.0.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/lib/mysql-connector-java-8.0.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/dtjava.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/get_java.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/get_javafx.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/javafx-chrome.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/javafx-loading-100x100.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/javafx-loading-25x25.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/upgrade_java.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/run544361045/web-files/upgrade_javafx.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/dtjava.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/get_java.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/get_javafx.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/javafx-chrome.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/javafx-loading-100x100.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/javafx-loading-25x25.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/upgrade_java.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/web-files/upgrade_javafx.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source file.iml" beforeDir="false" afterPath="$PROJECT_DIR$/source file.iml" afterDir="false" />
+    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="committed fxml files and css files">
+      <change afterPath="$PROJECT_DIR$/allPurchases.jrxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/printPurchasesOneDate.jrxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/printPurchasesTwoDates.jrxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchedPurchases.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/TotalPurchaseList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/TotalPurchaseList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +36,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1xUykuWVZN4NheKTT3brqQUtwuo" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -92,15 +49,15 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem\src\lib" />
       <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem" />
+      <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem\src\lib" />
     </key>
   </component>
   <component name="RunManager">
@@ -133,8 +90,27 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1630424109417</updated>
-      <workItem from="1630424180306" duration="2480000" />
+      <workItem from="1630424180306" duration="23736000" />
+      <workItem from="1630593445199" duration="2203000" />
+      <workItem from="1630606913511" duration="6238000" />
+      <workItem from="1630622552121" duration="4537000" />
+      <workItem from="1630684763382" duration="4135000" />
     </task>
+    <task id="LOCAL-00001" summary="re-added jar files&#10;removed dist folder">
+      <created>1630426974090</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1630426974091</updated>
+    </task>
+    <task id="LOCAL-00002" summary="committed fxml files and css files">
+      <created>1630427045947</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1630427045947</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,16 +126,42 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="re-added jar files&#10;removed dist folder" />
+    <MESSAGE value="committed fxml files and css files" />
+    <option name="LAST_COMMIT_MESSAGE" value="committed fxml files and css files" />
   </component>
   <component name="WindowStateProjectService">
     <state x="513" y="57" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1630426489524">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="513" y="57" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.0.1366.728@0.0.1366.728" timestamp="1630426489524" />
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1630594787944">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1630594787944" />
     <state x="389" y="105" key="FileChooserDialogImpl" timestamp="1630426715931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="389" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1630426715931" />
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1630691171518">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1630691171518" />
+    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1630691171515">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1630691171515" />
+    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1630691171513">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1630691171513" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1630691171516">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1630691171516" />
     <state x="163" y="0" key="SettingsEditor" timestamp="1630426721986">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

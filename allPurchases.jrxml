@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="allPurchases" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="505296ce-f282-4406-be25-719b534d860b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Inventory System Purchases 2 dates"/>
+	<queryString language="SQL">
+		<![CDATA[select * from printPurchases]]>
+	</queryString>
+	<field name="invoiceNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="invoiceNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="invoiceNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="productName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="productName"/>
+		<property name="com.jaspersoft.studio.field.label" value="productName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purchasedPrice" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="purchasedPrice"/>
+		<property name="com.jaspersoft.studio.field.label" value="purchasedPrice"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="date"/>
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="employeeName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="employeeName"/>
+		<property name="com.jaspersoft.studio.field.label" value="employeeName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="companyName"/>
+		<property name="com.jaspersoft.studio.field.label" value="companyName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="invoiceNumber">
+		<groupExpression><![CDATA[$F{invoiceNumber}]]></groupExpression>
+	</group>
+	<group name="productName">
+		<groupExpression><![CDATA[$F{productName}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="400" height="40" uuid="b5b838cb-025a-4318-88d8-8491c1b7d9a3"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Bril Innovation Centre]]></text>
+			</staticText>
+			<image>
+				<reportElement x="106" y="7" width="50" height="50" uuid="5858c0b2-b388-4201-939b-1bd399b10834"/>
+				<imageExpression><![CDATA["D:/backup/calceus .png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="31" width="200" height="19" uuid="a6ed0fea-2d4b-494c-a01f-7007324055be"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Location: Pokuase- Amasaman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="43" width="100" height="15" uuid="f2546e4e-a74a-4669-a21d-856b0988182d"/>
+				<text><![CDATA[GW-0362-0525]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="58" height="20" uuid="412d3780-d377-4710-b1ab-6bc23c30caf0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab67b4d3-90dc-4c1b-bce0-0d71002d55a7"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="0" width="69" height="20" uuid="1766338d-f455-47bc-b297-e020b4f236f5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b6bae2a-36f7-4101-93d9-8ca244cf8120"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="0" width="49" height="20" uuid="47bf8796-8b7a-4c6e-8c4f-2391a082a687">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="345ac2f9-e746-41de-b7e6-e81024c01c77"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="0" width="50" height="20" uuid="2c94936e-c3f6-4cc1-9e91-2eaf6c46edbe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6ae6f5e2-3f11-45cc-87ca-abb2aa0dca63"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="69" height="20" uuid="dd1d728a-00ed-4140-a41e-d3f5db1fb909">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fe67a474-e996-4c74-946c-b9f4ecf754fc"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="0" width="69" height="20" uuid="7253a47b-9f53-418c-a34d-ec238f7d2606">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9ee5e85a-6217-4b0a-9721-ab53d461352f"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="92" height="20" uuid="6a180e60-ed40-41e9-9a97-84201176f06c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bd06bb5-0d66-4e26-836e-f6df60184ca6"/>
+				</reportElement>
+				<text><![CDATA[Company Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="72" height="20" uuid="b68a556d-be3d-4317-95bd-0a717041e2d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab67b4d3-90dc-4c1b-bce0-0d71002d55a7"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{invoiceNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="101" height="20" uuid="62277bac-926f-4631-bff2-6daa8e5fc46d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b6bae2a-36f7-4101-93d9-8ca244cf8120"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="0" width="49" height="20" uuid="6b06afd9-1b1d-49f5-a47e-dd251907a52d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="345ac2f9-e746-41de-b7e6-e81024c01c77"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="50" height="20" uuid="b3cd9086-3fdb-4952-a38b-510ef0ed8e79">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6ae6f5e2-3f11-45cc-87ca-abb2aa0dca63"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{purchasedPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="0" width="69" height="20" uuid="a8774235-56d9-41e2-adad-31aae6af1057">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fe67a474-e996-4c74-946c-b9f4ecf754fc"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="0" width="69" height="20" uuid="baeaae5e-45a5-48a5-b557-bfd1d28c1d9c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9ee5e85a-6217-4b0a-9721-ab53d461352f"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="109" height="20" uuid="a663a725-85e8-446d-a501-ae9a6e65cdfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bd06bb5-0d66-4e26-836e-f6df60184ca6"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="1" width="36" height="22" uuid="bcfab30a-8786-4e76-aa50-4ac9cf9eaa1b"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="34" y="1" width="15" height="22" uuid="1f827138-d862-42a5-adc7-1de077001fe8"/>
+				<text><![CDATA[of]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="58" y="2" width="100" height="21" uuid="1b52a1fc-50ef-498e-9f8b-6bec8a4b8437"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="374" y="0" width="52" height="31" uuid="a147519c-125c-48dc-8064-f2bca14eaff6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[ToTal:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="3" width="100" height="28" uuid="a9d91dcb-caf4-4e4c-8689-5801cc700a66"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

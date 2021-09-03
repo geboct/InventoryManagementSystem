@@ -83,32 +83,36 @@ public class TotalPurchaseList implements Initializable {
         today.setText(LocalDate.now().toString());
 
     }
+
     private void print() {
         Connection connection = DBConnection.getConnection();
 
-        if (!searchField.getText().equals("")&& !purchasesTableView.getItems().isEmpty()) {
+        if (!searchField.getText().equals("") && !(purchasesTableView.getItems().isEmpty())) {
 
             try {
 
                 for (Purchases purchases : listOfaLLPurchases) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`productName`, `quantity`, `salePrice`, `total`, `date`, `employeeName`) VALUES (?,?,?,?,?,?)");
-                    preparedStatement.setString(1, purchases.getProductName());
-                    System.out.println();
-                    preparedStatement.setDouble(2, purchases.getQuantity());
-                    preparedStatement.setDouble(3, purchases.getTotal());
-                    preparedStatement.setDouble(4, purchases.getTotal());
-                    preparedStatement.setString(5, String.valueOf(purchases.getDate()));
-                    preparedStatement.setString(6, purchases.getEmployeeName());
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`) VALUES (?,?,?,?,?,?,?,?)");
+                    preparedStatement.setString(1, purchases.getInvoiceNumber());
+                    preparedStatement.setString(2, purchases.getProductName());
+                    preparedStatement.setDouble(3, purchases.getQuantity());
+                    preparedStatement.setDouble(4, purchases.getPurchasedPrice());
+                    preparedStatement.setDouble(5, purchases.getTotal());
+                    preparedStatement.setString(6, String.valueOf(purchases.getDate()));
+                    preparedStatement.setString(7, purchases.getEmployeeName());
+                    preparedStatement.setString(8, purchases.getCompanyName());
+
+
                     preparedStatement.executeUpdate();
                     System.out.println("products inserted into  print purchases");
-                    //generate report for search sales
+                    //generate report for search purchases
 
 
                 }
-                System.out.println("insert into print sales done");
+                System.out.println("insert into print purchases done");
 
                 //exporting to pdf
-                JasperDesign jasperDesign = JRXmlLoader.load("searchProducts.jrxml");
+                JasperDesign jasperDesign = JRXmlLoader.load("searchedPurchases.jrxml");
                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
 
@@ -120,7 +124,7 @@ public class TotalPurchaseList implements Initializable {
 
                 PreparedStatement preparedStatement = connection.prepareStatement("delete from printpurchases");
                 preparedStatement.executeUpdate();
-                System.out.println("delete from print sales");
+                System.out.println("delete from print purchases");
 
 
             } catch (Exception e) {
@@ -128,28 +132,33 @@ public class TotalPurchaseList implements Initializable {
                 System.out.println();
             }
 
-        } else if ((searchFieldButton.getText().isEmpty()) && fromDate.getValue() == null && !(purchasesTableView.getItems() == null)) {
-
+        }
+        else if  ((searchFieldButton.getText().isEmpty()) && fromDate.getValue() == null && !(purchasesTableView.getItems() == null)) {
+            // all purchases searched using one date (fromDate)
+            //usually purchases made in a day
             try {
 
                 for (Purchases purchases : listOfaLLPurchases) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printsales`(`productName`, `quantity`, `salePrice`, `total`, `date`, `employeeName`) VALUES (?,?,?,?,?,?)");
-                    preparedStatement.setString(1, sale.getProductName());
-                    preparedStatement.setDouble(2, sale.getQuantity());
-                    preparedStatement.setDouble(3, sale.getSalePrice());
-                    preparedStatement.setDouble(4, sale.getTotal());
-                    preparedStatement.setString(5, sale.getDate());
-                    preparedStatement.setString(6, sale.getEmployeeName());
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`,`fromDate`) VALUES (?,?,?,?,?,?,?,?,?)");
+                    preparedStatement.setString(1, purchases.getInvoiceNumber());
+                    preparedStatement.setString(2, purchases.getProductName());
+                    preparedStatement.setDouble(3, purchases.getQuantity());
+                    preparedStatement.setDouble(4, purchases.getPurchasedPrice());
+                    preparedStatement.setDouble(5, purchases.getTotal());
+                    preparedStatement.setString(6, String.valueOf(purchases.getDate()));
+                    preparedStatement.setString(7, purchases.getEmployeeName());
+                    preparedStatement.setString(8, purchases.getCompanyName());
+                    preparedStatement.setDate(9, Date.valueOf(fromDate.getValue()));
+
                     preparedStatement.executeUpdate();
-                    System.out.println("products inserted into  print sale");
-                    //generate report for total sales
+                    System.out.println("products inserted into  print purchases for one date");
 
 
                 }
-                System.out.println("insert into print sales done");
+                //generate report for search purchases
 
                 //exporting to pdf
-                JasperDesign jasperDesign = JRXmlLoader.load("AllProducts.jrxml");
+                JasperDesign jasperDesign = JRXmlLoader.load("allPurchases.jrxml");
                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
 
@@ -159,9 +168,9 @@ public class TotalPurchaseList implements Initializable {
                 // new PDFPrinter(jasperPrint, "", today.getText());
                 //deleting from print sales after printing
 
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from printsales");
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from printpurchases");
                 preparedStatement.executeUpdate();
-                System.out.println("delete from print sales");
+                System.out.println("delete from print purchases");
 
 
             } catch (Exception e) {
@@ -169,93 +178,99 @@ public class TotalPurchaseList implements Initializable {
                 System.out.println();
             }
 
-
-        } else if (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && !(toDate.getValue() == null)) {
-
+        }else if (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && !(toDate.getValue() == null)) {
+            // all purchases searched using two date (fromDate- toDate)
+            //usually purchases made from a day to another day
             try {
 
-
                 for (Purchases purchases : listOfaLLPurchases) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printsales`(`productName`, `quantity`, `salePrice`, `total`, `date`, `employeeName`, `invoiceNumber`, `fromDate`, `toDate`) VALUES (?,?,?,?,?,?,?,?,?)");
-                    preparedStatement.setString(1, sale.getProductName());
-                    preparedStatement.setDouble(2, sale.getQuantity());
-                    preparedStatement.setDouble(3, sale.getSalePrice());
-                    preparedStatement.setDouble(4, sale.getTotal());
-                    preparedStatement.setString(5, sale.getDate());
-                    preparedStatement.setString(6, sale.getEmployeeName());
-                    preparedStatement.setString(7, searchField.getText());
-                    preparedStatement.setDate(8, Date.valueOf(fromDate.getValue()));
-                    preparedStatement.setDate(9, Date.valueOf(toDate.getValue()));
-                    preparedStatement.executeUpdate();
-                    System.out.println("products inserted into  print sale");
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`,`fromDate`,`toDate`) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                    preparedStatement.setString(1, purchases.getInvoiceNumber());
+                    preparedStatement.setString(2, purchases.getProductName());
+                    preparedStatement.setDouble(3, purchases.getQuantity());
+                    preparedStatement.setDouble(4, purchases.getPurchasedPrice());
+                    preparedStatement.setDouble(5, purchases.getTotal());
+                    preparedStatement.setString(6, String.valueOf(purchases.getDate()));
+                    preparedStatement.setString(7, purchases.getEmployeeName());
+                    preparedStatement.setString(8, purchases.getCompanyName());
+                    preparedStatement.setDate(9, Date.valueOf(fromDate.getValue()));
+                    preparedStatement.setDate(10,Date.valueOf(toDate.getValue()));
 
-                    //generate report for search both dates
+                    preparedStatement.executeUpdate();
+                    System.out.println("products inserted into  print purchases for one date");
+
 
                 }
+                //generate report for search purchases
 
                 //exporting to pdf
-                JasperDesign jasperDesign = JRXmlLoader.load("twoDates.jrxml");
+                JasperDesign jasperDesign = JRXmlLoader.load("printPurchasesTwoDates.jrxml");
                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
 
                 JasperViewer.viewReport(jasperPrint, false);
-                // new Printer(jasperPrint, "POS-58C");
-                System.out.println("printing done");
-                //  new PDFPrinter(jasperPrint, "", today.getText());
-
-
-                //delete from print sales
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from printsales");
-                preparedStatement.executeUpdate();
-                System.out.println("delete from print sales");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        } else if (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && toDate.getValue() == null) {
-
-
-            try {
-
-                for (Purchases purchases : listOfaLLPurchases) {
-
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printsales`(`productName`, `quantity`, `salePrice`, `total`, `date`, `employeeName`, `invoiceNumber`, `fromDate`) VALUES (?,?,?,?,?,?,?,?)");
-                    preparedStatement.setString(1, purchases.getProductName());
-                    preparedStatement.setDouble(2, sale.getQuantity());
-                    preparedStatement.setDouble(3, sale.getSalePrice());
-                    preparedStatement.setDouble(4, sale.getTotal());
-                    preparedStatement.setString(5, sale.getDate());
-                    preparedStatement.setString(6, sale.getEmployeeName());
-                    preparedStatement.setString(7, searchField.getText());
-                    preparedStatement.setDate(8, Date.valueOf(fromDate.getValue()));
-                    preparedStatement.executeUpdate();
-                    System.out.println("products inserted into  print sale");
-                }
-                System.out.println("insert into print sales done");
-
-                //exporting to pdf
-                JasperDesign jasperDesign = JRXmlLoader.load("oneDate.jrxml");
-                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
-
-                JasperViewer.viewReport(jasperPrint, false);
-                // new Printer(jasperPrint, "POS-58C");
+                //new Printer(jasperPrint, "POS-58C");
                 System.out.println("printing done");
                 // new PDFPrinter(jasperPrint, "", today.getText());
+                //deleting from print sales after printing
 
-
-                //delete from print sales
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from printsales");
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from printpurchases");
                 preparedStatement.executeUpdate();
-                System.out.println("delete from print sales");
+                System.out.println("delete from print purchases");
+
+
             } catch (Exception e) {
                 e.printStackTrace();
+                System.out.println();
             }
 
+        }else  if  (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && toDate.getValue() == null) {
+            // all purchases
+
+            try {
+
+                for (Purchases purchases : listOfaLLPurchases) {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`) VALUES (?,?,?,?,?,?,?,?)");
+                    preparedStatement.setString(1, purchases.getInvoiceNumber());
+                    preparedStatement.setString(2, purchases.getProductName());
+                    preparedStatement.setDouble(3, purchases.getQuantity());
+                    preparedStatement.setDouble(4, purchases.getPurchasedPrice());
+                    preparedStatement.setDouble(5, purchases.getTotal());
+                    preparedStatement.setString(6, String.valueOf(purchases.getDate()));
+                    preparedStatement.setString(7, purchases.getEmployeeName());
+                    preparedStatement.setString(8, purchases.getCompanyName());
+
+
+                    preparedStatement.executeUpdate();
+                    System.out.println("products inserted into  print purchases for all purchases");
+
+
+                }
+                //generate report for search purchases
+
+                //exporting to pdf
+                JasperDesign jasperDesign = JRXmlLoader.load("allPurchases.jrxml");
+                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
+
+                JasperViewer.viewReport(jasperPrint, false);
+                //new Printer(jasperPrint, "POS-58C");
+                System.out.println("printing done");
+                // new PDFPrinter(jasperPrint, "", today.getText());
+                //deleting from print purchases after printing
+
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from printpurchases");
+                preparedStatement.executeUpdate();
+                System.out.println("delete from print purchases");
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println();
+            }
 
         }
+
 
 
     }
@@ -263,13 +278,14 @@ public class TotalPurchaseList implements Initializable {
 
     @FXML
     private void setExportToPDFButton() {
-        System.out.println("not working");
+        print();
+       /* System.out.println("not working");
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("Export under development");
         ButtonType ok = new ButtonType("OK");
         alert.getButtonTypes().setAll(ok);
         alert.setOnCloseRequest(e -> alert.close());
-        alert.showAndWait();
+        alert.showAndWait();*/
     }
 
     private void searchWithDate() {
@@ -279,6 +295,7 @@ public class TotalPurchaseList implements Initializable {
 
         if (!(fromDate.getValue() == null) && !(toDate.getValue() == null)) {
             ObservableList<Purchases> listOfPurchasesBoth = FXCollections.observableArrayList();
+
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM purchases WHERE date between ? and ?");
@@ -395,7 +412,7 @@ public class TotalPurchaseList implements Initializable {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 count += 1;
-                listOfaLLPurchases.addAll( new Purchases(
+                listOfaLLPurchases.addAll(new Purchases(
                         resultSet.getString("barcode"),
                         resultSet.getString("productName"),
                         resultSet.getDouble("quantity"),
