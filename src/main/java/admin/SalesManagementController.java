@@ -462,7 +462,7 @@ public class SalesManagementController implements Initializable {
 
 
                     //inserting the item into cart(db)
-                    preparedStatement = connection.prepareStatement("INSERT INTO `cart`(`productName`, `price`, `quantity`, `total`) VALUES (?,?,?,?)");
+                    preparedStatement = connection.prepareStatement("INSERT INTO `cart`(`productName`, `Price`, `quantity`, `total`) VALUES (?,?,?,?)");
                     preparedStatement.setString(1, nameOfProduct);
                     preparedStatement.setString(2, String.valueOf(unitPrice));
                     preparedStatement.setString(3, String.valueOf(quantity));
@@ -625,8 +625,6 @@ public class SalesManagementController implements Initializable {
     }
 
 
-
-
     @FXML
     private void setNewSaleButton() {
         posPane.setVisible(true);
@@ -705,6 +703,17 @@ public class SalesManagementController implements Initializable {
         });
     }
 
+
+    public void setDeleteSaleButton() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Delete Sales");
+        alert.setContentText("For security purposes\nDeletion is disabled\n Kindly contact Admin");
+        alert.showAndWait();
+       /* TrayNotification notification = new TrayNotification();
+        notification.setTray("Delete Purchase", "For security purposes\nDeletion is disabled\n Kindly contact Admin", NotificationType.ERROR);
+        notification.showAndDismiss(Duration.seconds(3));*/
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -717,7 +726,7 @@ public class SalesManagementController implements Initializable {
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         employeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
 
-
+        deleteSaleButton.setOnAction(e -> setDeleteSaleButton());
         selectAllSales();
         posCartTableView.setOnMouseClicked(this::onCartItemClicked);
 

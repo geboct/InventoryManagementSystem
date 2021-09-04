@@ -162,7 +162,7 @@ public class DashboardControllerBoth implements Initializable {
         stockOut = 0;
         try {
             PreparedStatement getOutOfStock = connection.prepareStatement("SELECT * FROM products WHERE  stock <= ?");
-            getOutOfStock.setInt(1, 5);
+            getOutOfStock.setInt(1, 6);
             ResultSet stockOutRs = getOutOfStock.executeQuery();
             while (stockOutRs.next()) {
                 stockOut += 1;

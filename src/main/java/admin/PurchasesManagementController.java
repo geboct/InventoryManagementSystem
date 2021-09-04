@@ -28,9 +28,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.java.admin.SalesModel.SalesModel;
 import main.java.admin.purchaseModel.PurchaseModel;
 import main.java.controllers.LogInController;
 import main.java.controllers.PromptDialogController;
+import main.java.entity.Purchases;
 import main.java.others.DBConnection;
 import main.java.others.Item;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -251,6 +253,39 @@ public class PurchasesManagementController implements Initializable {
     }
 
 
+    public void searchPurchases(){
+
+
+            FilteredList<PurchaseModel> searchedData = new FilteredList<>(listOfPurchases, e -> true);
+
+            searchTextField.setOnKeyReleased(e -> {
+                searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    searchedData.setPredicate(product -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        String lowerCaseFilter = newValue.toLowerCase();
+                        if (product.getProductName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true;
+                        } else return product.getProductName().toLowerCase().contains(lowerCaseFilter);
+                    });
+                });
+
+                SortedList<PurchaseModel> sortedData = new SortedList<>(searchedData);
+                sortedData.comparatorProperty().bind(purchasesTableView.comparatorProperty());
+                purchasesTableView.setItems(sortedData);
+            });
+
+    }
+
+
+
+
+
+
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -263,6 +298,7 @@ public class PurchasesManagementController implements Initializable {
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         employeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         initializeCartTableView();
+        removeButton.setOnAction(e->setRemoveProduct());
 
 
         selectAllPurchases();
@@ -272,9 +308,7 @@ public class PurchasesManagementController implements Initializable {
         newPurchaseButton.getGraphic().setStyle("-fx-fill: #ffffff");
 
         unEditableFields();
-        filterItems.setAll("Product Name", "Category", "Price", "Available Stock", "Default");
-        filterByComboBox.setItems(filterItems);
-        filterByComboBox.getSelectionModel().select("Default");
+
         setView();
 
     }
@@ -562,58 +596,39 @@ public class PurchasesManagementController implements Initializable {
     public void setRemoveProduct() {
         Connection connection = DBConnection.getConnection();
 
+                    String product=cartTableview.getSelectionModel().getSelectedItem().getProductName();
 
-        if (productNameTextField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Can't Delete");
-            alert.setContentText("No product has been selected to delete");
-            ButtonType ok = new ButtonType("OK");
-            alert.getButtonTypes().setAll(ok);
-            alert.setOnCloseRequest(e -> alert.close());
-            alert.showAndWait();
-
-
-        } else {
             try {
-                String product = productNameTextField.getText();
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from products where productName=?");
-                preparedStatement.setString(1, productNameTextField.getText());
+
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from purchasescart where productName=?");
+                preparedStatement.setString(1, product);
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Delete");
                 alert.setGraphic(new ImageView(this.getClass().getResource("/main/resources/icons/x-button.png").toString()));
-                alert.setHeaderText("Do you really want to delete ?\n" + product +
-                        " This action will delete the product from database.\n" +
-                        "Once it is done it can not be undone!");
+                alert.setHeaderText("Do you really want to remove ?\n" + product);
                 alert.setContentText("Press OK to confirm, Cancel to go back");
 
                 Optional<ButtonType> result = alert.showAndWait();
 
                 if (result.get() == ButtonType.OK) {
                     preparedStatement.executeUpdate();
-
-                    new PromptDialogController("Operation Successful!", product + " has been deleted Successfully");
+                    getItemsFromPurchasesCartDb();
+                    TrayNotification notification=new TrayNotification();
+                    notification.setTray("","has been deleted Successfully",NotificationType.ERROR);
+                    notification.showAndDismiss(Duration.seconds(3));
+                   // new PromptDialogController("Operation Successful!", product + " has been deleted Successfully");
                 }
 
-                //setting the fields to uneditable
-                txtSearch.setText("");
-                productNameTextField.setText("");
-                productNameTextField.setEditable(false);
-                sellingPriceTextField.setEditable(false);
-                sellingPriceTextField.setText("");
-                stockTextField.setEditable(false);
-                stockTextField.setText("");
-                descriptionTextArea.setText("");
-                descriptionTextArea.setEditable(false);
-                barcodeField.setText("");
-                barcodeField.setEditable(false);
-                categoryComboBox.getItems().clear();
 
             } catch (SQLException e) {
-                new PromptDialogController("Can't delete", e.getMessage());
+                TrayNotification notification=new TrayNotification();
+                notification.setTray("","Can't delete",NotificationType.ERROR);
+                notification.showAndDismiss(Duration.seconds(3));
+               // new PromptDialogController("Can't delete", e.getMessage());
                 e.printStackTrace();
             }
-        }
+
 
 
     }
@@ -645,52 +660,6 @@ public class PurchasesManagementController implements Initializable {
             }
         }
     }
-
-   /* @FXML
-    void outOfStockList(ActionEvent event) {
-//setting the fields to uneditable
-        unEditableFields();
-
-
-        btnGoBack.setOnAction(e -> {
-            itemListPane.setVisible(false);  //Setting item list pane visible
-            itemPane.setVisible(true); //Setting item pane visible
-        });
-
-        Connection con = DBConnection.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM products WHERE stock <=" + 5);
-            ResultSet itemResultSet = ps.executeQuery();
-
-            ObservableList<main.java.others.Item> outOfStk = FXCollections.observableArrayList();
-
-            while (itemResultSet.next()) {
-                main.java.others.Item item = new Item(itemResultSet.getString("barcodeField"),
-                        itemResultSet.getString("productName"),
-                        itemResultSet.getDouble("salePrice"),
-                        itemResultSet.getDouble("stock"),
-                        itemResultSet.getString("category"), itemResultSet.getString("description"));
-
-                itemNames.add(itemResultSet.getString("productName"));
-
-
-                btnGoBack.setOnAction(e -> {
-                    itemListPane.setVisible(false);  //Setting item list pane visible
-                    itemPane.setVisible(true); //Setting item pane visible
-                });
-
-                outOfStk.add(item);
-
-            }
-
-            tbl.setItems(outOfStk);
-
-            listView();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
 
     /**
@@ -1482,11 +1451,12 @@ public class PurchasesManagementController implements Initializable {
         cartPriceColumn.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
         cartStockColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         getItemsFromPurchasesCartDb();
+        searchTextField.setOnKeyReleased(e->searchPurchases());
 
     }
 
     public void setDeletePurchasesButton() {
-        Alert alert=new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Delete Purchase");
         alert.setContentText("For security purposes\nDeletion is disabled\n Kindly contact Admin");
         alert.showAndWait();

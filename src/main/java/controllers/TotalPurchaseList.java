@@ -75,6 +75,7 @@ public class TotalPurchaseList implements Initializable {
         searchFieldButton.setTooltip(new Tooltip("Search With Invoice"));
         searchField.setPromptText("Search with Invoice");
         searchButton.setOnAction(e -> searchWithDate());
+        clearFields.setOnAction(e->setClearFields());
         //exportToPDFButton.setOnAction(e -> setExportToPDFButton());
 
         initializeTableColumns();
@@ -132,14 +133,13 @@ public class TotalPurchaseList implements Initializable {
                 System.out.println();
             }
 
-        }
-        else if  ((searchFieldButton.getText().isEmpty()) && fromDate.getValue() == null && !(purchasesTableView.getItems() == null)) {
+        } else if ((searchFieldButton.getText().isEmpty()) && fromDate.getValue() == null && !(purchasesTableView.getItems() == null)) {
             // all purchases searched using one date (fromDate)
             //usually purchases made in a day
             try {
 
                 for (Purchases purchases : listOfaLLPurchases) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`,`fromDate`) VALUES (?,?,?,?,?,?,?,?,?)");
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`) VALUES (?,?,?,?,?,?,?,?)");
                     preparedStatement.setString(1, purchases.getInvoiceNumber());
                     preparedStatement.setString(2, purchases.getProductName());
                     preparedStatement.setDouble(3, purchases.getQuantity());
@@ -148,7 +148,6 @@ public class TotalPurchaseList implements Initializable {
                     preparedStatement.setString(6, String.valueOf(purchases.getDate()));
                     preparedStatement.setString(7, purchases.getEmployeeName());
                     preparedStatement.setString(8, purchases.getCompanyName());
-                    preparedStatement.setDate(9, Date.valueOf(fromDate.getValue()));
 
                     preparedStatement.executeUpdate();
                     System.out.println("products inserted into  print purchases for one date");
@@ -178,7 +177,7 @@ public class TotalPurchaseList implements Initializable {
                 System.out.println();
             }
 
-        }else if (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && !(toDate.getValue() == null)) {
+        } else if (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && !(toDate.getValue() == null)) {
             // all purchases searched using two date (fromDate- toDate)
             //usually purchases made from a day to another day
             try {
@@ -194,7 +193,7 @@ public class TotalPurchaseList implements Initializable {
                     preparedStatement.setString(7, purchases.getEmployeeName());
                     preparedStatement.setString(8, purchases.getCompanyName());
                     preparedStatement.setDate(9, Date.valueOf(fromDate.getValue()));
-                    preparedStatement.setDate(10,Date.valueOf(toDate.getValue()));
+                    preparedStatement.setDate(10, Date.valueOf(toDate.getValue()));
 
                     preparedStatement.executeUpdate();
                     System.out.println("products inserted into  print purchases for one date");
@@ -224,13 +223,13 @@ public class TotalPurchaseList implements Initializable {
                 System.out.println();
             }
 
-        }else  if  (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && toDate.getValue() == null) {
+        } else if (searchField.getText().isEmpty() && !(fromDate.getValue() == null) && toDate.getValue() == null) {
             // all purchases
 
             try {
 
                 for (Purchases purchases : listOfaLLPurchases) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`) VALUES (?,?,?,?,?,?,?,?)");
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printpurchases`(`invoiceNumber`, `productName`, `quantity`, `purchasedPrice`, `total`, `date`, `employeeName`,`companyName`,`fromDate`) VALUES (?,?,?,?,?,?,?,?,?)");
                     preparedStatement.setString(1, purchases.getInvoiceNumber());
                     preparedStatement.setString(2, purchases.getProductName());
                     preparedStatement.setDouble(3, purchases.getQuantity());
@@ -239,6 +238,7 @@ public class TotalPurchaseList implements Initializable {
                     preparedStatement.setString(6, String.valueOf(purchases.getDate()));
                     preparedStatement.setString(7, purchases.getEmployeeName());
                     preparedStatement.setString(8, purchases.getCompanyName());
+                    preparedStatement.setDate(9, Date.valueOf(fromDate.getValue()));
 
 
                     preparedStatement.executeUpdate();
@@ -249,7 +249,7 @@ public class TotalPurchaseList implements Initializable {
                 //generate report for search purchases
 
                 //exporting to pdf
-                JasperDesign jasperDesign = JRXmlLoader.load("allPurchases.jrxml");
+                JasperDesign jasperDesign = JRXmlLoader.load("printPurchasesOneDate.jrxml");
                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
 
@@ -270,7 +270,6 @@ public class TotalPurchaseList implements Initializable {
             }
 
         }
-
 
 
     }
@@ -433,5 +432,11 @@ public class TotalPurchaseList implements Initializable {
         }
     }
 
+    public void setClearFields() {
+        searchField.clear();
+        fromDate.setValue(null);
+        toDate.setValue(null);
 
+
+    }
 }

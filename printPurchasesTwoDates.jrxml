@@ -54,7 +54,7 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="fromDate" class="java.sql.Date">
+	<field name="fromDate" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="fromDate"/>
 		<property name="com.jaspersoft.studio.field.label" value="fromDate"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="printpurchases"/>
@@ -106,28 +106,28 @@
 	<pageHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="77" y="0" width="180" height="30" uuid="4e8df6f5-d47a-439f-889a-0678c35ba93c"/>
+				<reportElement x="62" y="0" width="180" height="30" uuid="4e8df6f5-d47a-439f-889a-0678c35ba93c"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
 				<text><![CDATA[List of Purchases from]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="260" y="0" width="57" height="30" uuid="b8467d6a-7ede-4789-abd1-134f38ab3d8f"/>
-				<textElement textAlignment="Center">
+				<reportElement x="250" y="0" width="113" height="30" uuid="b8467d6a-7ede-4789-abd1-134f38ab3d8f"/>
+				<textElement textAlignment="Left">
 					<font size="18"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fromDate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="328" y="0" width="32" height="30" uuid="0898ebb0-2eda-4e3b-9357-4f2166caecc1"/>
+				<reportElement x="363" y="0" width="32" height="30" uuid="0898ebb0-2eda-4e3b-9357-4f2166caecc1"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
 				<text><![CDATA[TO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="370" y="0" width="100" height="30" uuid="88d1a701-3733-4f18-a204-ffdca147153f"/>
+				<reportElement x="399" y="0" width="100" height="30" uuid="88d1a701-3733-4f18-a204-ffdca147153f"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>

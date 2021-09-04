@@ -1,6 +1,7 @@
 package main.java.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -167,17 +168,27 @@ public class EmployeeAccountController implements Initializable {
     @FXML
     private void onButtonHover(MouseEvent event) {
         if (event.getSource().equals(usernameButton)) {
-            usernameButton.setStyle("-fx-text-fill: white");
+            usernameButton.setStyle("-fx-text-fill: black");
+            usernameButton.setCursor(Cursor.HAND);
         } else if (event.getSource().equals(passwordButton)) {
-            passwordButton.setStyle("-fx-text-fill: white");
+            passwordButton.setStyle("-fx-text-fill: black");
+            passwordButton.setCursor(Cursor.HAND);
         } else if (event.getSource().equals(phoneButton)) {
-            phoneButton.setStyle("-fx-text-fill: white");
+            phoneButton.setStyle("-fx-text-fill: black");
+            phoneButton.setCursor(Cursor.HAND);
+
         } else if (event.getSource().equals(saveUsernameButton)) {
-            saveUsernameButton.setStyle("-fx-text-fill: white");
+            saveUsernameButton.setStyle("-fx-text-fill: black");
+            saveUsernameButton.setCursor(Cursor.HAND);
+
         } else if (event.getSource().equals(savePasswordButton)) {
-            savePasswordButton.setStyle("-fx-text-fill: white");
+            savePasswordButton.setStyle("-fx-text-fill: black");
+            savePasswordButton.setCursor(Cursor.HAND);
+
         } else if (event.getSource().equals(savePhoneButton)) {
-            savePasswordButton.setStyle("-fx-text-fill: white");
+            savePhoneButton.setStyle("-fx-text-fill: black");
+            savePhoneButton.setCursor(Cursor.HAND);
+
         }
     }
 
@@ -229,8 +240,8 @@ public class EmployeeAccountController implements Initializable {
             preparedStatement.setString(1, newUsername.getText());
             preparedStatement.setString(2, currentUsername.getText());
             preparedStatement.executeUpdate();
-            LogInController.loggerUsername=newUsername.getText();
-            EmployeeBaseController controller=new EmployeeBaseController();
+            LogInController.loggerUsername = newUsername.getText();
+            EmployeeBaseController controller = new EmployeeBaseController();
             controller.getLoginUsername();
 
             setUsernameButton();
@@ -272,9 +283,6 @@ public class EmployeeAccountController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
-
 
 
     @FXML
