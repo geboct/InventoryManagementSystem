@@ -19,27 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="added some fxml file for purchases">
+    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation&#10;2.Adding auditors section">
+      <change afterPath="$PROJECT_DIR$/db/inventory.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net amount" beforeDir="false" afterPath="$PROJECT_DIR$/net amount" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/admin/SalesManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/admin/SalesManagementController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/controllers/CheckoutController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/controllers/CheckoutController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/controllers/DashboardControllerBoth.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/controllers/DashboardControllerBoth.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/controllers/EmployeeAccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/controllers/EmployeeAccountController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/controllers/TotalPurchaseList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/controllers/TotalPurchaseList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/resources/view/adminAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/resources/view/adminAccount.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source file/main/resources/view/help.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/resources/view/help.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/printPurchasesTwoDates.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/printPurchasesTwoDates.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/receipt.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/receipt.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/admin/PurchasesManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/PurchasesManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/admin/SalesManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/SalesManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CheckoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/CheckoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/DashboardControllerBoth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/DashboardControllerBoth.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/EmployeeAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/EmployeeAccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/TotalPurchaseList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/TotalPurchaseList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/adminAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/adminAccount.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/help.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/help.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/purchasesManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/purchasesManagement.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/inventory (7).sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/admin/PurchasesManagementController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/admin/PurchasesManagementController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source file/main/java/admin/PurchasesManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/java/admin/PurchasesManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source file/main/resources/view/purchasesManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source file/main/resources/view/purchasesManagement.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,13 +49,14 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/db" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem\db" />
       <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem" />
       <recent name="C:\Users\Mr. Bril\IdeaProjects\InventoryManagementSystem\src\lib" />
     </key>
@@ -109,7 +96,7 @@
       <workItem from="1630606913511" duration="6238000" />
       <workItem from="1630622552121" duration="4537000" />
       <workItem from="1630684763382" duration="25136000" />
-      <workItem from="1630738582063" duration="9847000" />
+      <workItem from="1630738582063" duration="10766000" />
     </task>
     <task id="LOCAL-00001" summary="re-added jar files&#10;removed dist folder">
       <created>1630426974090</created>
@@ -132,7 +119,21 @@
       <option name="project" value="LOCAL" />
       <updated>1630691628439</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation&#10;2.Adding auditors section">
+      <created>1630751204704</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1630751204705</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation&#10;2.Adding auditors section">
+      <created>1630751235876</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1630751235876</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,9 +155,14 @@
     <MESSAGE value="re-added jar files&#10;removed dist folder" />
     <MESSAGE value="committed fxml files and css files" />
     <MESSAGE value="added some fxml file for purchases" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some fxml file for purchases" />
+    <MESSAGE value="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation&#10;2.Adding auditors section" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation&#10;2.Adding auditors section" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="275" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1630751565522">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1630751565522" />
     <state x="513" y="57" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1630426489524">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -169,22 +175,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="389" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1630426715931" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1630749516814">
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1630751092475">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1630749516814" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1630749516812">
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1630751092475" />
+    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1630751092474">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1630749516812" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1630749516811">
+    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1630751092473" />
+    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1630751092472">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1630749516811" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1630749516813">
+    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1630751092472" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1630751092474">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1630749516813" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1630751092474" />
     <state x="163" y="0" key="SettingsEditor" timestamp="1630426721986">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

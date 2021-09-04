@@ -42,7 +42,6 @@
                             </font>
                         </Label>
                         <Region prefHeight="65.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <ComboBox fx:id="filterByComboBox" prefHeight="37.0" prefWidth="188.0" promptText="Filter By:" HBox.hgrow="ALWAYS" />
                         <TextField fx:id="searchTextField" onKeyReleased="#setSearchTextField" prefHeight="40.0" prefWidth="238.0" promptText="search" style="-fx-background-radius: 9;" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="12.0" />
