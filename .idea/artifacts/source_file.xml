@@ -1,0 +1,40 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="source file">
+    <output-path>$PROJECT_DIR$/out/artifacts/Inventory System</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="main.Main" />
+        <option name="description" value="An Inventory System to Manage day to day activities of the business" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="icons">
+          <JavaFxApplicationIcons>
+            <option name="windowsIcon" value="$PROJECT_DIR$/src/images/logo.ico" />
+          </JavaFxApplicationIcons>
+        </option>
+        <option name="nativeBundle" value="image" />
+        <option name="title" value="BIMS" />
+        <option name="vendor" value="Brills Innovation Centre" />
+        <option name="version" value="2.2.1" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="source_file.jar">
+        <element id="module-output" name="source file" />
+      </element>
+      <element id="library" level="project" name="lib" />
+      <element id="file-copy" path="$PROJECT_DIR$/printPurchasesOneDate.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/twoDates.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/oneDate.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/outOfStock.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/printProducts.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/profilePicture.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/searchedPurchases.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/printWithCategory.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/AllProducts.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/allPurchases.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/receipt.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/searchProducts.jrxml" />
+      <element id="file-copy" path="$PROJECT_DIR$/printPurchasesTwoDates.jrxml" />
+    </root>
+  </artifact>
+</component>

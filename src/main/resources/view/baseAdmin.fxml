@@ -13,13 +13,13 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.19" maxHeight="700.0" maxWidth="1197.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1197.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.adminBaseController">
+<SplitPane dividerPositions="0.19" maxHeight="700.0" maxWidth="1197.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1197.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.adminBaseController">
   <items>
     <AnchorPane fx:id="paneLeft" maxWidth="280.0" minHeight="0.0" minWidth="75.0" prefHeight="687.0" prefWidth="226.0" style="-fx-background-color: #143D59;">
          <children>
             <AnchorPane fx:id="paneMenuHolder" layoutY="46.0" prefHeight="652.0" prefWidth="226.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="46.0">
                <children>
-                  <VBox layoutY="1.0" prefHeight="444.0" prefWidth="224.0" spacing="5.0" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <VBox layoutY="1.0" prefHeight="464.0" prefWidth="224.0" spacing="5.0" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <JFXButton fx:id="btnDashboard" alignment="BASELINE_LEFT" graphicTextGap="40.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="264.0" ripplerFill="WHITE" style="border-radius: 10; -fx-background-radius: 10;" text="Dashboard" textFill="WHITE" VBox.vgrow="ALWAYS">
                            <graphic>
@@ -55,7 +55,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <tooltip>
-                              <Tooltip text="Add, Delete, Update User" />
+                              <Tooltip text="Add,Update,Delete user" />
                            </tooltip>
                            <VBox.margin>
                               <Insets />
@@ -78,7 +78,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <tooltip>
-                              <Tooltip text="Add, Update" />
+                              <Tooltip text="Add, Update,Delete Category" />
                            </tooltip>
                            <VBox.margin>
                               <Insets />
@@ -147,7 +147,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <tooltip>
-                              <Tooltip text="Change account details" />
+                              <Tooltip text="View Purchases,Make new Purchase" />
                            </tooltip>
                            <padding>
                               <Insets left="4.0" right="1.0" />
@@ -199,6 +199,26 @@
                               <Font size="15.0" />
                            </font>
                         </JFXButton>
+                        <JFXButton fx:id="btnAdmin111" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="11.0" layoutY="290.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="268.0" ripplerFill="WHITE" text="Settings" textFill="WHITE">
+                           <graphic>
+                              <MaterialDesignIconView fill="#ffffff" glyphName="SETTINGS" size="30" textAlignment="JUSTIFY" />
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Settings, Backup" />
+                           </tooltip>
+                           <padding>
+                              <Insets left="4.0" right="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
                         <JFXButton fx:id="btnHelp" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="10.0" layoutY="175.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="267.0" ripplerFill="WHITE" text="Help" textFill="WHITE" VBox.vgrow="ALWAYS">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="QUESTION_CIRCLE" size="30" wrappingWidth="30.571430206298828" />
@@ -222,23 +242,9 @@
                               <Font size="15.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton fx:id="newPurchase" alignment="BASELINE_LEFT" graphicTextGap="40.0" layoutX="10.0" layoutY="118.0" onAction="#btnNavigators" prefHeight="50.0" prefWidth="266.0" ripplerFill="WHITE" text="New Purchase" textFill="WHITE" visible="false">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="30" wrappingWidth="32.28571319580078" />
-                           </graphic>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <tooltip>
-                              <Tooltip text="New Purchase" />
-                           </tooltip>
-                        </JFXButton>
                      </children>
                   </VBox>
-                  <AnchorPane fx:id="paneAccountSection" layoutX="-1.0" layoutY="443.0" prefHeight="208.0" prefWidth="224.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <AnchorPane fx:id="paneAccountSection" layoutY="444.0" prefHeight="194.0" prefWidth="224.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <VBox alignment="CENTER" layoutX="21.0" layoutY="101.0">
                            <children>

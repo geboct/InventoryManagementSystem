@@ -24,9 +24,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.PurchasesManagementController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.PurchasesManagementController">
     <children>
-        <AnchorPane prefHeight="46.0" prefWidth="1117.0" style="-fx-background-color: #253238;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <AnchorPane prefHeight="46.0" prefWidth="1117.0" style="-fx-background-color: #253238;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <VBox fx:id="allPurchasesVBox" layoutX="27.0" layoutY="63.0" prefHeight="638.0" prefWidth="1089.0" style="-fx-border-color: grey; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="63.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="1053.0" spacing="12.0" style="-fx-border-radius: 10;" VBox.vgrow="ALWAYS">
@@ -135,7 +135,10 @@
                 </AnchorPane>
                 <AnchorPane layoutY="100.0" prefHeight="76.0" prefWidth="1107.0" style="-fx-background-color: #253238;" AnchorPane.bottomAnchor="608.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
-                  <FontAwesomeIconView fill="WHITE" glyphName="ANGLE_LEFT" layoutX="33.0" layoutY="52.0" onMouseClicked="#setBackButton" size="45" strokeLineCap="ROUND" wrappingWidth="26.071428298950195" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="ANGLE_LEFT" layoutX="33.0" layoutY="52.0" onMouseClicked="#setBackButton" size="45" strokeLineCap="ROUND" wrappingWidth="26.071428298950195">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></FontAwesomeIconView>
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="itemPane" layoutX="-2.0" layoutY="85.0" prefHeight="572.0" prefWidth="1107.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0">
@@ -348,7 +351,7 @@
                               <Insets top="24.0" />
                            </VBox.margin>
                         </HBox>
-                        <JFXTextField fx:id="stockTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Quantity" VBox.vgrow="ALWAYS">
+                        <JFXTextField fx:id="availableQuantity" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Quantity" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -375,6 +378,248 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
+      <AnchorPane fx:id="updatePurchasesPane" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" stylesheets="/main/resources/css/inventory.css" visible="false">
+         <children>
+            <AnchorPane layoutY="100.0" prefHeight="76.0" prefWidth="1107.0" style="-fx-background-color: #253238;" AnchorPane.bottomAnchor="608.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <FontAwesomeIconView fx:id="backToPurchasesManagement" fill="WHITE" glyphName="ANGLE_LEFT" layoutX="33.0" layoutY="52.0" onMouseClicked="#setBackToPurchasesManagement" size="45" strokeLineCap="ROUND" wrappingWidth="26.071428298950195">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+                  <Label layoutX="404.0" layoutY="14.0" text="Update Purchases" textFill="WHITE">
+                     <font>
+                        <Font name="Bookman Old Style" size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="itemPane1" layoutX="-2.0" layoutY="85.0" prefHeight="572.0" prefWidth="1007.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0">
+               <children>
+                  <JFXButton fx:id="btnOutOfStock1" alignment="CENTER" buttonType="RAISED" graphicTextGap="10.0" layoutX="767.0" layoutY="384.0" prefHeight="50.0" prefWidth="240.0" ripplerFill="#37474f" style="-fx-background-color: white;" text="Out of Stock" textFill="WHITE" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <FontAwesomeIconView fill="#263238" glyphName="EXCLAMATION_TRIANGLE" size="30" />
+                     </graphic>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnPrevEntry1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="317.0" layoutY="492.0" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40; -fx-border-radius: 40 40 40 40;" stylesheets="@../css/customer.css" visible="false">
+                     <graphic>
+                        <FontAwesomeIconView fill="#263238" glyphName="ANGLE_LEFT" size="40" strokeLineCap="ROUND" wrappingWidth="13.071428298950195" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnAddNew1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="314.0" layoutY="492.0" onAction="#btnAddMode" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40;" stylesheets="@../css/customer.css" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <FontAwesomeIconView fx:id="btnAddIcon1" fill="#263238" glyphName="PLUS" size="30" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnNextEntry1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="460.0" layoutY="492.0" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40; -fx-border-radius: 40 40 40 40;" stylesheets="@../css/customer.css" visible="false">
+                     <graphic>
+                        <FontAwesomeIconView fill="#263238" glyphName="ANGLE_RIGHT" size="40" strokeLineCap="ROUND" text="" wrappingWidth="13.071428298950195" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="updateButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="555.0" layoutY="492.0" onAction="#setUpdatePurchaseButton" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40;" stylesheets="@../css/customer.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <MaterialDesignIconView fill="#263238" glyphName="UPLOAD" size="35" />
+                     </graphic>
+                  </JFXButton>
+                  <Label fx:id="lblMode1" layoutX="21.0" layoutY="23.0" prefHeight="51.0" prefWidth="248.0" text="Navigation Mode" textFill="GREEN" visible="false">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblSearchResults1" alignment="CENTER_RIGHT" layoutX="631.0" layoutY="48.0" prefHeight="17.0" prefWidth="154.0" text="Results found!" visible="false" />
+                  <JFXButton fx:id="btnDelete1" alignment="CENTER" buttonType="RAISED" disable="true" graphicTextGap="10.0" layoutX="767.0" layoutY="322.0" onAction="#btnDelAction" prefHeight="50.0" prefWidth="208.0" ripplerFill="WHITE" style="-fx-background-color: red; -fx-text-fill: white;" text="Delete Entry" textFill="WHITE" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="30" />
+                     </graphic>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <VBox layoutX="129.0" layoutY="16.0" prefHeight="478.0" prefWidth="124.0" AnchorPane.leftAnchor="220.0">
+                     <children>
+                        <Label prefHeight="24.0" prefWidth="78.0" text="Bar Code">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="19.0" prefWidth="78.0" text="Name:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="29.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="25.0" prefWidth="106.0" text="Selling price" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="26.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="106.0" text="Purchased Price" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="28.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="18.0" prefWidth="94.0" text="Description:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="48.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="16.0" prefWidth="78.0" text="Category:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="48.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="48.0" text="Stock:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="48.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="78.0" text="Company:" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="48.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="268.0" layoutY="15.0" prefHeight="462.0" prefWidth="363.0" AnchorPane.leftAnchor="400.0">
+                     <children>
+                        <JFXTextField fx:id="updateBarcodeField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Barcode">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="updateProductNameTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Product Name" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="19.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="updateSellingPriceTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Selling Price" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="18.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="updatePurchasedPriceTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Purchased Price" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="19.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <TextArea fx:id="updateDescriptionTextArea1" onMouseClicked="#onFieldsClicked" prefHeight="61.0" prefWidth="240.0" promptText="Description">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <HBox prefHeight="31.0" prefWidth="363.0">
+                           <children>
+                              <JFXComboBox fx:id="updateCategoryComboBox" onMouseClicked="#onFieldsClicked" prefHeight="25.0" prefWidth="232.0" promptText="category" style="-fx-text-size: 15px;" />
+                              <Button mnemonicParsing="false" onAction="#addNewCategory" style="-fx-border-color: gray;">
+                                 <graphic>
+                                    <MaterialDesignIconView fill="#263238" glyphName="PLUS" size="15" />
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Add new category" />
+                                 </tooltip>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="24.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                           <children>
+                              <JFXTextField fx:id="availableQuantity" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="112.0" promptText="Quantity" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <Label fx:id="plusMinusLabel" text="+" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="newQuantityField" labelFloat="true" prefHeight="31.0" prefWidth="100.0" promptText="New Quantity" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <ComboBox fx:id="upDownWardsComboBox" prefHeight="29.0" prefWidth="138.0" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                           </children>
+                        </HBox>
+                        <JFXTextField fx:id="upDateCompanyTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Company">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="46.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
 
 
 

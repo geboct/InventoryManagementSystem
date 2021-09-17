@@ -194,6 +194,7 @@ public class LogInController implements Initializable {
                             //scene.getStylesheets().add(css);
                             base.setTitle("Inventory System");
                             base.getIcons().setAll(new Image("/images/logo.png"));
+                            base.setResizable(false);
                             base.getIcons().add(new Image("/main/resources/icons/inventory.png"));
                             base.setScene(scene);
                             base.setOnCloseRequest(ee -> {
@@ -223,6 +224,7 @@ public class LogInController implements Initializable {
                             base.setOnCloseRequest(ee -> {
                                 ee.consume();
                             });
+                            base.setResizable(false);
                             base.setMaximized(true);
                             base.show();
                             Stage logIn = (Stage) btnLogIn.getScene().getWindow(); //Getting current window

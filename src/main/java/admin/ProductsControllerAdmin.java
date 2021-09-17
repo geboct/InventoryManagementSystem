@@ -109,9 +109,18 @@ public class ProductsControllerAdmin implements Initializable {
     @FXML
     private TableColumn<Item, String> columnCategory;
     @FXML
-    private JFXButton printButton;
+    private Label plusMinusLabel;
+
     @FXML
     private FontAwesomeIconView btnSearchIcon;
+
+    @FXML
+    private JFXTextField availableStock, newStock;
+
+    @FXML
+    private ComboBox<String> upDownComboBox;
+
+
     private static int recordIndex = 0;
     private static int recordSize = 0;
     private Item onView = null;
@@ -210,7 +219,7 @@ public class ProductsControllerAdmin implements Initializable {
             barcodeField.setText(barcode);
             productNameTextField.setText(productName);
             priceTextField.setText(String.valueOf(salePrice));
-            stockTextField.setText(String.valueOf(stock));
+            availableStock.setText(String.valueOf(stock));
             categoryComboBox.getSelectionModel().select(category);
             descriptionTextArea.setText(description);
 
@@ -219,7 +228,7 @@ public class ProductsControllerAdmin implements Initializable {
 
             productNameTextField.setText("");
             priceTextField.setText(String.valueOf(""));
-            stockTextField.setText(String.valueOf(""));
+            availableStock.setText(String.valueOf(""));
             categoryComboBox.getSelectionModel().clearSelection();
             descriptionTextArea.setText("");
 
@@ -249,12 +258,17 @@ public class ProductsControllerAdmin implements Initializable {
         productNameTextField.setText("");
         priceTextField.setEditable(false);
         priceTextField.setText("");
-        stockTextField.setEditable(false);
-        stockTextField.setText("");
+        availableStock.setEditable(false);
+        availableStock.setText("");
+        newStock.setText("");
         descriptionTextArea.setEditable(false);
         descriptionTextArea.setText("");
         categoryComboBox.getItems().clear();
         categoryComboBox.setEditable(false);
+        plusMinusLabel.setVisible(false);
+        newStock.setVisible(false);
+        upDownComboBox.setVisible(false);
+
 
         removeProduct.setDisable(false);
         updateProduct.setDisable(false);
@@ -268,12 +282,15 @@ public class ProductsControllerAdmin implements Initializable {
         productNameTextField.setText("");
         priceTextField.setEditable(true);
         priceTextField.setText("");
-        stockTextField.setEditable(true);
-        stockTextField.setText("");
+        newStock.setEditable(true);
+        newStock.setText("");
+        availableStock.setText("");
+        availableStock.setEditable(true);
         descriptionTextArea.setEditable(true);
         descriptionTextArea.setText("");
         categoryComboBox.getItems().clear();
         getCategories(categoryComboBox);
+
         lblPageIndex.setText("Showing 0 of 0 results.");
         removeProduct.setDisable(true);
         updateProduct.setDisable(true);
@@ -286,6 +303,7 @@ public class ProductsControllerAdmin implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         unEditableFields();
         filterItems.setAll("Product Name", "Category", "Price", "Available Stock");
+        upDownComboBox.getItems().setAll("UpWards", "DownWards");
         filterByComboBox.setItems(filterItems);
         setView();
 
@@ -373,7 +391,7 @@ public class ProductsControllerAdmin implements Initializable {
 
     //This method will set navigate between Items
     private void recordNavigator() {
-        stockTextField.setStyle("-fx-text-fill: #263238"); //Resetting stock color
+        availableStock.setStyle("-fx-text-fill: #263238"); //Resetting stock color
 
 
         barcodeField.setText(onView.getBarcode());
@@ -382,10 +400,10 @@ public class ProductsControllerAdmin implements Initializable {
         descriptionTextArea.setText(onView.getDescription());
         categoryComboBox.getItems().setAll(onView.getCategory());
         categoryComboBox.getSelectionModel().select(0);
-        stockTextField.setText(Double.toString(onView.getStock()));
+        availableStock.setText(Double.toString(onView.getStock()));
 
         if (onView.getStock() <= 5) //Setting stock color red if it's very limited
-            stockTextField.setStyle("-fx-text-fill: red");
+            availableStock.setStyle("-fx-text-fill: red");
 
 
     }
@@ -411,9 +429,12 @@ public class ProductsControllerAdmin implements Initializable {
                 barcodeField.setEditable(true);
                 productNameTextField.setEditable(true);
                 priceTextField.setEditable(true);
-                stockTextField.setEditable(true);
+                newStock.setEditable(true);
                 descriptionTextArea.setEditable(true);
                 categoryComboBox.getItems().setAll(list);
+                plusMinusLabel.setVisible(true);
+                newStock.setVisible(true);
+                upDownComboBox.setVisible(true);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -452,8 +473,8 @@ public class ProductsControllerAdmin implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Delete");
                 alert.setGraphic(new ImageView(this.getClass().getResource("/main/resources/icons/x-button.png").toString()));
-                alert.setHeaderText("Do you really want to delete ?\n" + product +
-                        " This action will delete the product from database.\n" +
+                alert.setHeaderText("Do you really want to delete " + product +
+                        " \nThis action will delete the product from database.\n" +
                         "Once it is done it can not be undone!");
                 alert.setContentText("Press OK to confirm, Cancel to go back");
 
@@ -461,23 +482,24 @@ public class ProductsControllerAdmin implements Initializable {
 
                 if (result.get() == ButtonType.OK) {
                     preparedStatement.executeUpdate();
-
+                    //setting the fields to uneditable
+                    txtSearch.setText("");
+                    productNameTextField.setText("");
+                    productNameTextField.setEditable(false);
+                    priceTextField.setEditable(false);
+                    priceTextField.setText("");
+                    availableStock.setText("");
+                    newStock.setEditable(false);
+                    newStock.setText("");
+                    descriptionTextArea.setText("");
+                    descriptionTextArea.setEditable(false);
+                    barcodeField.setText("");
+                    barcodeField.setEditable(false);
+                    categoryComboBox.getItems().clear();
                     new PromptDialogController("Operation Successful!", product + " has been deleted Successfully");
                 }
 
-                //setting the fields to uneditable
-                txtSearch.setText("");
-                productNameTextField.setText("");
-                productNameTextField.setEditable(false);
-                priceTextField.setEditable(false);
-                priceTextField.setText("");
-                stockTextField.setEditable(false);
-                stockTextField.setText("");
-                descriptionTextArea.setText("");
-                descriptionTextArea.setEditable(false);
-                barcodeField.setText("");
-                barcodeField.setEditable(false);
-                categoryComboBox.getItems().clear();
+
 
             } catch (SQLException e) {
                 new PromptDialogController("Can't delete", e.getMessage());
@@ -523,6 +545,9 @@ public class ProductsControllerAdmin implements Initializable {
         }
         tbl.setItems(listOfAllItems);
         listView();
+        upDownComboBox.setVisible(false);
+        plusMinusLabel.setVisible(false);
+        newStock.setVisible(false);
     }
 
     @FXML
@@ -637,7 +662,7 @@ public class ProductsControllerAdmin implements Initializable {
             priceTextField.setUnFocusColor(Color.web(defColor));
             categoryComboBox.setUnFocusColor(Color.web(defColor));
             txtSearch.setUnFocusColor(Color.web(defColor));
-            stockTextField.setUnFocusColor(Color.web(defColor));
+            availableStock.setUnFocusColor(Color.web(defColor));
 
             reloadRecords();
 
@@ -671,7 +696,7 @@ public class ProductsControllerAdmin implements Initializable {
                 productNameTextField.setText("");
                 categoryComboBox.setValue("");
                 priceTextField.setText("");
-                stockTextField.setText("");
+                availableStock.setText("");
             } catch (SQLException e) {
                 e.printStackTrace();
                 new PromptDialogController("SQL Error!", "Error occured while executing Query.\nSQL Error Code: " + e.getErrorCode());
@@ -825,8 +850,8 @@ public class ProductsControllerAdmin implements Initializable {
 
         }
 
-        if (stockTextField.getText().equals("")) {
-            stockTextField.setUnFocusColor(Color.web("red"));
+        if (availableStock.getText().equals("")) {
+            availableStock.setUnFocusColor(Color.web("red"));
             entryFlag = false;
 
         }
@@ -859,7 +884,7 @@ public class ProductsControllerAdmin implements Initializable {
         }
 
         if (event.getSource() == stockTextField) {
-            stockTextField.setUnFocusColor(Color.web("#263238"));
+            availableStock.setUnFocusColor(Color.web("#263238"));
 
 
         }
@@ -945,7 +970,7 @@ public class ProductsControllerAdmin implements Initializable {
                 barcodeField.setEditable(true);
                 productNameTextField.setEditable(true);
                 priceTextField.setEditable(true);
-                stockTextField.setEditable(true);
+                newStock.setEditable(true);
                 descriptionTextArea.setEditable(true);
                 categoryComboBox.getItems().setAll(list);
 
@@ -962,7 +987,23 @@ public class ProductsControllerAdmin implements Initializable {
             }
 
             ps.setDouble(3, salePrice);
-            ps.setDouble(4, Double.valueOf(stockTextField.getText()));
+            if (upDownComboBox.getSelectionModel().getSelectedItem() != null) {
+                switch (upDownComboBox.getSelectionModel().getSelectedItem()) {
+                    case "UpWards":
+                        ps.setDouble(4, (Double.parseDouble(availableStock.getText()) + Double.parseDouble(newStock.getText())));
+                        System.out.println("upwards selected");
+                        break;
+                    case "DownWards":
+                        ps.setDouble(4, (Double.parseDouble(availableStock.getText()) - Double.parseDouble(newStock.getText())));
+                        System.out.println("downwards selected");
+
+                        break;
+
+                }
+            }else{
+                ps.setDouble(4, (Double.parseDouble(availableStock.getText()) ));
+                System.out.println("Default selected");
+            }
             ps.setString(5, descriptionTextArea.getText());
             ps.setString(6, categoryComboBox.getValue());
             ps.setString(7, oldProductName);
@@ -1056,15 +1097,15 @@ public class ProductsControllerAdmin implements Initializable {
                     categoryList.setAll(categoryResultSet.getString("categoryName"));
 
                 }
-                barcodeField.setText(resultSet.getString("barcodeField"));
-                productNameTextField.setText(resultSet.getString("productName"));
-                priceTextField.setText(resultSet.getString("salePrice"));
+                barcodeField.setText(barcode);
+                productNameTextField.setText(productName);
+                priceTextField.setText(String.valueOf(price));
                 descriptionTextArea.setText(descriptionS);
                 categoryComboBox.setItems(categoryList);
                 categoryComboBox.getSelectionModel().select(category);
 
 
-                stockTextField.setText(String.valueOf(stock));
+                availableStock.setText(String.valueOf(stock));
             }
 
         } catch (SQLException e) {
@@ -1262,6 +1303,16 @@ public class ProductsControllerAdmin implements Initializable {
                 e.printStackTrace();
             }
 
+
+        }
+    }
+
+    @FXML
+    public void setUpDownComboBox() {
+        if (upDownComboBox.getSelectionModel().getSelectedItem() == "UpWards") {
+            plusMinusLabel.setText("+");
+        } else if (upDownComboBox.getSelectionModel().getSelectedItem() == "DownWards") {
+            plusMinusLabel.setText("-");
 
         }
     }

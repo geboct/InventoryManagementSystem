@@ -156,6 +156,7 @@ public class adminBaseController implements Initializable {
         FXML_URL.put("Purchases", "/main/resources/view/purchasesManagement.fxml");
         FXML_URL.put("Accounts", "/main/resources/view/adminAccount.fxml");
         FXML_URL.put("Report", "/main/resources/view/report.fxml");
+        FXML_URL.put("Settings", "/main/resources/view/settings.fxml");
 
 
     }
@@ -333,6 +334,7 @@ public class adminBaseController implements Initializable {
             root.getStylesheets().add("/main/resources/css/login.css");
             Scene scene = new Scene(root);
             Stage logInPrompt = new Stage();
+            logInPrompt.getIcons().setAll(new Image("/images/logo.png"));
             logInPrompt.setScene(scene);
             logInPrompt.show();
 

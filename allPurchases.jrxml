@@ -78,7 +78,7 @@
 			</staticText>
 			<image>
 				<reportElement x="106" y="7" width="50" height="50" uuid="5858c0b2-b388-4201-939b-1bd399b10834"/>
-				<imageExpression><![CDATA["D:/backup/calceus .png"]]></imageExpression>
+				<imageExpression><![CDATA["D:/main.java.backup/calceus .png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="180" y="31" width="200" height="19" uuid="a6ed0fea-2d4b-494c-a01f-7007324055be"/>

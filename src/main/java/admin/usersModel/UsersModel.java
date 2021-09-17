@@ -2,13 +2,21 @@ package main.java.admin.usersModel;
 
 public class UsersModel {
     String id;
-    String name, username,role, lastLogin,status;
+    String name, username,role,phoneNumber, lastLogin,status;
 
 
     public UsersModel(String id, String name, String username, String role, String lastLogin, String status) {
         this.id = id;
         this.name = name;
         this.username = username;
+        this.role = role;
+        this.lastLogin = lastLogin;
+        this.status = status;
+    }  public UsersModel(String id, String name, String username, String phoneNumber,String role, String lastLogin, String status) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.phoneNumber=phoneNumber;
         this.role = role;
         this.lastLogin = lastLogin;
         this.status = status;
@@ -60,5 +68,13 @@ public class UsersModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

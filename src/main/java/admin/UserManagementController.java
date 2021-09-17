@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import main.java.others.DBConnection;
@@ -41,13 +42,17 @@ public class UserManagementController implements Initializable {
     @FXML
     private VBox allUsersVBox;
 
-    @FXML private TextField searchTextField;
+    @FXML
+    private TextField searchTextField;
     @FXML
     private Button addNewUserButton;
     @FXML
     private Button newUserBackButton;
     @FXML
     private Button newUserSubmitButton;
+
+    @FXML
+    private Button updateButton;
     @FXML
     private Button deleteUserButton;
     @FXML
@@ -66,6 +71,83 @@ public class UserManagementController implements Initializable {
     ObservableList<UsersModel> allUsersList = FXCollections.observableArrayList();
 
 
+    Connection connection = DBConnection.getConnection();
+    String username = "";
+
+    private void updateUserDetails() {
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `user` SET `fullName`=?,`username`=?,`phone`=?,`password`=?,`accessLevel`=?,`status`=? where username=?");
+            //   preparedStatement.setString(1, );
+            preparedStatement.setString(1, fullNameField.getText());
+            preparedStatement.setString(2, usernameField.getText());
+            if (phoneNumberField.getText().length() > 10 || phoneNumberField.getText().length() < 10) {
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("ERROR", fullNameField.getText() + " Phone Number is Incorrect", NotificationType.ERROR);
+                notification.showAndDismiss(Duration.seconds(3));
+            } else if (phoneNumberField.getText().length() == 10) {
+                preparedStatement.setString(3, phoneNumberField.getText());
+
+            }
+            preparedStatement.setString(4, "1234");
+            preparedStatement.setString(5, String.valueOf(accessLevelComboBox.getValue()));
+            preparedStatement.setString(6, String.valueOf(statusComboBox.getValue()));
+            preparedStatement.setString(7, username);
+            preparedStatement.executeUpdate();
+
+            TrayNotification notification = new TrayNotification();
+            notification.setTray("Success", fullNameField.getText() + " Updated successfully", NotificationType.SUCCESS);
+            notification.showAndDismiss(Duration.seconds(3));
+
+            fullNameField.clear();
+            usernameField.clear();
+            phoneNumberField.clear();
+            accessLevelComboBox.getSelectionModel().clearSelection();
+            statusComboBox.getSelectionModel().clearSelection();
+            allUsersVBox.setVisible(true);
+            newUserSubmitButton.setVisible(true);
+            newUserVBox.setVisible(false);
+            updateButton.setVisible(false);
+
+        } catch (SQLException e) {
+            TrayNotification notification = new TrayNotification();
+            notification.setTray("Error", "Unable to update user", NotificationType.ERROR);
+            notification.showAndDismiss(Duration.seconds(3));
+            e.printStackTrace();
+
+        }
+    }
+
+    public void editUser(MouseEvent e) {
+
+
+        if (e.getClickCount() == 2) {
+            if (usersTableView.getSelectionModel().getSelectedItem() != null) {
+                allUsersVBox.setVisible(false);
+                newUserVBox.setVisible(true);
+                fullNameField.setText(usersTableView.getSelectionModel().getSelectedItem().getName());
+                usernameField.setText(usersTableView.getSelectionModel().getSelectedItem().getUsername());
+                phoneNumberField.setText(usersTableView.getSelectionModel().getSelectedItem().getPhoneNumber());
+                accessLevelComboBox.getSelectionModel().select(usersTableView.getSelectionModel().getSelectedItem().getRole());
+                statusComboBox.getSelectionModel().select(usersTableView.getSelectionModel().getSelectedItem().getStatus());
+                username = usersTableView.getSelectionModel().getSelectedItem().getUsername();
+
+                newUserSubmitButton.setVisible(false);
+                updateButton.setVisible(true);
+
+
+            }else {
+                TrayNotification notification=new TrayNotification();
+                notification.setTray(null,"No user is Selected",NotificationType.ERROR);
+                notification.showAndDismiss(Duration.seconds(3));
+            }
+
+
+
+        }
+
+    }
+
     @FXML
     private void setDeleteUserButton() {
         if (usersTableView.getSelectionModel().getSelectedItem() == null) {
@@ -82,19 +164,13 @@ public class UserManagementController implements Initializable {
             } catch (SQLException e) {
 
                 e.printStackTrace();
-            } finally {
-                try {
-                    Objects.requireNonNull(connection).close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
         }
     }
 
 
-    @FXML
     private void setNewUserSubmitButton() {
+
 
         Connection connection = DBConnection.getConnection();
         try {
@@ -102,8 +178,10 @@ public class UserManagementController implements Initializable {
             //   preparedStatement.setString(1, );
             preparedStatement.setString(1, fullNameField.getText());
             preparedStatement.setString(2, usernameField.getText());
-            if (phoneNumberField.getText().length() > 10) {
-
+            if (phoneNumberField.getText().length() > 10 || phoneNumberField.getText().length() < 10) {
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("ERROR", fullNameField.getText() + " Phone Number is Incorrect", NotificationType.ERROR);
+                notification.showAndDismiss(Duration.seconds(3));
             } else if (phoneNumberField.getText().length() == 10) {
                 preparedStatement.setString(3, phoneNumberField.getText());
 
@@ -128,12 +206,6 @@ public class UserManagementController implements Initializable {
             notification.showAndDismiss(Duration.seconds(3));
             e.printStackTrace();
 
-        }finally {
-            try {
-                Objects.requireNonNull(connection).close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -142,6 +214,7 @@ public class UserManagementController implements Initializable {
 
         allUsersVBox.setVisible(false);
         newUserVBox.setVisible(true);
+        //newUserSubmitButton.setOnAction(e -> addNewUser());
     }
 
 
@@ -160,6 +233,7 @@ public class UserManagementController implements Initializable {
                 allUsersList.addAll(new UsersModel(resultSet.getString("userID"),
                         resultSet.getString("fullName"),
                         resultSet.getString("username"),
+                        resultSet.getString("phone"),
                         resultSet.getString("accessLevel"),
                         resultSet.getString("lastLogin"),
                         resultSet.getString("status")));
@@ -171,41 +245,32 @@ public class UserManagementController implements Initializable {
             notification.setTray("Error", "Unable to load users", NotificationType.ERROR);
             notification.showAndDismiss(Duration.seconds(3));
             /// e.printStackTrace();
-        } finally {
-
-            try {
-                Objects.requireNonNull(connection).close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
         }
     }
 
     @FXML
-    public void onUserSearch(){
+    public void onUserSearch() {
 
 
+        FilteredList<UsersModel> searchedData = new FilteredList<>(allUsersList, e -> true);
 
-            FilteredList<UsersModel> searchedData = new FilteredList<>(allUsersList, e -> true);
-
-            searchTextField.setOnKeyReleased(e -> {
-                searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    searchedData.setPredicate(product -> {
-                        if (newValue == null || newValue.isEmpty()) {
-                            return true;
-                        }
-                        String lowerCaseFilter = newValue.toLowerCase();
-                        if (product.getName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true;
-                        } else return product.getName().toLowerCase().contains(lowerCaseFilter);
-                    });
+        searchTextField.setOnKeyReleased(e -> {
+            searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                searchedData.setPredicate(product -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (product.getName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else return product.getName().toLowerCase().contains(lowerCaseFilter);
                 });
-
-                SortedList<UsersModel> sortedData = new SortedList<>(searchedData);
-                sortedData.comparatorProperty().bind(usersTableView.comparatorProperty());
-                usersTableView.setItems(sortedData);
             });
+
+            SortedList<UsersModel> sortedData = new SortedList<>(searchedData);
+            sortedData.comparatorProperty().bind(usersTableView.comparatorProperty());
+            usersTableView.setItems(sortedData);
+        });
 
     }
 
@@ -225,13 +290,20 @@ public class UserManagementController implements Initializable {
         ObservableList<String> statuses = FXCollections.observableArrayList("Active", "Deactive");
         statusComboBox.setItems(statuses);
 
-
+        usersTableView.setTooltip(new Tooltip("Double click to edit user"));
         selectAllUsers();
         addNewUserButton.setOnAction(e -> addNewUser());
         newUserBackButton.setOnAction(e -> {
             allUsersVBox.setVisible(true);
             newUserVBox.setVisible(false);
             selectAllUsers();
+        });
+
+        newUserSubmitButton.setOnAction(ee -> setNewUserSubmitButton());
+        updateButton.setOnAction(e -> updateUserDetails());
+        usersTableView.setOnMouseClicked(e -> {
+            editUser(e);
+
         });
 
     }

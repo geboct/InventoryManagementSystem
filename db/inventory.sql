@@ -27,6 +27,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `accounts`
 --
 
+CREATE DATABASE [IF NOT EXISTS] inventory;
+USE inventory;
+
 CREATE TABLE `accounts` (
   `acccountID` int(11) NOT NULL,
   `accountName` varchar(45) NOT NULL,

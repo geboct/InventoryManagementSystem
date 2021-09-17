@@ -63,14 +63,16 @@ public class PurchaseModel {
 
     }
 
-    public PurchaseModel(String barcode, String productName, double stock, double purchasedPrice, double sellingPrice, Date date,String description, String category, String companyName, String employeeName ) {
+
+
+    public PurchaseModel(String barcode, String productName, double purchasedPrice, double quantity, double total, String date,String description, String category, String companyName, String employeeName ) {
 
         this.barcode = barcode;
         this.productName = productName;
         this.purchasedPrice=purchasedPrice;
-        this.sellingPrice = sellingPrice;
-        this.quantity = stock;
-        this.dateAdded = date;
+        this.total=total;
+        this.quantity = quantity;
+        this.dateTime = date;
         this.companyName = companyName;
         this.employeeName = employeeName;
         this.description=description;

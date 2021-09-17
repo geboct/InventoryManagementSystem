@@ -28,11 +28,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import main.java.admin.SalesModel.SalesModel;
 import main.java.admin.purchaseModel.PurchaseModel;
 import main.java.controllers.LogInController;
 import main.java.controllers.PromptDialogController;
-import main.java.entity.Purchases;
 import main.java.others.DBConnection;
 import main.java.others.Item;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -59,15 +57,48 @@ import java.util.ResourceBundle;
 
 public class PurchasesManagementController implements Initializable {
 
+
+    @FXML
+    private AnchorPane updatePurchasesPane;
+    @FXML
+    private JFXTextField updateBarcodeField;
+
+    @FXML
+    private JFXTextField updateProductNameTextField;
+
+    @FXML
+    private JFXTextField updateSellingPriceTextField;
+
+    @FXML
+    private JFXTextField updatePurchasedPriceTextField;
+
+    @FXML
+    private TextArea updateDescriptionTextArea1;
+
+    @FXML
+    private JFXComboBox<String> updateCategoryComboBox;
+
+
+    @FXML
+    private JFXTextField updatenewQuantityField, availableQuantity;
+
+    @FXML
+    private JFXTextField upDateCompanyTextField, newQuantityField;
+    @FXML
+    private FontAwesomeIconView backToPurchasesManagement;
+
     @FXML
     private VBox allPurchasesVBox;
     @FXML
     private Button newPurchaseButton;
     @FXML
+    private Button updatePurchaseButton;
+    @FXML
     private Button deletePurchasesbutton;
     @FXML
     private Button addNewCategoryButton;
-
+    @FXML
+    private ComboBox<String> upDownWardsComboBox;
     @FXML
     private TableView<PurchaseModel> purchasesTableView;
     @FXML
@@ -111,8 +142,7 @@ public class PurchasesManagementController implements Initializable {
 
     @FXML
     private TextArea descriptionTextArea;
-    @FXML
-    private JFXTextField stockTextField;
+
     @FXML
     private JFXTextField sellingPriceTextField;
     @FXML
@@ -127,6 +157,8 @@ public class PurchasesManagementController implements Initializable {
     @FXML
     private JFXButton newProduct;
 
+    @FXML
+    private Label plusMinusLabel;
     @FXML
     private JFXButton btnListAll;
     @FXML
@@ -199,15 +231,85 @@ public class PurchasesManagementController implements Initializable {
     ObservableList<PurchaseModel> searchWithName = FXCollections.observableArrayList();
     ObservableList<PurchaseModel> listOfPurchases = FXCollections.observableArrayList();
     ObservableList<PurchaseModel> addToCartItems = FXCollections.observableArrayList();
+    ObservableList<String> listOfCategories = FXCollections.observableArrayList();
 
 
     String oldProductName;
+    String selectedProductName, selectedBarcode;
 
+    @FXML
+    public void setBackToPurchasesManagement() {
+
+
+        updatePurchasesPane.setVisible(false);
+        allPurchasesVBox.setVisible(true);
+
+    }
+
+    public void updatePurchases() {
+
+        UpdateEditableFields();
+        double sellingPrice = 0.00;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from products where productName=?");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("select * from categories");
+            preparedStatement.setString(1, oldProductName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet.next()) {
+                sellingPrice = resultSet.getDouble("salePrice");
+            }
+            while (resultSet1.next()) {
+                listOfCategories.addAll(resultSet1.getString("categoryName"));
+                System.out.println(listOfCategories);
+            }
+            updateCategoryComboBox.getItems().setAll(listOfCategories);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        if (purchasesTableView.getSelectionModel().getSelectedItem() != null) {
+            updateBarcodeField.setText(purchasesTableView.getSelectionModel().getSelectedItem().getBarcode());
+            selectedBarcode = purchasesTableView.getSelectionModel().getSelectedItem().getBarcode();
+            updateProductNameTextField.setText(purchasesTableView.getSelectionModel().getSelectedItem().getProductName());
+            selectedProductName = purchasesTableView.getSelectionModel().getSelectedItem().getProductName();
+            updateSellingPriceTextField.setText(String.valueOf(sellingPrice));
+            updatePurchasedPriceTextField.setText(purchasesTableView.getSelectionModel().getSelectedItem().getPurchasedPrice().toString());
+            updateDescriptionTextArea1.setText(purchasesTableView.getSelectionModel().getSelectedItem().getDescription());
+            updateCategoryComboBox.getSelectionModel().select(purchasesTableView.getSelectionModel().getSelectedItem().getCategory());
+
+            availableQuantity.setText(purchasesTableView.getSelectionModel().getSelectedItem().getQuantity().toString());
+            upDateCompanyTextField.setText(purchasesTableView.getSelectionModel().getSelectedItem().getCompanyName());
+            posPane.setVisible(false);
+            updatePurchasesPane.setVisible(true);
+            allPurchasesVBox.setVisible(false);
+        }
+    }
+
+    private void UpdateEditableFields() {
+        updateBarcodeField.setText("");
+        updateBarcodeField.setEditable(true);
+        updateProductNameTextField.setEditable(true);
+        updateProductNameTextField.setText("");
+        updatePurchasedPriceTextField.setText("");
+        updatePurchasedPriceTextField.setEditable(true);
+        updateSellingPriceTextField.setEditable(true);
+        updateSellingPriceTextField.setText("");
+        availableQuantity.setEditable(true);
+        availableQuantity.setText("");
+        updateDescriptionTextArea1.setEditable(true);
+        updateDescriptionTextArea1.setText("");
+        updateCategoryComboBox.getItems().clear();
+        upDateCompanyTextField.setText("");
+        upDateCompanyTextField.setEditable(true);
+    }
 
     @FXML
     private void setNewPurchaseButton() {
+
         posPane.setVisible(true);
         allPurchasesVBox.setVisible(false);
+        updatePurchasesPane.setVisible(false);
         initializeCartTableView();
         editableFields();
 
@@ -215,9 +317,87 @@ public class PurchasesManagementController implements Initializable {
     }
 
     @FXML
+    public void setUpdatePurchaseButton() {
+        double totalQuantity = 0;
+        try {
+
+            ///inserting purchases items into purchases database
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `purchases` SET " +
+                    "`invoiceNumber`=?,`barcode`=?,`productName`=?,`quantity`=?," +
+                    "`purchasedPrice`=?,`total`=?,`date`=?,`description`=?,`category`=?," +
+                    "`employeeName`=?,`companyName`=? where  productName=?");
+            preparedStatement.setString(1, "");//invoice number
+            preparedStatement.setString(2, updateBarcodeField.getText());//barcode of product
+            preparedStatement.setString(3, upDateCompanyTextField.getText());//name of product
+            if (upDownWardsComboBox.getSelectionModel().getSelectedItem() != null) {
+                switch (upDownWardsComboBox.getSelectionModel().getSelectedItem()) {
+                    case "UpWards":
+                        preparedStatement.setDouble(4, (Double.parseDouble(availableQuantity.getText()) + Double.parseDouble(newQuantityField.getText())));
+                        totalQuantity = (Double.parseDouble(availableQuantity.getText()) + Double.parseDouble(newQuantityField.getText()));
+                        System.out.println("upwards selected");
+                        break;
+                    case "DownWards":
+                        preparedStatement.setDouble(4, (Double.parseDouble(availableQuantity.getText()) - Double.parseDouble(newQuantityField.getText())));
+                        totalQuantity = (Double.parseDouble(availableQuantity.getText()) - Double.parseDouble(newQuantityField.getText()));
+
+                        System.out.println("downwards selected");
+
+                        break;
+
+                }
+            } else {
+                preparedStatement.setDouble(4, (Double.parseDouble(availableQuantity.getText())));
+                totalQuantity = (Double.parseDouble(availableQuantity.getText()));
+
+                System.out.println("Default selected");
+            }
+            preparedStatement.setDouble(5, Double.valueOf(updatePurchasedPriceTextField.getText()));//purchased price
+            preparedStatement.setDouble(6, (totalQuantity * Double.valueOf(updatePurchasedPriceTextField.getText())));//total
+            preparedStatement.setString(7, String.valueOf(LocalDateTime.now()));//date of entering product into system
+            preparedStatement.setString(8, upDateCompanyTextField.getText());//company producty was bought from
+            preparedStatement.setString(9, LogInController.loggerUsername);//username of the logged in user since he or she entered the poduct into the system
+            preparedStatement.setString(10, updateDescriptionTextArea1.getText());//description of product
+            preparedStatement.setString(11, updateCategoryComboBox.getValue());//category of product
+            preparedStatement.setString(12, selectedProductName);
+
+            //inserting purchased items into products database
+            PreparedStatement ps = connection.prepareStatement("update products set barcodeField=?, productName=?, description=?, stock=?, salePrice=?, purchasedPrice=?,category=?,dateAdded=? where productName=?");
+
+            ps.setString(1, updateBarcodeField.getText());
+            ps.setString(2, updateProductNameTextField.getText());
+            ps.setString(3, updateDescriptionTextArea1.getText());
+            ps.setDouble(4, totalQuantity);
+            ps.setDouble(5, Double.parseDouble(updateSellingPriceTextField.getText()));
+            ps.setDouble(6, Double.parseDouble(updatePurchasedPriceTextField.getText()));
+            ps.setString(7, updateCategoryComboBox.getValue());
+            ps.setDate(8, java.sql.Date.valueOf(LocalDate.now()));
+            ps.setString(9, selectedProductName);
+
+            preparedStatement.executeUpdate();
+            ps.executeUpdate();
+            selectAllPurchases();
+            updatePurchasesPane.setVisible(false);
+            allPurchasesVBox.setVisible(true);
+            UpdateEditableFields();
+
+
+            TrayNotification notification = new TrayNotification();
+            notification.setTray(" Product update", "Successfully  updated", NotificationType.SUCCESS);
+            notification.showAndDismiss(Duration.seconds(4));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // new PromptDialogController("SQL Error!", "Error occured while executing Query.\nSQL Error Code: " + e.getErrorCode());
+        }
+    }
+
+    @FXML
     private void setBackButton() {
         posPane.setVisible(false);
+        updatePurchasesPane.setVisible(false);
         allPurchasesVBox.setVisible(true);
+
         unEditableFields();
         selectAllPurchases();
     }
@@ -239,6 +419,8 @@ public class PurchasesManagementController implements Initializable {
                         resultSet.getDouble("quantity"),
                         resultSet.getDouble("total"),
                         resultSet.getString("date"),
+                        resultSet.getString("description"),
+                        resultSet.getString("category"),
                         resultSet.getString("companyName"),
                         resultSet.getString("employeeName")));
             }
@@ -253,37 +435,30 @@ public class PurchasesManagementController implements Initializable {
     }
 
 
-    public void searchPurchases(){
+    public void searchPurchases() {
 
 
-            FilteredList<PurchaseModel> searchedData = new FilteredList<>(listOfPurchases, e -> true);
+        FilteredList<PurchaseModel> searchedData = new FilteredList<>(listOfPurchases, e -> true);
 
-            searchTextField.setOnKeyReleased(e -> {
-                searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    searchedData.setPredicate(product -> {
-                        if (newValue == null || newValue.isEmpty()) {
-                            return true;
-                        }
-                        String lowerCaseFilter = newValue.toLowerCase();
-                        if (product.getProductName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true;
-                        } else return product.getProductName().toLowerCase().contains(lowerCaseFilter);
-                    });
+        searchTextField.setOnKeyReleased(e -> {
+            searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                searchedData.setPredicate(product -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (product.getProductName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else return product.getProductName().toLowerCase().contains(lowerCaseFilter);
                 });
-
-                SortedList<PurchaseModel> sortedData = new SortedList<>(searchedData);
-                sortedData.comparatorProperty().bind(purchasesTableView.comparatorProperty());
-                purchasesTableView.setItems(sortedData);
             });
 
+            SortedList<PurchaseModel> sortedData = new SortedList<>(searchedData);
+            sortedData.comparatorProperty().bind(purchasesTableView.comparatorProperty());
+            purchasesTableView.setItems(sortedData);
+        });
+
     }
-
-
-
-
-
-
-
 
 
     @Override
@@ -298,7 +473,15 @@ public class PurchasesManagementController implements Initializable {
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         employeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         initializeCartTableView();
-        removeButton.setOnAction(e->setRemoveProduct());
+        removeButton.setOnAction(e -> setRemoveProduct());
+        purchasesTableView.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                oldProductName = purchasesTableView.getSelectionModel().getSelectedItem().getProductName();
+                updatePurchases();
+            } else {
+
+            }
+        });
 
 
         selectAllPurchases();
@@ -389,7 +572,7 @@ public class PurchasesManagementController implements Initializable {
             barcodeField.setText(barcode);
             productNameTextField.setText(productName);
             sellingPriceTextField.setText(String.valueOf(salePrice));
-            stockTextField.setText(String.valueOf(stock));
+            availableQuantity.setText(String.valueOf(stock));
             categoryComboBox.getSelectionModel().select(category);
             descriptionTextArea.setText(description);
 
@@ -398,7 +581,7 @@ public class PurchasesManagementController implements Initializable {
 
             productNameTextField.setText("");
             sellingPriceTextField.setText(String.valueOf(""));
-            stockTextField.setText(String.valueOf(""));
+            availableQuantity.setText(String.valueOf(""));
             categoryComboBox.getSelectionModel().clearSelection();
             descriptionTextArea.setText("");
 
@@ -423,8 +606,6 @@ public class PurchasesManagementController implements Initializable {
         productNameTextField.setText("");
         sellingPriceTextField.setEditable(false);
         sellingPriceTextField.setText("");
-        stockTextField.setEditable(false);
-        stockTextField.setText("");
         descriptionTextArea.setEditable(false);
         descriptionTextArea.setText("");
         categoryComboBox.getItems().clear();
@@ -443,8 +624,8 @@ public class PurchasesManagementController implements Initializable {
         purchasedPriceTextField.setEditable(true);
         sellingPriceTextField.setEditable(true);
         sellingPriceTextField.setText("");
-        stockTextField.setEditable(true);
-        stockTextField.setText("");
+        newQuantityField.setEditable(true);
+        newQuantityField.setText("");
         descriptionTextArea.setEditable(true);
         descriptionTextArea.setText("");
         categoryComboBox.getItems().clear();
@@ -537,7 +718,7 @@ public class PurchasesManagementController implements Initializable {
 
     //This method will set navigate between Items
     private void recordNavigator() {
-        stockTextField.setStyle("-fx-text-fill: #263238"); //Resetting stock color
+        newQuantityField.setStyle("-fx-text-fill: #263238"); //Resetting stock color
 
 
         barcodeField.setText(onView.getBarcode());
@@ -546,10 +727,10 @@ public class PurchasesManagementController implements Initializable {
         descriptionTextArea.setText(onView.getDescription());
         categoryComboBox.getItems().setAll(onView.getCategory());
         categoryComboBox.getSelectionModel().select(0);
-        stockTextField.setText(Double.toString(onView.getStock()));
+        newQuantityField.setText(Double.toString(onView.getStock()));
 
         if (onView.getStock() <= 5) //Setting stock color red if it's very limited
-            stockTextField.setStyle("-fx-text-fill: red");
+            newQuantityField.setStyle("-fx-text-fill: red");
 
 
     }
@@ -575,7 +756,7 @@ public class PurchasesManagementController implements Initializable {
                 barcodeField.setEditable(true);
                 productNameTextField.setEditable(true);
                 sellingPriceTextField.setEditable(true);
-                stockTextField.setEditable(true);
+                newQuantityField.setEditable(true);
                 descriptionTextArea.setEditable(true);
                 categoryComboBox.getItems().setAll(list);
             } catch (SQLException e) {
@@ -596,39 +777,38 @@ public class PurchasesManagementController implements Initializable {
     public void setRemoveProduct() {
         Connection connection = DBConnection.getConnection();
 
-                    String product=cartTableview.getSelectionModel().getSelectedItem().getProductName();
 
-            try {
+        try {
+            String product = cartTableview.getSelectionModel().getSelectedItem().getProductName();
 
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from purchasescart where productName=?");
-                preparedStatement.setString(1, product);
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from purchasescart where productName=?");
+            preparedStatement.setString(1, product);
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirm Delete");
-                alert.setGraphic(new ImageView(this.getClass().getResource("/main/resources/icons/x-button.png").toString()));
-                alert.setHeaderText("Do you really want to remove ?\n" + product);
-                alert.setContentText("Press OK to confirm, Cancel to go back");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Delete");
+            alert.setGraphic(new ImageView(this.getClass().getResource("/main/resources/icons/x-button.png").toString()));
+            alert.setHeaderText("Do you really want to remove ?\n" + product);
+            alert.setContentText("Press OK to confirm, Cancel to go back");
 
-                Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = alert.showAndWait();
 
-                if (result.get() == ButtonType.OK) {
-                    preparedStatement.executeUpdate();
-                    getItemsFromPurchasesCartDb();
-                    TrayNotification notification=new TrayNotification();
-                    notification.setTray("","has been deleted Successfully",NotificationType.ERROR);
-                    notification.showAndDismiss(Duration.seconds(3));
-                   // new PromptDialogController("Operation Successful!", product + " has been deleted Successfully");
-                }
-
-
-            } catch (SQLException e) {
-                TrayNotification notification=new TrayNotification();
-                notification.setTray("","Can't delete",NotificationType.ERROR);
+            if (result.get() == ButtonType.OK) {
+                preparedStatement.executeUpdate();
+                getItemsFromPurchasesCartDb();
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("", "has been deleted Successfully", NotificationType.ERROR);
                 notification.showAndDismiss(Duration.seconds(3));
-               // new PromptDialogController("Can't delete", e.getMessage());
-                e.printStackTrace();
+                // new PromptDialogController("Operation Successful!", product + " has been deleted Successfully");
             }
 
+
+        } catch (SQLException | NullPointerException e) {
+            TrayNotification notification = new TrayNotification();
+            notification.setTray("", "Can't delete", NotificationType.ERROR);
+            notification.showAndDismiss(Duration.seconds(3));
+            // new PromptDialogController("Can't delete", e.getMessage());
+            e.printStackTrace();
+        }
 
 
     }
@@ -700,7 +880,7 @@ public class PurchasesManagementController implements Initializable {
             sellingPriceTextField.setUnFocusColor(Color.web(defColor));
             categoryComboBox.setUnFocusColor(Color.web(defColor));
             txtSearch.setUnFocusColor(Color.web(defColor));
-            stockTextField.setUnFocusColor(Color.web(defColor));
+            newQuantityField.setUnFocusColor(Color.web(defColor));
 
             reloadRecords();
 
@@ -734,7 +914,7 @@ public class PurchasesManagementController implements Initializable {
                 productNameTextField.setText("");
                 categoryComboBox.setValue("");
                 sellingPriceTextField.setText("");
-                stockTextField.setText("");
+                newQuantityField.setText("");
             } catch (SQLException e) {
                 e.printStackTrace();
                 new PromptDialogController("SQL Error!", "Error occured while executing Query.\nSQL Error Code: " + e.getErrorCode());
@@ -888,8 +1068,8 @@ public class PurchasesManagementController implements Initializable {
 
         }
 
-        if (stockTextField.getText().equals("")) {
-            stockTextField.setUnFocusColor(Color.web("red"));
+        if (newQuantityField.getText().equals("")) {
+            newQuantityField.setUnFocusColor(Color.web("red"));
             entryFlag = false;
 
         }
@@ -921,8 +1101,8 @@ public class PurchasesManagementController implements Initializable {
 
         }
 
-        if (event.getSource() == stockTextField) {
-            stockTextField.setUnFocusColor(Color.web("#263238"));
+        if (event.getSource() == newQuantityField) {
+            newQuantityField.setUnFocusColor(Color.web("#263238"));
 
 
         }
@@ -1025,7 +1205,7 @@ public class PurchasesManagementController implements Initializable {
                 preparedStatement.setString(1, "");
                 preparedStatement.setString(2, barcodeField.getText());
                 preparedStatement.setString(3, productNameTextField.getText());
-                preparedStatement.setDouble(4, Double.valueOf(stockTextField.getText()));
+                preparedStatement.setDouble(4, Double.valueOf(newQuantityField.getText()));
                 preparedStatement.setDouble(5, Double.valueOf(purchasedPriceTextField.getText()));
                 preparedStatement.setDouble(6, (itemsInCart.getQuantity() * itemsInCart.getPurchasedPrice()));
                 preparedStatement.setString(7, String.valueOf(LocalDateTime.now()));
@@ -1083,8 +1263,8 @@ public class PurchasesManagementController implements Initializable {
                 preparedStatement.setString(2, barcodeField.getText());
             }
             preparedStatement.setString(3, productNameTextField.getText());
-            if (validateStock(String.valueOf(stockTextField.getText()))) {
-                preparedStatement.setDouble(4, Double.valueOf(stockTextField.getText()));
+            if (validateStock(String.valueOf(newQuantityField.getText()))) {
+                preparedStatement.setDouble(4, Double.valueOf(newQuantityField.getText()));
             }
             if (validatePurchasedPrice(purchasedPriceTextField.getText())) {
                 preparedStatement.setDouble(5, Double.valueOf(purchasedPriceTextField.getText()));
@@ -1115,7 +1295,7 @@ public class PurchasesManagementController implements Initializable {
             addToCartItems.clear();
             while (resultSet.next()) {
                 addToCartItems.addAll(new PurchaseModel(resultSet.getString("barcode"), resultSet.getString("productName"), resultSet.getDouble("quantity"),
-                        resultSet.getDouble("purchasedPrice"), resultSet.getDouble("sellingPrice"), resultSet.getDate("date"), resultSet.getString("description"), resultSet.getString("category"), resultSet.getString("companyName"),
+                        resultSet.getDouble("purchasedPrice"), resultSet.getDouble("sellingPrice"), resultSet.getString("date"), resultSet.getString("description"), resultSet.getString("category"), resultSet.getString("companyName"),
                         resultSet.getString("employeeName")));
             }
             cartTableview.setItems(addToCartItems);
@@ -1218,7 +1398,7 @@ public class PurchasesManagementController implements Initializable {
                 categoryComboBox.getSelectionModel().select(category);
 
 
-                stockTextField.setText(String.valueOf(stock));
+                newQuantityField.setText(String.valueOf(stock));
             }
 
         } catch (SQLException e) {
@@ -1451,7 +1631,18 @@ public class PurchasesManagementController implements Initializable {
         cartPriceColumn.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
         cartStockColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         getItemsFromPurchasesCartDb();
-        searchTextField.setOnKeyReleased(e->searchPurchases());
+        searchTextField.setOnKeyReleased(e -> searchPurchases());
+        upDownWardsComboBox.getItems().setAll("UpWards", "DownWards");
+        upDownWardsComboBox.setOnAction(e -> {
+            switch (upDownWardsComboBox.getSelectionModel().getSelectedItem()) {
+                case "UpWards":
+                    plusMinusLabel.setText("+");
+                    break;
+                case "DownWards":
+                    plusMinusLabel.setText("-");
+                    break;
+            }
+        });
 
     }
 

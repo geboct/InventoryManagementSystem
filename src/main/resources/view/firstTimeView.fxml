@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.FirstTimeViewController">
+   <children>
+      <AnchorPane fx:id="firstScreenPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2f92d0;">
+         <children>
+            <ImageView fitHeight="217.0" fitWidth="536.0" layoutX="45.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/Inventory-management-system-objectives.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="57.0" layoutY="12.0" text="BIMS " textFill="WHITE">
+               <font>
+                  <Font name="Bradley Hand ITC" size="41.0" />
+               </font>
+            </Label>
+            <Label layoutX="73.0" layoutY="285.0" text=" the entire supply chain, from purchasing to end sales. " textFill="WHITE">
+               <font>
+                  <Font name="Bookman Old Style" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="85.0" layoutY="245.0" text="BIMS has been developed to track your goods throughout" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="skip" layoutX="29.0" layoutY="353.0" text="skip" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="next" layoutX="526.0" layoutY="362.0" text="Next&gt;&gt;" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="secondScreenPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2f92d0;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="next1" layoutX="526.0" layoutY="362.0" text="Next&gt;&gt;" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="110.0" layoutY="278.0" text="Visite " textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="websiteLink" layoutX="145.0" layoutY="274.0" text="https://www.inventory.brilsinnovation.com" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Hyperlink>
+            <Label layoutX="415.0" layoutY="278.0" text="for more info." textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="262.0" fitWidth="419.0" layoutX="90.0" layoutY="9.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../images/inventory2.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="back" layoutX="41.0" layoutY="362.0" text="&lt;&lt;Back" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
