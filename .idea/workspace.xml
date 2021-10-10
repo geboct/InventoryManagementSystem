@@ -24,25 +24,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation">
-      <change afterPath="$PROJECT_DIR$/src/main/java/admin/PurchasesInvoiceGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/admin/SalesInvoiceGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/admin/ample.java" afterDir="false" />
+    <list default="true" id="954e2153-9f4a-4c41-9ea2-0e030d2d2e3a" name="Default Changelist" comment="worked on returns">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back.sql" beforeDir="false" afterPath="$PROJECT_DIR$/back.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net amount" beforeDir="false" afterPath="$PROJECT_DIR$/net amount" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/admin/ProductsControllerAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/ProductsControllerAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/admin/PurchasesManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/PurchasesManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/admin/SalesManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/SalesManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/admin/SalesModel/SalesModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/SalesModel/SalesModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/admin/purchaseModel/PurchaseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/admin/purchaseModel/PurchaseModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backup/Backup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backup/Backup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CheckoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/CheckoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/checkout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/checkout.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/purchasesManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/purchasesManagement.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/salesManagement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/salesManagement.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +155,7 @@
       <workItem from="1633099380321" duration="19531000" />
       <workItem from="1633334155785" duration="5404000" />
       <workItem from="1633353966722" duration="1403000" />
-      <workItem from="1633780424480" duration="15408000" />
+      <workItem from="1633780424480" duration="16563000" />
     </task>
     <task id="LOCAL-00001" summary="re-added jar files&#10;removed dist folder">
       <created>1630426974090</created>
@@ -222,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631860732559</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="worked on returns">
+      <created>1633844318622</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1633844318623</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +238,7 @@
     <MESSAGE value="added some fxml file for purchases" />
     <MESSAGE value="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation&#10;2.Adding auditors section" />
     <MESSAGE value="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed the full system&#10;Hoping to add some functions like&#10;1. detecting first time installation" />
+    <MESSAGE value="worked on returns" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on returns" />
   </component>
 </project>

@@ -1246,6 +1246,9 @@ public class SalesManagementController implements Initializable {
 public void submitReturnedProducts(){
     //add the products the user is returning into the database
     //delete that particular sale from the sales table
+/**
+ * TODO: add date of returns
+ */
 
     try{
         PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO `returns`(`" +
@@ -1368,6 +1371,7 @@ public void submitReturnedProducts(){
         faultyRadioButton.setOnAction(e -> toggleActions(e));
         notNeededRadioButton.setOnAction(e -> toggleActions(e));
         wrongProductRadioButton.setOnAction(e -> toggleActions(e));
+        subMitReturnsButton.setOnAction(e->submitReturnedProducts());
 
 
     }
