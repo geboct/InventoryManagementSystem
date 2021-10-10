@@ -4,17 +4,20 @@ import java.sql.Date;
 
 public class PurchaseModel {
 
-    String barcode,productName,category,description;
-    Double sellingPrice,purchasedPrice,quantity,total;
-    String dateTime;
-    Date dateAdded;
-    String companyName,employeeName;
+    String invoiceNumber,barcode, productName, category, description;
+    Double sellingPrice, purchasedPrice, quantity, total;
+    Date dateTime;
+    String companyName, employeeName;
 
 
-    public PurchaseModel(String barcode, String productName, Double sellingPrice, Double quantity, Double total, String dateTime, String companyName, String employeeName) {
+    public PurchaseModel(String invoiceNumber, String barcode, String productName, Double sellingPrice, Double purchasedPrice, Double quantity, Double total,String category, String description,  Date dateTime, String companyName, String employeeName) {
+        this.invoiceNumber = invoiceNumber;
         this.barcode = barcode;
         this.productName = productName;
+        this.category = category;
+        this.description = description;
         this.sellingPrice = sellingPrice;
+        this.purchasedPrice = purchasedPrice;
         this.quantity = quantity;
         this.total = total;
         this.dateTime = dateTime;
@@ -22,64 +25,44 @@ public class PurchaseModel {
         this.employeeName = employeeName;
     }
 
-    public PurchaseModel(String barcodeField, String productName, double salePrice, double purchasedPrice, double stock, String category, String description, Date dateAdded) {
-
-        this.barcode = barcodeField;
-        this.productName = productName;
-        this.sellingPrice = salePrice;
+    public PurchaseModel(String barcode, String productName, double purchasedPrice, double sellingPrice, double quantity, Date date, String description, String category, String companyName, String employeeName) {
+        this.barcode=barcode;
+        this.productName=productName;
         this.purchasedPrice=purchasedPrice;
-        this.quantity = stock;
-        this.category = category;
-        this.description = description;
-        this.dateAdded = dateAdded;
-
-
-    }
-
-    public PurchaseModel(String barcodeField, String productName, double purchasedPrice, double stock, double total,String date,String companyName, String employeeName) {
-
-        this.barcode = barcodeField;
-        this.productName = productName;
-        this.purchasedPrice=purchasedPrice;
-        this.quantity = stock;
-        this.total=total;
+        this.sellingPrice=sellingPrice;
+        this.quantity=quantity;
         this.dateTime=date;
-        this.companyName = companyName;
-        this.employeeName = employeeName;
-
-
-    }
-
-    public PurchaseModel(String barcodeField, String productName, double salePrice, double purchasedPrice, double stock, String category, String description) {
-
-        this.barcode = barcodeField;
-        this.productName = productName;
-        this.sellingPrice = salePrice;
-        this.purchasedPrice=purchasedPrice;
-        this.quantity = stock;
-        this.category = category;
-        this.description = description;
-
-
-    }
-
-
-
-    public PurchaseModel(String barcode, String productName, double purchasedPrice, double quantity, double total, String date,String description, String category, String companyName, String employeeName ) {
-
-        this.barcode = barcode;
-        this.productName = productName;
-        this.purchasedPrice=purchasedPrice;
-        this.total=total;
-        this.quantity = quantity;
-        this.dateTime = date;
-        this.companyName = companyName;
-        this.employeeName = employeeName;
         this.description=description;
         this.category=category;
+        this.companyName=companyName;
+        this.employeeName=employeeName;
+    }
+
+    public PurchaseModel(String invoiceNumber, String barcode, String productName, double purchasedPrice, double sellingPrice, double quantity, Date date, String description, String category, String companyName, String employeeName) {
+       this.invoiceNumber=invoiceNumber;
+        this.barcode=barcode;
+        this.productName=productName;
+        this.purchasedPrice=purchasedPrice;
+        this.sellingPrice=sellingPrice;
+        this.quantity=quantity;
+        this.dateTime=date;
+        this.description=description;
+        this.category=category;
+        this.companyName=companyName;
+        this.employeeName=employeeName;
+    }
+
+    public PurchaseModel() {
 
     }
 
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
 
     public String getBarcode() {
         return barcode;
@@ -95,54 +78,6 @@ public class PurchaseModel {
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public Double getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
     }
 
     public String getCategory() {
@@ -161,6 +96,14 @@ public class PurchaseModel {
         this.description = description;
     }
 
+    public Double getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(Double sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
     public Double getPurchasedPrice() {
         return purchasedPrice;
     }
@@ -169,12 +112,43 @@ public class PurchaseModel {
         this.purchasedPrice = purchasedPrice;
     }
 
-    public Date getDateAdded() {
-        return dateAdded;
+    public Double getQuantity() {
+        return quantity;
     }
 
-    public void setDateAdded(Date dateAdded) {
-        this.dateAdded = dateAdded;
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 }

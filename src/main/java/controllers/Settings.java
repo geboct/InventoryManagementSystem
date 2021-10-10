@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -128,9 +129,16 @@ public class Settings implements Initializable {
 
     }
 
-    public void backingUp() {
-        Thread thread = new Thread(backup);
-        thread.start();
+    public boolean backingUp() {
+       try{
+           Thread thread = new Thread(backup);
+           thread.start();
+           return true;
+       }catch (Exception e){
+           e.printStackTrace();
+           return false;
+       }
+
 
 
     }
@@ -167,12 +175,15 @@ public class Settings implements Initializable {
 
 
             try {
-                backingUp();
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `companyinfo`(`lastBackUpTime`) VALUES (?)");
-                preparedStatement.setDate(1, Date.valueOf(String.valueOf(LocalDateTime.now())));
-                TrayNotification notification=new TrayNotification();
-                notification.setTray("Backup","Backup Successful",NotificationType.SUCCESS);
-                notification.showAndDismiss(Duration.seconds(3));
+                if (backingUp()){
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `companyinfo`(`lastBackUpTime`) VALUES (?)");
+                    preparedStatement.setDate(1, Date.valueOf(LocalDate.now()));
+                    TrayNotification notification=new TrayNotification();
+                    notification.setTray("Backup","Backup Successful",NotificationType.SUCCESS);
+                    notification.showAndDismiss(Duration.seconds(3));
+                }
+
+
             } catch (Exception e1) {
                 e1.printStackTrace();
             }

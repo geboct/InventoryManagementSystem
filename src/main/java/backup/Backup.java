@@ -43,7 +43,7 @@ public class Backup {
                         int processComplete = runtimeProcess.waitFor();
 
                         if (processComplete == 0) {
-
+                            progress += 1;
                             System.out.println("Backup created successfully");
 
                         } else {
@@ -53,7 +53,7 @@ public class Backup {
                     } catch (IOException | InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                    progress += 0.1;
+
                     final double reportedProgress = progress;
                     Platform.runLater(new Runnable() {
                         @Override

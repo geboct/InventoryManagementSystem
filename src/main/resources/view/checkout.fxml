@@ -89,7 +89,7 @@
          <children>
             <AnchorPane prefHeight="184.0" prefWidth="218.0" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXButton fx:id="makePaymentButton" buttonType="RAISED" layoutX="5.0" layoutY="11.0" prefHeight="75.0" prefWidth="192.0" ripplerFill="#292bbf" style="-fx-border-color: white; -fx-border-radius: 50; -fx-background-radius: 50; -fx-background-color: ;" text="Make Payment" textFill="WHITE" AnchorPane.leftAnchor="5.0">
+                  <JFXButton fx:id="makePaymentButton" buttonType="RAISED" layoutX="5.0" layoutY="11.0" prefHeight="75.0" prefWidth="192.0" ripplerFill="#292bbf" style="-fx-border-color: white; -fx-border-radius: 50; -fx-background-radius: 50; -fx-background-color:darkblue ;" text="Make Payment" textFill="WHITE" AnchorPane.leftAnchor="5.0">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

@@ -10,6 +10,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.java.admin.SalesInvoiceGenerator;
+import main.java.admin.SalesManagementController;
 import main.java.others.DBConnection;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -31,7 +33,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class CheckoutController implements Initializable {
+public class CheckoutController  implements Initializable {
 
     Connection connection = DBConnection.getConnection();
 
@@ -47,6 +49,8 @@ public class CheckoutController implements Initializable {
     private AnchorPane checkoutPane;
     @FXML
     private JFXTextField amountPaidTextField;
+
+    private JFXTextField invoiceNumberTexField;
 
 
     @FXML
@@ -67,6 +71,9 @@ public class CheckoutController implements Initializable {
         readNetAmount();
         changeLabel.setText("GH₵ 0.00");
 
+           invoiceNumberTexField=new JFXTextField();
+
+
 
     }
 
@@ -86,6 +93,7 @@ public class CheckoutController implements Initializable {
             PreparedStatement deleteCartStatement = connection.prepareStatement("delete from cart");
             deleteCartStatement.executeUpdate();
             System.out.println("delete from cart success");
+
         } catch (SQLException e) {
             e.getMessage();
         }
@@ -116,7 +124,7 @@ public class CheckoutController implements Initializable {
 
             change = Math.abs(paid - total);
             DecimalFormat decimalFormat = new DecimalFormat("###.#");
-            if (validateInput())
+            if (validateInputForChekoutController())
                 changeLabel.setText("GH₵ " + String.valueOf(decimalFormat.format(change)));
 
         } catch (Exception e) {
@@ -134,6 +142,7 @@ public class CheckoutController implements Initializable {
 
     //method to get Items From cart and insert into sales
     private void setMakePaymentButton() {
+        new SalesInvoiceGenerator(invoiceNumberTexField,"sales");
 
         if (checkFields()) {
             Connection connection = DBConnection.getConnection();
@@ -153,18 +162,18 @@ public class CheckoutController implements Initializable {
                     //inserting the purchased product into sales
                     try {
 
-                        PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO sales( productName, price, quantity, total, grandTotal, amountPaid,balance,date,customerName,employeeName) VALUES (?,?,?,?,?,?,?,?,?,?)");
-
-                        insertStatement.setString(1, productName);
-                        insertStatement.setDouble(2, salePrice);
-                        insertStatement.setDouble(3, quantity);
-                        insertStatement.setDouble(4, total);
-                        insertStatement.setDouble(5, grandTotal);
-                        insertStatement.setDouble(6, amountPaid);
-                        insertStatement.setDouble(7, change);
-                        insertStatement.setDate(8, Date.valueOf(LocalDate.now()));
-                        insertStatement.setString(9, customerNameField.getText());
-                        insertStatement.setString(10, LogInController.loggerUsername);
+                        PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO sales(invoiceNumber, productName, price, quantity, total, grandTotal, amountPaid,balance,date,customerName,employeeName) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                        insertStatement.setString(1, invoiceNumberTexField.getText());
+                        insertStatement.setString(2, productName);
+                        insertStatement.setDouble(3, salePrice);
+                        insertStatement.setDouble(4, quantity);
+                        insertStatement.setDouble(5, total);
+                        insertStatement.setDouble(6, grandTotal);
+                        insertStatement.setDouble(7, amountPaid);
+                        insertStatement.setDouble(8, change);
+                        insertStatement.setDate(9, Date.valueOf(LocalDate.now()));
+                        insertStatement.setString(10, customerNameField.getText());
+                        insertStatement.setString(11, LogInController.loggerUsername);
                         insertStatement.executeUpdate();
                         System.out.println("insert into sales successful");
 
@@ -285,7 +294,7 @@ public class CheckoutController implements Initializable {
 
     }
 
-    public boolean validateInput() {
+    public boolean validateInputForChekoutController() {
 
         String errorMessage = "";
 

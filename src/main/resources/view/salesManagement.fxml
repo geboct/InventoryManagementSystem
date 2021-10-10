@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -19,10 +24,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.SalesManagementController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.SalesManagementController">
     <children>
         <AnchorPane prefHeight="46.0" prefWidth="1117.0" style="-fx-background-color: #253238;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <VBox fx:id="allSalesVBox" layoutX="27.0" layoutY="63.0" prefHeight="638.0" prefWidth="1089.0" style="-fx-border-color: grey; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="63.0">
+        <VBox fx:id="allSalesVBox" layoutX="4.0" layoutY="63.0" prefHeight="667.0" prefWidth="1133.0" style="-fx-border-color: grey; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="63.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="1053.0" style="-fx-border-radius: 10;">
                     <children>
@@ -31,20 +36,20 @@
                                 <Insets top="5.0" />
                             </HBox.margin>
                         </FontAwesomeIconView>
-                        <Label text="Sales" HBox.hgrow="ALWAYS">
+                        <Label prefHeight="25.0" prefWidth="104.0" text="Sales" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
                         <Region prefHeight="61.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="searchSalesTextField" onKeyReleased="#filterData" prefHeight="40.0" prefWidth="0.0" promptText="search" style="-fx-background-radius: 9;" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets right="12.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets left="12.0" right="12.0" />
-                     </padding>
-                  </TextField>
+                        <TextField fx:id="searchSalesTextField" onKeyReleased="#filterData" prefHeight="40.0" prefWidth="263.0" promptText="search" style="-fx-background-radius: 9;" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="12.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="12.0" right="12.0" />
+                            </padding>
+                        </TextField>
                         <Button fx:id="newSaleButton" mnemonicParsing="false" onAction="#setNewSaleButton" prefHeight="37.0" prefWidth="155.0" style="-fx-background-color: #253238; -fx-background-radius: 10; -fx-border-radius: 10; -fx-text-fill: white;" text="New Sale" textFill="WHITE" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font name="System Bold" size="13.0" />
@@ -55,27 +60,44 @@
                             <HBox.margin>
                                 <Insets right="16.0" />
                             </HBox.margin>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+                     </graphic>
                         </Button>
+                  <Button fx:id="returnsButton" layoutX="926.0" layoutY="22.0" mnemonicParsing="false" onAction="#setNewSaleButton" prefHeight="37.0" prefWidth="155.0" style="-fx-background-color: #253238; -fx-background-radius: 10; -fx-border-radius: 10; -fx-text-fill: white;" text="Returns" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="ARROW_CIRCLE_LEFT" size="13" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
                     </children>
                     <padding>
                         <Insets left="14.0" />
                     </padding>
                 </HBox>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#253238" height="2.0" stroke="#253238" strokeType="INSIDE" width="1053.0" VBox.vgrow="ALWAYS" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#253238" height="2.0" stroke="#253238" strokeType="INSIDE" width="1087.0" VBox.vgrow="ALWAYS" />
                 <AnchorPane VBox.vgrow="ALWAYS">
                     <children>
                         <VBox layoutX="15.0" layoutY="15.0" prefHeight="406.0" prefWidth="1023.0" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                             <children>
-                                <TableView fx:id="salesTableView" prefHeight="285.0" prefWidth="1023.0" style="-fx-border-radius: 10;">
+                                <TableView fx:id="salesTableView" prefHeight="285.0" prefWidth="1023.0" style="-fx-border-radius: 10;" tableMenuButtonVisible="true">
                                     <columns>
-                                        <TableColumn fx:id="barcodeColumn" prefWidth="75.0" text="Barcode" />
-                                        <TableColumn fx:id="productNameColumn" prefWidth="247.0" text="Product Name" />
+                                        <TableColumn fx:id="invoiceColumn" prefWidth="108.0" text="Invoice Number" />
+                                        <TableColumn fx:id="productNameColumn" prefWidth="214.0" text="Product Name" />
                                         <TableColumn fx:id="priceColumn" prefWidth="99.0" text="Price" />
                                         <TableColumn fx:id="quantityColumn" prefWidth="93.0" text="Quantity" />
                                         <TableColumn fx:id="totalColumn" prefWidth="135.0" text="Total" />
                                         <TableColumn fx:id="dateTimeColumn" prefWidth="113.0" text="Date &amp; Time" />
                                         <TableColumn fx:id="customerNameColumn" prefWidth="125.0" text="Customer Name" />
-                                        <TableColumn fx:id="employeeNameColumn" prefWidth="135.0" text="Employee" />
+                                        <TableColumn fx:id="employeeNameColumn" prefWidth="155.0" text="Employee" />
                                     </columns>
                                 </TableView>
                                 <Button fx:id="deleteSaleButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="148.0" style="-fx-background-color: #253238; -fx-text-fill: white; -fx-border-radius: 10; -fx-background-radius: 10;" text="Delete" VBox.vgrow="ALWAYS">
@@ -88,6 +110,9 @@
                                     <VBox.margin>
                                         <Insets left="880.0" top="18.0" />
                                     </VBox.margin>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="13" />
+                           </graphic>
                                 </Button>
                             </children>
                         </VBox>
@@ -108,7 +133,7 @@
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="560.0" style="-fx-background-color: #143D59;" />
-                        <TextField fx:id="searchCartTextField" onKeyReleased="#searchCartItems" prefHeight="40.0" prefWidth="261.0" promptText="search cart" />
+                                <TextField fx:id="searchCartTextField" onKeyReleased="#searchCartItems" prefHeight="40.0" prefWidth="261.0" promptText="search cart" />
                             </children>
                             <VBox.margin>
                                 <Insets />
@@ -229,21 +254,25 @@
                                                         <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="597.0" spacing="10.0" style="-fx-font-size: 15; -fx-background-color: #143D59;" styleClass="leftHBox" VBox.vgrow="NEVER">
                                                             <children>
                                                                 <Button fx:id="addButton" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#setAddButton" prefHeight="31.0" prefWidth="80.0" text="Add">
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor></Button>
+                                                                    <cursor>
+                                                                        <Cursor fx:constant="HAND" />
+                                                                    </cursor>
+                                                                </Button>
                                                                 <Button fx:id="removeButton" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#removeAction" prefHeight="31.0" prefWidth="80.0" text="Drop" HBox.hgrow="ALWAYS">
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor></Button>
+                                                                    <cursor>
+                                                                        <Cursor fx:constant="HAND" />
+                                                                    </cursor>
+                                                                </Button>
                                                                 <Button fx:id="resetButton" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetInvoice" prefHeight="31.0" prefWidth="80.0" text="Reset" HBox.hgrow="ALWAYS">
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor></Button>
-                                                <Button fx:id="backButton" alignment="CENTER" layoutX="367.0" layoutY="17.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#setBackButton" prefHeight="31.0" prefWidth="80.0" text="Back">
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor></Button>
+                                                                    <cursor>
+                                                                        <Cursor fx:constant="HAND" />
+                                                                    </cursor>
+                                                                </Button>
+                                                                <Button fx:id="backButton" alignment="CENTER" layoutX="367.0" layoutY="17.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#setBackButton" prefHeight="31.0" prefWidth="80.0" text="Back">
+                                                                    <cursor>
+                                                                        <Cursor fx:constant="HAND" />
+                                                                    </cursor>
+                                                                </Button>
                                                             </children>
                                                         </HBox>
                                                     </children>
@@ -297,9 +326,10 @@
                                                         <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="235.0" style="-fx-font-size: 15; -fx-background-color: #143D59;">
                                                             <children>
                                                                 <Button fx:id="paymentButton" alignment="CENTER" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#paymentAction" prefHeight="45.0" prefWidth="150.0" text="Payment" HBox.hgrow="ALWAYS">
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor></Button>
+                                                                    <cursor>
+                                                                        <Cursor fx:constant="HAND" />
+                                                                    </cursor>
+                                                                </Button>
                                                             </children>
                                                         </HBox>
                                                     </children>
@@ -318,5 +348,264 @@
             </children>
         </AnchorPane>
 
+        <AnchorPane fx:id="checkoutPane" prefHeight="732.0" prefWidth="1119.0" visible="false" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <VBox fx:id="mainPane" alignment="CENTER" fillWidth="false" prefHeight="537.0" prefWidth="486.0" style="-fx-background-color: #005066;" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="333.0" AnchorPane.topAnchor="100.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+                    <children>
+                        <AnchorPane prefHeight="76.0" prefWidth="336.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <JFXTextField fx:id="customerNameField" alignment="CENTER_RIGHT" focusColor="#4d4d4d" layoutY="23.0" prefHeight="53.0" prefWidth="333.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: gray; -fx-text-fill: white;" AnchorPane.rightAnchor="0.0">
+                                    <padding>
+                                        <Insets left="20.0" right="25.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="22.0" />
+                                    </font>
+                                </JFXTextField>
+                                <Label layoutX="20.0" layoutY="17.0" prefHeight="12.0" prefWidth="101.0" style="-fx-background-color: #005066;" text="  CUSTOMER NAME" textFill="WHITE">
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="9.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="totalAmountTextField" alignment="CENTER_RIGHT" layoutY="23.0" prefHeight="53.0" prefWidth="333.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: gray;" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="23.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets right="25.0" />
+                                    </padding>
+                                </Label>
+                                <Label layoutX="22.0" layoutY="17.0" prefHeight="12.0" prefWidth="94.0" style="-fx-background-color: #005066;" text="  TOTAL AMOUNT" textFill="WHITE">
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="9.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="53.0" prefWidth="314.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <JFXTextField fx:id="amountPaidTextField" alignment="CENTER_RIGHT" focusColor="#4d4d4d" layoutX="2.0" onKeyReleased="#setCalculateButton" prefHeight="53.0" prefWidth="333.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: gray; -fx-text-fill: white;" AnchorPane.rightAnchor="0.0">
+                                    <padding>
+                                        <Insets left="20.0" right="25.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="22.0" />
+                                    </font>
+                                </JFXTextField>
+                                <Label layoutX="25.0" layoutY="-6.0" prefHeight="12.0" prefWidth="86.0" style="-fx-background-color: #005066;" text="  AMOUNT PAID" textFill="WHITE">
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="9.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="21.0" />
+                            </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="93.0" prefWidth="296.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="changeLabel" alignment="CENTER_RIGHT" layoutY="23.0" prefHeight="53.0" prefWidth="333.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: gray; -fx-text-fill: white;" AnchorPane.rightAnchor="0.0">
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="22.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets right="25.0" />
+                                    </padding>
+                                </Label>
+                                <Label layoutX="31.0" layoutY="18.0" prefHeight="12.0" prefWidth="56.0" style="-fx-background-color: #005066;" text="  CHANGE" textFill="WHITE">
+                                    <font>
+                                        <Font name="Bookman Old Style Bold" size="9.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <VBox alignment="CENTER" fillWidth="false" prefHeight="187.0" prefWidth="253.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <AnchorPane prefHeight="184.0" prefWidth="218.0" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <JFXButton fx:id="makePaymentButton" buttonType="RAISED" layoutX="5.0" layoutY="11.0" prefHeight="75.0" prefWidth="192.0" ripplerFill="#292bbf" style="-fx-border-color: white; -fx-border-radius: 50; -fx-background-radius: 50; -fx-background-color:darkblue ;" text="Make Payment" textFill="WHITE" AnchorPane.leftAnchor="5.0">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </JFXButton>
+                                        <JFXButton fx:id="cancelButton" buttonType="RAISED" layoutX="34.0" layoutY="106.0" prefHeight="56.0" prefWidth="135.0" ripplerFill="#292bbf" style="-fx-border-color: white; -fx-border-radius: 50; -fx-background-radius: 50;" text="Cancel" textFill="WHITE" AnchorPane.leftAnchor="34.0" />
+                                        <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_CART" layoutX="7.0" layoutY="60.0" size="30" />
+                                        <FontAwesomeIconView fill="WHITE" glyphName="INFO" layoutX="52.0" layoutY="179.0" size="12" />
+                                        <Label layoutX="58.0" layoutY="168.0" prefHeight="12.0" prefWidth="125.0" style="-fx-background-color: #005066;" text="Calculation is Automated" textFill="WHITE">
+                                            <font>
+                                                <Font name="Bookman Old Style Bold" size="9.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="8.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </AnchorPane>
+      <AnchorPane fx:id="returnsPane" layoutX="-2.0" prefHeight="742.0" prefWidth="1131.0" visible="false">
+         <children>
+            <VBox layoutX="74.0" layoutY="58.0" prefHeight="530.0" prefWidth="493.0" style="-fx-border-color: gray; -fx-border-radius: 30; -fx-background-radius: 30;">
+               <children>
+                  <JFXTextField fx:id="returnsInvoiceNumberTextField" onKeyReleased="#setReturnsInvoiceNumberTextField" prefHeight="78.0" prefWidth="402.0" promptText="Invoice Number" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets left="25.0" right="120.0" top="6.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <TableView fx:id="productsInInvoiceTableView" prefHeight="465.0" prefWidth="491.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="productsInInvoiceName" prefWidth="75.0" text="Name" />
+                      <TableColumn fx:id="productsInInvoiceQuantity" prefWidth="75.0" text="Quantity" />
+                        <TableColumn fx:id="productsInInvoicePrice" prefWidth="75.0" text="Price" />
+                        <TableColumn fx:id="productsInInvoiceTotal" prefWidth="75.0" text="Total" />
+                        <TableColumn fx:id="productsInInvoiceDate" prefWidth="75.0" text="Date" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <VBox.margin>
+                        <Insets top="12.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label text="Grand Total: GHC" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="returnsGrandTotalLabel" prefHeight="17.0" prefWidth="106.0" text="1000.9" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label text="Amount Paid:GHC" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="returnsAmountPaidLabel" text="787373883.9" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="697.0" layoutY="348.0" prefHeight="254.0" prefWidth="369.0">
+               <children>
+                  <Label text="Please select a reson for returning product / item" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Bookman Old Style Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="28.0" prefWidth="369.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="faultyRadioButton" mnemonicParsing="false" text="Faulty Product" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="16.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="369.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="notNeededRadioButton" mnemonicParsing="false" text="Product No Longer Needed" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="66.0" prefHeight="28.0" prefWidth="369.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="wrongProductRadioButton" mnemonicParsing="false" text="Customer Bought the wrong product" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="160.0" prefHeight="28.0" prefWidth="369.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="otherReasonRadioButton" mnemonicParsing="false" text="Other Reason(s)" />
+                     </children>
+                  </HBox>
+                  <JFXTextArea fx:id="otherReasonTextArea" labelFloat="true" prefHeight="103.0" prefWidth="369.0" promptText="State other reasons here" style="-fx-border-color: gray; -fx-border-radius: 10;" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="8.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </JFXTextArea>
+               </children>
+            </VBox>
+            <TableView fx:id="returningProductsTableView" layoutX="697.0" layoutY="58.0" prefHeight="273.0" prefWidth="376.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="returningProductName" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="returningProductPrice" prefWidth="75.0" text="Price" />
+                  <TableColumn fx:id="returningProductQuantity" prefWidth="75.0" text="Quantity" />
+                  <TableColumn fx:id="returningProductTotal" prefWidth="75.0" text="Total" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <VBox alignment="TOP_CENTER" layoutX="588.0" layoutY="58.0" prefHeight="264.0" prefWidth="60.0" spacing="20.0" style="-fx-border-color: grey;" AnchorPane.topAnchor="58.0">
+               <children>
+                  <FontAwesomeIconView fx:id="pushAllRightIcon" glyphName="ANGLE_DOUBLE_RIGHT" size="30" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="8.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="pushAllLeftIcon" glyphName="ANGLE_DOUBLE_LEFT" layoutX="11.0" layoutY="21.0" size="30" VBox.vgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="pushSingleRightIcon" glyphName="ANGLE_RIGHT" layoutX="11.0" layoutY="47.0" size="30" VBox.vgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="pushSingleLeftIcon" glyphName="ANGLE_LEFT" layoutX="11.0" layoutY="34.0" size="30" VBox.vgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></FontAwesomeIconView>
+               </children>
+            </VBox>
+            <Button fx:id="subMitReturnsButton" layoutX="904.0" layoutY="630.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="148.0" style="-fx-background-color: #253238;" text="Submit" textFill="WHITE">
+               <tooltip>
+                  <Tooltip text="Submit Returns" />
+               </tooltip>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="UPLOAD" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <AnchorPane prefHeight="46.0" prefWidth="1143.0" style="-fx-background-color: #253238;">
+               <children>
+                  <FontAwesomeIconView fx:id="returnsBackIcon" fill="WHITE" glyphName="ANGLE_LEFT" layoutX="24.0" layoutY="36.0" size="40">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

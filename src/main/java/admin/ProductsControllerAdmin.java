@@ -1146,6 +1146,7 @@ public class ProductsControllerAdmin implements Initializable {
 
         } else if (filterByComboBox.getValue() == ("Price")) {
             try {
+                searchWithPrice.clear();
                 PreparedStatement preparedStatement = connection.prepareStatement(" select * from products where salePrice like ?");
                 preparedStatement.setString(1, "%" + searchTextField.getText() + "%");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -1168,6 +1169,7 @@ public class ProductsControllerAdmin implements Initializable {
 
         } else if (filterByComboBox.getValue() == ("Available Stock")) {
             try {
+                searchWithStock.clear();
                 PreparedStatement preparedStatement = connection.prepareStatement(" select * from products where stock like ?");
                 preparedStatement.setString(1, "%" + searchTextField.getText() + "%");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -1187,6 +1189,8 @@ public class ProductsControllerAdmin implements Initializable {
             }
         } else if (filterByComboBox.getValue() == ("Product Name")) {
             try {
+                searchWithName.clear();
+
                 PreparedStatement preparedStatement = connection.prepareStatement(" select * from products where productName like ?");
                 preparedStatement.setString(1, "%" + searchTextField.getText() + "%");
                 ResultSet resultSet = preparedStatement.executeQuery();

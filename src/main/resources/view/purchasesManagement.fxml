@@ -26,7 +26,7 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1107.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.admin.PurchasesManagementController">
     <children>
-        <AnchorPane prefHeight="46.0" prefWidth="1117.0" style="-fx-background-color: #253238;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <AnchorPane prefHeight="46.0" prefWidth="1117.0" style="-fx-background-color: #253238;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <VBox fx:id="allPurchasesVBox" layoutX="27.0" layoutY="63.0" prefHeight="638.0" prefWidth="1089.0" style="-fx-border-color: grey; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="63.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="1053.0" spacing="12.0" style="-fx-border-radius: 10;" VBox.vgrow="ALWAYS">
@@ -73,8 +73,8 @@
                             <children>
                                 <TableView fx:id="purchasesTableView" prefHeight="285.0" prefWidth="1023.0" style="-fx-border-radius: 10;">
                                     <columns>
-                                        <TableColumn fx:id="barcodeColumn" prefWidth="75.0" text="Barcode" />
-                                        <TableColumn fx:id="productNameColumn" prefWidth="247.0" text="Product Name" />
+                                        <TableColumn fx:id="invoiceNumberColumn" prefWidth="112.0" text="Invoice Number" />
+                                        <TableColumn fx:id="productNameColumn" prefWidth="210.0" text="Product Name" />
                                         <TableColumn fx:id="priceColumn" prefWidth="99.0" text="Price" />
                                         <TableColumn fx:id="quantityColumn" prefWidth="93.0" text="Quantity" />
                                         <TableColumn fx:id="totalColumn" prefWidth="135.0" text="Total" />
@@ -190,7 +190,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </JFXButton>
-                        <JFXButton fx:id="addTocartButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="387.0" layoutY="492.0" onAction="#addToCart" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40;" stylesheets="@../css/customer.css">
+                        <JFXButton fx:id="addTocartButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="387.0" layoutY="510.0" onAction="#addToCart" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40;" stylesheets="@../css/customer.css">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
@@ -232,19 +232,30 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <VBox layoutX="129.0" layoutY="16.0" prefHeight="478.0" prefWidth="124.0">
+                  <VBox layoutX="129.0" layoutY="16.0" prefHeight="494.0" prefWidth="124.0">
                      <children>
-                              <Label prefHeight="24.0" prefWidth="78.0" text="Bar Code">
+                        <Label layoutX="10.0" layoutY="440.0" prefHeight="23.0" prefWidth="125.0" text="Invoice Number:">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                              <Label prefHeight="24.0" prefWidth="78.0" text="Bar Code:">
                                   <font>
                                       <Font name="System Bold" size="14.0" />
                                   </font>
+                           <VBox.margin>
+                              <Insets top="27.0" />
+                           </VBox.margin>
                               </Label>
                               <Label prefHeight="19.0" prefWidth="78.0" text="Name:" VBox.vgrow="ALWAYS">
                                   <font>
                                       <Font name="System Bold" size="14.0" />
                                   </font>
                            <VBox.margin>
-                              <Insets top="29.0" />
+                              <Insets top="32.0" />
                            </VBox.margin>
                               </Label>
                               <Label prefHeight="25.0" prefWidth="106.0" text="Selling price" VBox.vgrow="ALWAYS">
@@ -252,7 +263,7 @@
                                       <Font name="System Bold" size="14.0" />
                                   </font>
                            <VBox.margin>
-                              <Insets top="26.0" />
+                              <Insets top="20.0" />
                            </VBox.margin>
                               </Label>
                         <Label prefHeight="23.0" prefWidth="106.0" text="Purchased Price" VBox.vgrow="ALWAYS">
@@ -276,7 +287,7 @@
                                       <Font name="System Bold" size="14.0" />
                                   </font>
                            <VBox.margin>
-                              <Insets top="48.0" />
+                              <Insets top="28.0" />
                            </VBox.margin>
                               </Label>
                               <Label prefHeight="23.0" prefWidth="48.0" text="Stock:" VBox.vgrow="ALWAYS">
@@ -284,7 +295,7 @@
                                       <Font name="System Bold" size="14.0" />
                                   </font>
                            <VBox.margin>
-                              <Insets top="48.0" />
+                              <Insets top="35.0" />
                            </VBox.margin>
                               </Label>
                               <Label prefHeight="23.0" prefWidth="78.0" text="Company:" VBox.vgrow="ALWAYS">
@@ -292,18 +303,29 @@
                                       <Font name="System Bold" size="14.0" />
                                   </font>
                            <VBox.margin>
-                              <Insets top="48.0" />
+                              <Insets top="38.0" />
                            </VBox.margin>
                               </Label>
                      </children></VBox>
                   <VBox layoutX="268.0" layoutY="15.0" prefHeight="462.0" prefWidth="363.0">
                      <children>
-                              <JFXTextField fx:id="barcodeField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Barcode">
+                         <JFXTextField fx:id="invoiceNumberField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Invoice Number">
+                             <font>
+                                 <Font size="15.0" />
+                             </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                         </JFXTextField>
+                              <JFXTextField fx:id="barcodeField" alignment="CENTER" editable="false" focusColor="#263238" onKeyReleased="#checkItemExistence" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Barcode">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
                               </JFXTextField>
-                              <JFXTextField fx:id="productNameTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Product Name" VBox.vgrow="ALWAYS">
+                              <JFXTextField fx:id="productNameTextField" alignment="CENTER" editable="false" focusColor="#263238" onKeyReleased="#checkItemExistence" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Product Name" VBox.vgrow="ALWAYS">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
@@ -351,7 +373,7 @@
                               <Insets top="24.0" />
                            </VBox.margin>
                         </HBox>
-                        <JFXTextField fx:id="availableQuantity" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Quantity" VBox.vgrow="ALWAYS">
+                        <JFXTextField fx:id="quantityField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Quantity" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -364,7 +386,7 @@
                                       <Font size="15.0" />
                                   </font>
                            <VBox.margin>
-                              <Insets top="46.0" />
+                              <Insets top="30.0" />
                            </VBox.margin>
                               </JFXTextField>
                      </children>
@@ -394,7 +416,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="itemPane1" layoutX="-2.0" layoutY="85.0" prefHeight="572.0" prefWidth="1007.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0">
+            <AnchorPane fx:id="itemPane1" layoutX="-2.0" layoutY="79.0" prefHeight="591.0" prefWidth="1105.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0">
                <children>
                   <JFXButton fx:id="btnOutOfStock1" alignment="CENTER" buttonType="RAISED" graphicTextGap="10.0" layoutX="767.0" layoutY="384.0" prefHeight="50.0" prefWidth="240.0" ripplerFill="#37474f" style="-fx-background-color: white;" text="Out of Stock" textFill="WHITE" visible="false">
                      <cursor>
@@ -431,7 +453,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="updateButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="555.0" layoutY="492.0" onAction="#setUpdatePurchaseButton" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40;" stylesheets="@../css/customer.css">
+                  <JFXButton fx:id="updateButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="555.0" layoutY="534.0" onAction="#setUpdatePurchaseButton" prefHeight="61.0" prefWidth="59.0" ripplerFill="#c9c3c3" style="-fx-background-radius: 40 40 40 40;" stylesheets="@../css/customer.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -458,10 +480,18 @@
                   </JFXButton>
                   <VBox layoutX="129.0" layoutY="16.0" prefHeight="478.0" prefWidth="124.0" AnchorPane.leftAnchor="220.0">
                      <children>
-                        <Label prefHeight="24.0" prefWidth="78.0" text="Bar Code">
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="166.0" text="Invoice Number:" VBox.vgrow="ALWAYS">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
+                        </Label>
+                        <Label prefHeight="24.0" prefWidth="78.0" text="Bar Code" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
                         </Label>
                         <Label prefHeight="19.0" prefWidth="78.0" text="Name:" VBox.vgrow="ALWAYS">
                            <font>
@@ -476,7 +506,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="26.0" />
+                              <Insets top="35.0" />
                            </VBox.margin>
                         </Label>
                         <Label prefHeight="23.0" prefWidth="106.0" text="Purchased Price" VBox.vgrow="ALWAYS">
@@ -500,7 +530,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="48.0" />
+                              <Insets top="42.0" />
                            </VBox.margin>
                         </Label>
                         <Label prefHeight="23.0" prefWidth="48.0" text="Stock:" VBox.vgrow="ALWAYS">
@@ -521,9 +551,17 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox layoutX="268.0" layoutY="15.0" prefHeight="462.0" prefWidth="363.0" AnchorPane.leftAnchor="400.0">
+                  <VBox layoutX="268.0" layoutY="6.0" prefHeight="504.0" prefWidth="363.0" spacing="20.0" AnchorPane.leftAnchor="400.0">
                      <children>
-                        <JFXTextField fx:id="updateBarcodeField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Barcode">
+                         <JFXTextField fx:id="updateInvoiceNumberField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Invoice Number" VBox.vgrow="ALWAYS">
+                         <font>
+                             <Font size="15.0" />
+                         </font>
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                     </JFXTextField>
+                        <JFXTextField fx:id="updateBarcodeField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Barcode" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -533,7 +571,7 @@
                               <Font size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="19.0" />
+                              <Insets />
                            </VBox.margin>
                         </JFXTextField>
                         <JFXTextField fx:id="updateSellingPriceTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Selling Price" VBox.vgrow="ALWAYS">
@@ -541,7 +579,7 @@
                               <Font size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="18.0" />
+                              <Insets />
                            </VBox.margin>
                         </JFXTextField>
                         <JFXTextField fx:id="updatePurchasedPriceTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Purchased Price" VBox.vgrow="ALWAYS">
@@ -549,15 +587,15 @@
                               <Font size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="19.0" />
+                              <Insets />
                            </VBox.margin>
                         </JFXTextField>
-                        <TextArea fx:id="updateDescriptionTextArea1" onMouseClicked="#onFieldsClicked" prefHeight="61.0" prefWidth="240.0" promptText="Description">
+                        <TextArea fx:id="updateDescriptionTextArea1" onMouseClicked="#onFieldsClicked" prefHeight="48.0" prefWidth="363.0" promptText="Description" VBox.vgrow="ALWAYS">
                            <VBox.margin>
-                              <Insets top="31.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextArea>
-                        <HBox prefHeight="31.0" prefWidth="363.0">
+                        <HBox prefHeight="31.0" prefWidth="363.0" VBox.vgrow="ALWAYS">
                            <children>
                               <JFXComboBox fx:id="updateCategoryComboBox" onMouseClicked="#onFieldsClicked" prefHeight="25.0" prefWidth="232.0" promptText="category" style="-fx-text-size: 15px;" />
                               <Button mnemonicParsing="false" onAction="#addNewCategory" style="-fx-border-color: gray;">
@@ -573,12 +611,12 @@
                               </Button>
                            </children>
                            <VBox.margin>
-                              <Insets top="24.0" />
+                              <Insets />
                            </VBox.margin>
                         </HBox>
-                        <HBox VBox.vgrow="ALWAYS">
+                        <HBox prefHeight="46.0" prefWidth="363.0" VBox.vgrow="ALWAYS">
                            <VBox.margin>
-                              <Insets top="25.0" />
+                              <Insets top="5.0" />
                            </VBox.margin>
                            <children>
                               <JFXTextField fx:id="availableQuantity" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="112.0" promptText="Quantity" HBox.hgrow="ALWAYS">
@@ -606,12 +644,12 @@
                               </ComboBox>
                            </children>
                         </HBox>
-                        <JFXTextField fx:id="upDateCompanyTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Company">
+                        <JFXTextField fx:id="upDateCompanyTextField" alignment="CENTER" editable="false" focusColor="#263238" onMouseClicked="#onFieldsClicked" prefHeight="31.0" prefWidth="232.0" promptText="Company" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="46.0" />
+                              <Insets />
                            </VBox.margin>
                         </JFXTextField>
                      </children>

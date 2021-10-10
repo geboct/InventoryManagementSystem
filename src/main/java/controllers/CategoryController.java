@@ -127,17 +127,32 @@ public class CategoryController implements Initializable {
     void deleteCategory(ActionEvent event) {
         Connection con = DBConnection.getConnection();
         try {
-            PreparedStatement deleteCat = con.prepareStatement("DELETE FROM categories WHERE categoryname = ?");
 
-            deleteCat.setString(1, categoryTable.getSelectionModel().getSelectedItem().getCategoryName());
 
-            deleteCat.executeUpdate();
-            setTableData();
-            con.close();
-            TrayNotification notification = new TrayNotification();
-            notification.setTray("Success", "Category deleted successfully", NotificationType.SUCCESS);
-            notification.showAndDismiss(Duration.seconds(3));
-            //  new PromptDialogController("Success!", "Deleting Entry Successful");
+
+
+            PreparedStatement preparedStatement=con.prepareStatement("select * from products where category=?");
+            preparedStatement.setString(1,categoryTable.getSelectionModel().getSelectedItem().getCategoryName());
+            ResultSet resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("Error", "Can't delete type. The type has one or more \nitem entries listed.", NotificationType.ERROR);
+                notification.showAndDismiss(Duration.seconds(3));
+
+            }else {
+                PreparedStatement deleteCat = con.prepareStatement("DELETE FROM categories WHERE categoryname = ?");
+
+                deleteCat.setString(1, categoryTable.getSelectionModel().getSelectedItem().getCategoryName());
+
+                deleteCat.executeUpdate();
+                setTableData();
+                con.close();
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("Success", "Category deleted successfully", NotificationType.SUCCESS);
+                notification.showAndDismiss(Duration.seconds(3));
+                //  new PromptDialogController("Success!", "Deleting Entry Successful");
+            }
+
         } catch (SQLException e) {
             if (e.getErrorCode() == 1451) {
                 //Has foreign key constraints

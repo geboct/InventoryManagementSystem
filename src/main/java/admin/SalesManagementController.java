@@ -1,39 +1,50 @@
 package main.java.admin;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import main.java.admin.SalesModel.SalesModel;
-import main.java.controllers.CheckoutController;
+import main.java.admin.purchaseModel.PurchaseModel;
+import main.java.controllers.LogInController;
 import main.java.entity.Item;
 import main.java.entity.Product;
 import main.java.others.DBConnection;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import org.jfree.chart.axis.Axis;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -42,14 +53,16 @@ public class SalesManagementController implements Initializable {
     @FXML
     private VBox allSalesVBox;
     @FXML
-    private Button newSaleButton;
+    private Button newSaleButton, returnsButton;
     @FXML
     private Button deleteSaleButton;
+    @FXML
+    private AnchorPane returnsPane;
 
     @FXML
-    private TableView<SalesModel> salesTableView;
+    protected TableView<SalesModel> salesTableView;
     @FXML
-    private TableColumn<SalesModel, String> barcodeColumn;
+    private TableColumn<SalesModel, String> invoiceColumn;
     @FXML
     private TableColumn<SalesModel, String> productNameColumn;
     @FXML
@@ -125,6 +138,118 @@ public class SalesManagementController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
     //pos properties end here
+
+    /**
+     * checkout controller starts here
+     */
+    @FXML
+    private JFXTextField customerNameField;
+
+    @FXML
+    private Label totalAmountTextField;
+
+    @FXML
+    private VBox mainPane;
+    @FXML
+    private AnchorPane checkoutPane;
+    @FXML
+    private JFXTextField amountPaidTextField;
+
+    private JFXTextField invoiceNumberTexField;
+
+
+    @FXML
+    private Label changeLabel;
+
+    @FXML
+    private JFXButton cancelButton;
+
+    @FXML
+    private JFXButton makePaymentButton;
+    Double change;
+
+    /**
+     * checkout controller properties end here
+     */
+    /**
+     * return page properties begin here
+     */
+    @FXML
+    private JFXTextField returnsInvoiceNumberTextField;
+
+    @FXML
+    private TableView<SalesModel> productsInInvoiceTableView;
+
+    @FXML
+    private TableColumn<SalesModel, String> productsInInvoiceName;
+
+    @FXML
+    private TableColumn<SalesModel, String> productsInInvoiceQuantity;
+
+    @FXML
+    private TableColumn<SalesModel, String> productsInInvoicePrice;
+
+    @FXML
+    private TableColumn<SalesModel, String> productsInInvoiceTotal;
+
+    @FXML
+    private TableColumn<SalesModel, String> productsInInvoiceDate;
+
+    @FXML
+    private Label returnsGrandTotalLabel;
+
+    @FXML
+    private Label returnsAmountPaidLabel;
+
+    @FXML
+    private RadioButton faultyRadioButton;
+
+    @FXML
+    private RadioButton notNeededRadioButton;
+
+    @FXML
+    private RadioButton wrongProductRadioButton;
+
+    @FXML
+    private RadioButton otherReasonRadioButton;
+
+    @FXML
+    private JFXTextArea otherReasonTextArea;
+
+    @FXML
+    private TableView<SalesModel> returningProductsTableView;
+
+    @FXML
+    private TableColumn<SalesModel, String> returningProductName;
+
+    @FXML
+    private TableColumn<SalesModel, String> returningProductPrice;
+
+    @FXML
+    private TableColumn<SalesModel, String> returningProductQuantity;
+
+    @FXML
+    private TableColumn<SalesModel, String> returningProductTotal;
+
+    @FXML
+    private FontAwesomeIconView pushAllRightIcon, returnsBackIcon;
+
+    @FXML
+    private FontAwesomeIconView pushAllLeftIcon;
+
+    @FXML
+    private FontAwesomeIconView pushSingleRightIcon;
+
+    @FXML
+    private FontAwesomeIconView pushSingleLeftIcon;
+
+    @FXML
+    private Button subMitReturnsButton;
+
+    /**
+     * return page property ends here
+     */
+
     Connection connection = DBConnection.getConnection();
 
 
@@ -133,6 +258,8 @@ public class SalesManagementController implements Initializable {
     ObservableList<Item> productList = FXCollections.observableArrayList();
     ObservableList<SalesModel> listOfSales = FXCollections.observableArrayList();
     ObservableList<Item> cartSearch = FXCollections.observableArrayList();
+    ObservableList<SalesModel> listOfItemsInInvoice = FXCollections.observableArrayList();
+    ObservableList<SalesModel> listOfItemsInInvoiceWorkWith = FXCollections.observableArrayList();
 
 
     private void onCartItemClicked(MouseEvent event) {
@@ -241,23 +368,17 @@ public class SalesManagementController implements Initializable {
     @FXML
     private void paymentAction() {
         writeNetAmount(netPayableField.getText().trim());
+        cancelButton.setOnAction(e -> setCancelButton());
+        makePaymentButton.setOnAction(e -> setMakePaymentButton());
+        readNetAmount();
+        changeLabel.setText("GH₵ 0.00");
+        invoiceNumberTexField = new JFXTextField();
+        checkoutPane.setVisible(true);
+        posPane.setVisible(false);
+       /* try {
 
-        /*//inserting the items into cart
-        for (Item s : cartItems) {
-            insertIntoCart(s.getItemName(), s.getUnitPrice(), s.getQuantity(), s.getTotal());
-            System.out.println("inserted to cart success");
-
-        }*/
-
-        try {
-
-            FXMLLoader loader = new FXMLLoader((getClass().getResource("/main/resources/view/checkout.fxml")));
-            CheckoutController controller = new CheckoutController();
-            loader.setController(controller);
-
-            Parent root = loader.load();
-            Stage stage = new Stage();
-
+            Parent root=FXMLLoader.load(getClass().getResource("/main/resources/view/checkout.fxml"));
+            Stage stage=new Stage();
 
             stage.initModality(Modality.APPLICATION_MODAL);
             root.setOnMousePressed((MouseEvent e) -> {
@@ -281,7 +402,8 @@ public class SalesManagementController implements Initializable {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
+
     }
 
     private void resetInterface() {
@@ -624,6 +746,12 @@ public class SalesManagementController implements Initializable {
 
     }
 
+    private void setReturnsButton() {
+        allSalesVBox.setVisible(false);
+        returnsPane.setVisible(true);
+        initializeReturnsTables();
+
+    }
 
     @FXML
     private void setNewSaleButton() {
@@ -640,6 +768,7 @@ public class SalesManagementController implements Initializable {
         posPane.setVisible(false);
         allSalesVBox.setVisible(true);
 
+
     }
 
     /**
@@ -649,10 +778,11 @@ public class SalesManagementController implements Initializable {
         Connection connection = DBConnection.getConnection();
 
         try {
+            listOfSales.clear();
             PreparedStatement preparedStatement = connection.prepareStatement("select * from sales");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                listOfSales.addAll(new SalesModel(resultSet.getString("barcode"),
+                listOfSales.addAll(new SalesModel(resultSet.getString("invoiceNumber"), resultSet.getString("barcode"),
                         resultSet.getString("productName"),
                         resultSet.getDouble("price"),
                         resultSet.getDouble("quantity"),
@@ -705,19 +835,82 @@ public class SalesManagementController implements Initializable {
 
 
     public void setDeleteSaleButton() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("You are about t delete a sale\nClick Ok to delete or close to exit");
+            alert.setHeaderText(null);
+            alert.setTitle("Confirm Deletion");
+            alert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CLOSE);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `deletedsales`(`invoiceNumber`, " +
+                        "`barcode`, `productName`, `price` ," +
+
+                        "`quantity`, `total`, `date`, `customerName`, `employeeName`) VALUES (?,?,?,?,?,?,?,?,?)");
+                preparedStatement.setString(1, salesTableView.getSelectionModel().getSelectedItem().getInvoiceNumber());
+                preparedStatement.setString(2, salesTableView.getSelectionModel().getSelectedItem().getBarcode());
+                preparedStatement.setString(3, salesTableView.getSelectionModel().getSelectedItem().getProductName());
+                preparedStatement.setDouble(4, salesTableView.getSelectionModel().getSelectedItem().getPrice());
+                preparedStatement.setDouble(5, salesTableView.getSelectionModel().getSelectedItem().getQuantity());
+                preparedStatement.setDouble(6, salesTableView.getSelectionModel().getSelectedItem().getTotal());
+                preparedStatement.setString(7, String.valueOf(LocalDate.now()));
+                preparedStatement.setString(8, salesTableView.getSelectionModel().getSelectedItem().getCustomerName());
+                preparedStatement.setString(9, LogInController.loggerUsername);
+                preparedStatement.executeUpdate();
+
+                PreparedStatement deletePurchase = connection.prepareStatement("delete from sales where invoiceNumber=? and productName=?");
+                deletePurchase.setString(1, salesTableView.getSelectionModel().getSelectedItem().getInvoiceNumber());
+                deletePurchase.setString(2, salesTableView.getSelectionModel().getSelectedItem().getProductName());
+                deletePurchase.executeUpdate();
+                selectAllSales();
+
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("Delete Sales", "Product deleted Successfully", NotificationType.SUCCESS);
+                notification.showAndDismiss(Duration.seconds(3));
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+       /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Delete Sales");
         alert.setContentText("For security purposes\nDeletion is disabled\n Kindly contact Admin");
-        alert.showAndWait();
+        alert.showAndWait();*/
        /* TrayNotification notification = new TrayNotification();
         notification.setTray("Delete Purchase", "For security purposes\nDeletion is disabled\n Kindly contact Admin", NotificationType.ERROR);
         notification.showAndDismiss(Duration.seconds(3));*/
     }
 
+    public void onRightMouseButtonClickedOnAllPurchases(MouseEvent event) {//if user right clicks on the table showing all purchases
+        // a pop should appear with a menu showing delete, update and returns
+        ContextMenu returnsMenuContext = new ContextMenu();
+        MenuItem returnsMenuItem = new MenuItem("Return a product");
+        returnsMenuItem.setOnAction(ee -> {
+            setReturnsButton();
+        });
+
+        MenuItem deleteMenuItem = new MenuItem("Delete a product");
+        deleteMenuItem.setOnAction(ee -> {
+            setDeleteSaleButton();
+        });
+        MenuItem newSaleMenuItem = new MenuItem("New Sale");
+        newSaleMenuItem.setOnAction(ee -> {
+            setNewSaleButton();
+        });
+
+        returnsMenuContext.getItems().addAll(newSaleMenuItem, deleteMenuItem, returnsMenuItem);
+        if (event.getButton() == MouseButton.SECONDARY) {
+            returnsMenuContext.show(salesTableView, event.getScreenX(), event.getScreenY());
+        }
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        barcodeColumn.setCellValueFactory(new PropertyValueFactory<>("barcode"));
+        invoiceColumn.setCellValueFactory(new PropertyValueFactory<>("invoiceNumber"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -729,7 +922,496 @@ public class SalesManagementController implements Initializable {
         deleteSaleButton.setOnAction(e -> setDeleteSaleButton());
         selectAllSales();
         posCartTableView.setOnMouseClicked(this::onCartItemClicked);
+        returnsButton.setOnAction(e -> setReturnsButton());
+
+        salesTableView.setOnMouseClicked(this::onRightMouseButtonClickedOnAllPurchases);
+    }
+
+
+    /**
+     * checkout controller
+     */
+
+    private void setCancelButton() {
+       /* Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();*/
+        //cart must be cleared to avoid duplication on when user clicks pay
+        //deleting items from cart
+
+        // deleteItemsFromCart(connection);
+        posPane.setVisible(true);
+        checkoutPane.setVisible(false);
+
+    }
+
+    private void deleteItemsFromCart(Connection connection) {
+        try {
+            PreparedStatement deleteCartStatement = connection.prepareStatement("delete from cart");
+            deleteCartStatement.executeUpdate();
+            System.out.println("delete from cart success");
+
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+
+
+    private void readNetAmount() {
+        try {
+            FileReader fr = new FileReader("net amount");
+            BufferedReader br = new BufferedReader(fr);
+
+            totalAmountTextField.setText(br.readLine());
+            br.close();
+            fr.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void setCalculateButton() {
+
+        try {
+            double total = Double.parseDouble(totalAmountTextField.getText());
+            double paid = Double.parseDouble(amountPaidTextField.getText());
+
+            change = Math.abs(paid - total);
+            DecimalFormat decimalFormat = new DecimalFormat("###.#");
+            if (validateInputForChekoutController())
+                changeLabel.setText("GH₵ " + String.valueOf(decimalFormat.format(change)));
+
+        } catch (Exception e) {
+           /* TrayNotification notification = new TrayNotification();
+            notification.setTray("Invalid Number", "please enter a valid amount", NotificationType.ERROR);
+            notification.showAndDismiss(Duration.seconds(4));*/
+            // new PromptDialogController("Invalid Number", "Please Enter valid Figure");
+
+            changeLabel.setText("Invalid paid amount");
+        }
+    }
+
+
+    //method to get Items From cart and insert into sales
+    private void setMakePaymentButton() {
+        new SalesInvoiceGenerator(invoiceNumberTexField, "sales");
+
+        if (checkFields()) {
+            Connection connection = DBConnection.getConnection();
+            try {
+                assert connection != null;
+                final PreparedStatement[] preparedStatement = {connection.prepareStatement(" Select * from cart")};
+                ResultSet resultSet = preparedStatement[0].executeQuery();
+                while (resultSet.next()) {
+                    String productName = resultSet.getString("productName");
+                    double salePrice = resultSet.getDouble("price");
+                    double quantity = resultSet.getDouble("quantity");
+                    double total = resultSet.getDouble("total");
+                    double grandTotal = Double.parseDouble(totalAmountTextField.getText());
+                    double amountPaid = Double.parseDouble(amountPaidTextField.getText());
+                    double change = Double.parseDouble(changeLabel.getText().substring(4));
+
+                    //inserting the purchased product into sales
+                    try {
+
+                        PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO sales(invoiceNumber, productName, price, quantity, total, grandTotal, amountPaid,balance,date,customerName,employeeName) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                        insertStatement.setString(1, invoiceNumberTexField.getText());
+                        insertStatement.setString(2, productName);
+                        insertStatement.setDouble(3, salePrice);
+                        insertStatement.setDouble(4, quantity);
+                        insertStatement.setDouble(5, total);
+                        insertStatement.setDouble(6, grandTotal);
+                        insertStatement.setDouble(7, amountPaid);
+                        insertStatement.setDouble(8, change);
+                        insertStatement.setDate(9, java.sql.Date.valueOf(LocalDate.now()));
+                        insertStatement.setString(10, customerNameField.getText());
+                        insertStatement.setString(11, LogInController.loggerUsername);
+                        insertStatement.executeUpdate();
+                        System.out.println("insert into sales successful");
+
+                        //updating stock
+                        updateStock();
+
+
+                        //inserting into print invoice table
+                        insertIntoPrintInvoice(
+                                productName,
+                                salePrice,
+                                quantity,
+                                total,
+                                grandTotal,
+                                amountPaid,
+                                change,
+                                LogInController.loggerUsername,
+                                customerNameField.getText());
+
+                        //since payment has been made, our cart is supposed to be empty
+                        //deleting items from cart
+
+
+                        deleteItemsFromCart(connection);
+                        //clearing items from the cart table view
+                        posCartTableView.getItems().clear();
+
+                    } catch (Exception e) {
+                        e.getMessage();
+                        e.printStackTrace();
+                    }
+
+
+                }
+                checkoutPane.setVisible(false);
+                posPane.setVisible(true);
+                resetInvoice();
+                customerNameField.setText("");
+                totalAmountTextField.setText("");
+                changeLabel.setText("");
+                amountPaidTextField.setText("");
+
+                Thread thread = new Thread(() -> {
+                    try {
+                        JasperDesign jasperDesign = JRXmlLoader.load("receipt.jrxml");
+                        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
+
+                        JasperViewer.viewReport(jasperPrint, false);
+                        // new Printer(jasperPrint, "EPSON TM-T20II Receipt");
+                        System.out.println("printing done");
+
+
+                        String query = "delete from printinvoice";
+
+                        preparedStatement[0] = connection.prepareStatement(query);
+
+                        preparedStatement[0].executeUpdate();
+                        System.out.println("New Sale deleted from print Invoice Table after printing");
+
+                    } catch (Exception ee) {
+                        TrayNotification notification = new TrayNotification();
+                        notification.setTray("Cannot Locate Report", ee.getMessage(), NotificationType.ERROR);
+                        notification.showAndDismiss(Duration.seconds(3));
+                        // new PromptDialogController("Cannot Locate Report", "Specify report location");
+                        ee.printStackTrace();
+                    }
+
+                });
+                thread.setDaemon(true);
+                thread.start();
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    private void updateStock() {
+        String productName = "";
+        double quantity, stock = 0, remainingStock = 0;
+
+        try {
+            //getting the names of product and quantity from cart
+
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from cart");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                productName = resultSet.getString("productName");
+                quantity = resultSet.getDouble("quantity");
+
+                //getting the stock value from the products table
+                PreparedStatement getStockStatement = connection.prepareStatement("select * from products where productName=?");
+                getStockStatement.setString(1, productName);
+                ResultSet stockResult = getStockStatement.executeQuery();
+                while (stockResult.next()) {
+                    stock = stockResult.getDouble("stock");
+                }
+
+                //subtracting the quantity purchased from the available stock
+                remainingStock = (stock - quantity);
+
+                //inserting the new stock into database
+                //NOTE: the already stock will be replaced with the new one
+                PreparedStatement insertNewStockStatement = connection.prepareStatement("UPDATE `products` SET stock=? WHERE productName=?  ");
+                insertNewStockStatement.setDouble(1, remainingStock);
+                insertNewStockStatement.setString(2, productName);
+                insertNewStockStatement.executeUpdate();
+
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }
+
+    public boolean validateInputForChekoutController() {
+
+        String errorMessage = "";
+
+
+        if (amountPaidTextField.getText() == null || amountPaidTextField.getText().length() <= 0) {
+            errorMessage += "Invalid Input!\n";
+        } else if (Double.parseDouble(amountPaidTextField.getText()) < Double.parseDouble(totalAmountTextField.getText())) {
+            errorMessage += "Insufficient Input!\n";
+        }
+
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            /*Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please input the valid amount");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();*/
+            changeLabel.setText("invalid amount paid");
+
+
+            return false;
+        }
+    }
+
+
+    private boolean checkFields() {
+
+        if (!amountPaidTextField.getText().isEmpty()) {
+            try {
+
+                if (Double.parseDouble(amountPaidTextField.getText()) < Double.parseDouble(totalAmountTextField.getText())) {
+                    TrayNotification notification = new TrayNotification();
+                    notification.setTray(null, "Amount paid can't be less than Total AMount", NotificationType.ERROR);
+                    notification.showAndDismiss(Duration.seconds(3));
+                    return false;
+                }
+
+            } catch (NumberFormatException e) {
+                TrayNotification notification = new TrayNotification();
+                notification.setTray(null, "Please Enter a valid Amount", NotificationType.ERROR);
+                notification.showAndDismiss(Duration.seconds(3));
+                return false;
+            }
+        } else {
+            TrayNotification notification = new TrayNotification();
+            notification.setTray(null, "Amount paid can't be Empty", NotificationType.ERROR);
+            notification.showAndDismiss(Duration.seconds(3));
+            return false;
+        }
+        return true;
+
+    }
+
+
+    /**
+     * inserting the sale into the print invoice table
+     **/
+
+    public void insertIntoPrintInvoice(String productName, double unitPrice, double quantity, double total, double grandTotal, double amountPaid, double balance, String employeeName, String customername) {
+        try {
+
+            String query = "insert into printInvoice( productName, unitPrice, quantity, Total,grandTotal,amountPaid,balance,employeeName,customerName) values(?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, productName);
+            preparedStatement.setDouble(2, unitPrice);
+            preparedStatement.setDouble(3, quantity);
+            preparedStatement.setDouble(4, total);
+            preparedStatement.setDouble(5, grandTotal);
+            preparedStatement.setDouble(6, amountPaid);
+            preparedStatement.setDouble(7, balance);
+            preparedStatement.setString(8, employeeName);
+            preparedStatement.setString(9, customername);
+            preparedStatement.executeUpdate();
+            System.out.println("new Sale inserted into invoice success");
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * checkout controller ends here
+     */
+
+
+    /**
+     * returns start here
+     */
+public void submitReturnedProducts(){
+    //add the products the user is returning into the database
+    //delete that particular sale from the sales table
+
+    try{
+        PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO `returns`(`" +
+                "invoiceNumber`, `barcode`, `productName`, `price`, `quantity`, `total`, " +
+                "`grandTotal`, `amountPaid`, `date`, `customerName`, `soldEmployeeName`, " +
+                "`receivingEmployeeName`,`reasonForReturns`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+        for (SalesModel salesModel:returningProductsTableView.getItems()){
+            preparedStatement.setString(1,salesModel.getInvoiceNumber());
+            preparedStatement.setString(2,salesModel.getBarcode());
+            preparedStatement.setString(3,salesModel.getProductName());
+            preparedStatement.setDouble(4,salesModel.getPrice());
+            preparedStatement.setDouble(5,salesModel.getQuantity());
+            preparedStatement.setDouble(6,salesModel.getTotal());
+            preparedStatement.setDouble(7, Double.parseDouble(returnsGrandTotalLabel.getText()));
+            preparedStatement.setDouble(8, Double.parseDouble(returnsAmountPaidLabel.getText()));
+            preparedStatement.setDate(9, java.sql.Date.valueOf(salesModel.getDateTime()));
+            preparedStatement.setString(10,salesModel.getCustomerName());
+            preparedStatement.setString(11,salesModel.getEmployeeName());
+            preparedStatement.setString(12,LogInController.loggerUsername);
+            if (faultyRadioButton.isSelected()){
+                preparedStatement.setString(13,"Faulty Product");
+
+            }else if(notNeededRadioButton.isSelected()){
+                preparedStatement.setString(13,"Product no longer needed");
+
+            }else if(wrongProductRadioButton.isSelected()){
+                preparedStatement.setString(13,"customer bought wrong product");
+
+            }else if(otherReasonRadioButton.isSelected()){
+                preparedStatement.setString(13,otherReasonTextArea.getText());
+
+            }
+            preparedStatement.executeUpdate();
+            TrayNotification notification=new TrayNotification();
+            notification.setTray("Returns","Product returns accepted ",NotificationType.SUCCESS);
+            notification.showAndDismiss(Duration.seconds(3));
+
+        }
+
+    } catch (SQLException throwables) {
+        TrayNotification notification=new TrayNotification();
+        notification.setTray("Returns","Unable to accept returns ",NotificationType.ERROR);
+        notification.showAndDismiss(Duration.seconds(3));
+        throwables.printStackTrace();
+    }
+
+}
+
+    public void toggleActions(ActionEvent event) {//if a radio button is selected
+
+        if (event.getSource() == faultyRadioButton) {
+            otherReasonTextArea.setVisible(false);
+        } else if (event.getSource() == notNeededRadioButton) {
+            otherReasonTextArea.setVisible(false);
+        } else if (event.getSource() == wrongProductRadioButton) {
+            otherReasonTextArea.setVisible(false);
+        } else if (event.getSource() == otherReasonRadioButton) {
+            otherReasonTextArea.setVisible(true);
+        }
+    }
+
+    public void setToggleButtons() {
+
+        ToggleGroup groupRadioButtons = new ToggleGroup();
+        faultyRadioButton.setToggleGroup(groupRadioButtons);
+        notNeededRadioButton.setToggleGroup(groupRadioButtons);
+        wrongProductRadioButton.setToggleGroup(groupRadioButtons);
+        otherReasonRadioButton.setToggleGroup(groupRadioButtons);
+
+
+    }
+
+
+    public void IconsActions(MouseEvent event) {
+        if (event.getSource() == pushAllRightIcon) {
+            listOfItemsInInvoice = listOfItemsInInvoiceWorkWith;
+            returningProductsTableView.getItems().setAll(listOfItemsInInvoiceWorkWith);
+        } else if (event.getSource() == pushAllLeftIcon) {
+            returningProductsTableView.getItems().clear();
+
+        } else if (event.getSource() == pushSingleRightIcon) {
+            returningProductsTableView.getItems().add(productsInInvoiceTableView.getSelectionModel().getSelectedItem());
+
+        } else if (event.getSource() == pushSingleLeftIcon) {
+
+            int index = returningProductsTableView.getSelectionModel().getSelectedIndex();
+            returningProductsTableView.getItems().remove(index);
+
+        }
+    }
+
+
+    public void setReturnsBackIcon() {
+        returnsPane.setVisible(false);
+        allSalesVBox.setVisible(true);
+        // returnsBackIcon.setVisible(true);
+    }
+
+    public void initializeReturnsTables() {
+        productsInInvoiceName.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        productsInInvoiceQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        productsInInvoicePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        productsInInvoiceTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        productsInInvoiceDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        returnsBackIcon.setVisible(true);
+        returnsBackIcon.setOnMouseClicked(e -> setReturnsBackIcon());
+        pushAllRightIcon.setOnMouseClicked(e -> IconsActions(e));
+        pushAllLeftIcon.setOnMouseClicked(e -> IconsActions(e));
+        pushSingleRightIcon.setOnMouseClicked(e -> IconsActions(e));
+        pushSingleLeftIcon.setOnMouseClicked(e -> IconsActions(e));
+
+        //initializing the selected items to return table
+        returningProductName.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        returningProductPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        returningProductQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        returningProductTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        setToggleButtons();
+        otherReasonTextArea.setVisible(false);
+        otherReasonRadioButton.setOnAction(e -> toggleActions(e));
+        faultyRadioButton.setOnAction(e -> toggleActions(e));
+        notNeededRadioButton.setOnAction(e -> toggleActions(e));
+        wrongProductRadioButton.setOnAction(e -> toggleActions(e));
+
+
+    }
+
+
+    @FXML
+    public void setReturnsInvoiceNumberTextField(KeyEvent event) {
+        double grandTotal = 0.00, amountPaid = 0.00;
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("select * from sales where invoiceNumber =? ");
+                preparedStatement.setString(1, returnsInvoiceNumberTextField.getText());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                listOfItemsInInvoice.clear();
+                while (resultSet.next()) {
+                    listOfItemsInInvoice.addAll(new SalesModel(resultSet.getString("invoiceNumber"),
+                            resultSet.getString("barcode"),
+                            resultSet.getString("productName"),
+                            resultSet.getDouble("price"),
+                            resultSet.getDouble("quantity"),
+                            resultSet.getDouble("total"),
+                            resultSet.getString("date"),
+                            resultSet.getString("customerName"),
+                            resultSet.getString("employeeName")));
+                    listOfItemsInInvoiceWorkWith.addAll(new SalesModel(resultSet.getString("invoiceNumber"), resultSet.getString("barcode"),
+                            resultSet.getString("productName"), resultSet.getDouble("price"), resultSet.getDouble("quantity"), resultSet.getDouble("total"),
+                            resultSet.getString("date"), resultSet.getString("customerName"), resultSet.getString("employeeName")));
+
+
+                    grandTotal = resultSet.getDouble("grandTotal");
+                    amountPaid = resultSet.getDouble("amountPaid");
+
+                }
+                returnsGrandTotalLabel.setText(String.valueOf(grandTotal));
+                returnsAmountPaidLabel.setText(String.valueOf(amountPaid));
+                productsInInvoiceTableView.setItems(listOfItemsInInvoice);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * returns end here
+     */
 }

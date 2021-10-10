@@ -3,7 +3,7 @@ package main.java.admin.SalesModel;
 import java.util.Date;
 
 public class SalesModel {
-    String barcode,productName;
+    String invoiceNumber,barcode,productName;
     Double price,quantity,total;
     String dateTime;
     String customerName,employeeName;
@@ -18,6 +18,28 @@ public class SalesModel {
         this.dateTime = dateTime;
         this.customerName = customerName;
         this.employeeName = employeeName;
+    }
+    public SalesModel(String invoiceNumber,String barcode, String productName, Double price, Double quantity, Double total, String dateTime, String customerName, String employeeName) {
+       this.invoiceNumber=invoiceNumber;
+        this.barcode = barcode;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+        this.total = total;
+        this.dateTime = dateTime;
+        this.customerName = customerName;
+        this.employeeName = employeeName;
+    }
+
+
+
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
     }
 
     public String getBarcode() {
