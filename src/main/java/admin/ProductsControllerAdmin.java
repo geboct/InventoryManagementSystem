@@ -20,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import main.java.controllers.PromptDialogController;
 import main.java.entity.Product;
-import main.java.entity.Sale;
 import main.java.others.DBConnection;
 import main.java.others.Item;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -117,7 +116,8 @@ public class ProductsControllerAdmin implements Initializable {
     private Item onView = null;
     String currentBC;
 
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.localConnection();
+    Connection serverConnection = DBConnection.serverConnection();
     ObservableList<Product> searchList = FXCollections.observableArrayList();
     /**
      * addFlag will differentiate b/w Adding a new entry
@@ -152,14 +152,14 @@ public class ProductsControllerAdmin implements Initializable {
 
     @FXML
     private void checkItemExistence(KeyEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
 
         String barcode = "", productName = "", description = "", category = "";
         Double salePrice = 0.00, stock = 0.00;
 
         if (event.getSource().equals(barcodeField) && event.getCode().equals(KeyCode.ENTER)) {
             try {
-                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM products WHERE barcodeField =  ?");
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM products WHERE barcode =  ?");
                 preparedStatement.setString(1, barcodeField.getText());
 
                 ResultSet itemResultSet = preparedStatement.executeQuery();
@@ -199,7 +199,7 @@ public class ProductsControllerAdmin implements Initializable {
         String description;
         if (itemResultSet.next()) {
 
-            barcode = itemResultSet.getString("barcodeField");
+            barcode = itemResultSet.getString("barcode");
             productName = itemResultSet.getString("productName");
             salePrice = itemResultSet.getDouble("salePrice");
             stock = itemResultSet.getDouble("stock");
@@ -294,14 +294,14 @@ public class ProductsControllerAdmin implements Initializable {
 
     private void reloadRecords() {
         itemList.clear();
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
             PreparedStatement getItemList = connection.prepareStatement("SELECT *" +
-                    "FROM products ORDER BY barcodeField");
+                    "FROM products ORDER BY barcode");
             ResultSet itemResultSet = getItemList.executeQuery();
 
             while (itemResultSet.next()) {
-                Item item = new Item(itemResultSet.getString("barcodeField"),
+                Item item = new Item(itemResultSet.getString("barcode"),
                         itemResultSet.getString("productName"),
                         itemResultSet.getDouble("salePrice"),
                         itemResultSet.getDouble("stock"),
@@ -400,7 +400,7 @@ public class ProductsControllerAdmin implements Initializable {
 
         } else {
             try {
-                Connection con = DBConnection.getConnection();
+                Connection con = DBConnection.localConnection();
                 ObservableList<String> list = FXCollections.observableArrayList();
                 PreparedStatement preparedStatement = con.prepareStatement("select * from categories");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -430,7 +430,8 @@ public class ProductsControllerAdmin implements Initializable {
 
 
     public void setRemoveProduct() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
+        Connection localConnection = DBConnection.localConnection();
 
 
         if (productNameTextField.getText().isEmpty()) {
@@ -447,7 +448,9 @@ public class ProductsControllerAdmin implements Initializable {
             try {
                 String product = productNameTextField.getText();
                 PreparedStatement preparedStatement = connection.prepareStatement("delete from products where productName=?");
+                PreparedStatement serverPreparedStatement = serverConnection.prepareStatement("delete from products where productName=?");
                 preparedStatement.setString(1, productNameTextField.getText());
+                serverPreparedStatement.setString(1, productNameTextField.getText());
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Delete");
@@ -461,6 +464,7 @@ public class ProductsControllerAdmin implements Initializable {
 
                 if (result.get() == ButtonType.OK) {
                     preparedStatement.executeUpdate();
+                    serverPreparedStatement.executeUpdate();
 
                     new PromptDialogController("Operation Successful!", product + " has been deleted Successfully");
                 }
@@ -495,7 +499,7 @@ public class ProductsControllerAdmin implements Initializable {
         unEditableFields();
 
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
 
         btnGoBack.setOnAction(e -> {
             itemListPane.setVisible(false);  //Setting item list pane visible
@@ -537,10 +541,13 @@ public class ProductsControllerAdmin implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.serverConnection();
+            Connection serverConnection = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = connection.prepareStatement("DELETE FROM  products WHERE barcode = " + barcodeField.getText());
+                PreparedStatement serverPs = serverConnection.prepareStatement("DELETE FROM  products WHERE barcode = " + barcodeField.getText());
                 ps.executeUpdate();
+                serverPs.executeUpdate();
 
                 TrayNotification notification = new TrayNotification();
                 notification.setTray("Operation Successful.", "Item is deleted from the database. Restart or refresh to see effective result.", NotificationType.ERROR);
@@ -563,7 +570,7 @@ public class ProductsControllerAdmin implements Initializable {
             itemPane.setVisible(true); //Setting item pane visible
         });
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM products WHERE stock <=" + 5);
             ResultSet itemResultSet = ps.executeQuery();
@@ -571,7 +578,7 @@ public class ProductsControllerAdmin implements Initializable {
             ObservableList<Item> outOfStk = FXCollections.observableArrayList();
 
             while (itemResultSet.next()) {
-                Item item = new Item(itemResultSet.getString("barcodeField"),
+                Item item = new Item(itemResultSet.getString("barcode"),
                         itemResultSet.getString("productName"),
                         itemResultSet.getDouble("salePrice"),
                         itemResultSet.getDouble("stock"),
@@ -643,7 +650,7 @@ public class ProductsControllerAdmin implements Initializable {
 
 
         } else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.localConnection();
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT max(itemID) FROM products");
                 ResultSet rs = ps.executeQuery();
@@ -687,9 +694,9 @@ public class ProductsControllerAdmin implements Initializable {
      * @return: The search result of the query
      */
     private ObservableList<Item> searchWithID(Long id) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
 
-        String idSQL = "SELECT * FROM products WHERE barcodeField like  ?";
+        String idSQL = "SELECT * FROM products WHERE barcode like  ?";
 
         ObservableList<Item> searchResult = FXCollections.observableArrayList(); //list to hold search result
 
@@ -701,7 +708,7 @@ public class ProductsControllerAdmin implements Initializable {
 
             //Getting values from Items result set
             while (itemResultSet.next()) {
-                Item item = new Item(itemResultSet.getString("barcodeField"),
+                Item item = new Item(itemResultSet.getString("barcode"),
                         itemResultSet.getString("productName"),
                         itemResultSet.getDouble("salePrice"),
 
@@ -733,7 +740,7 @@ public class ProductsControllerAdmin implements Initializable {
      */
 
     private ObservableList<Item> searchWithName(String name) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
 
         String nameSQL = "SELECT * FROM products WHERE productName like ? ";
 
@@ -747,7 +754,7 @@ public class ProductsControllerAdmin implements Initializable {
 
             //Getting values from customers result set
             while (itemResultSet.next()) {
-                Item item = new Item(itemResultSet.getString("barcodeField"),
+                Item item = new Item(itemResultSet.getString("barcode"),
                         itemResultSet.getString("productName"),
                         itemResultSet.getDouble("salePrice"),
                         itemResultSet.getDouble("stock"),
@@ -900,23 +907,33 @@ public class ProductsControllerAdmin implements Initializable {
     }
 
     private void addRecordToDatabase() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
+        Connection serverCon = DBConnection.serverConnection();
         try {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO products(barcodeField, productName, description, stock, salePrice, category) VALUES( ?, ?, ?, ?,?, ?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO products(barcode, productName, description, stock, salePrice, category) VALUES( ?, ?, ?, ?,?, ?)");
+            PreparedStatement serverPs = serverCon.prepareStatement("INSERT INTO products(barcode, productName, description, stock, salePrice, category) VALUES( ?, ?, ?, ?,?, ?)");
 
             ps.setString(1, barcodeField.getText());
             ps.setString(2, productNameTextField.getText());
             ps.setString(3, descriptionTextArea.getText());
+
+            serverPs.setString(1, barcodeField.getText());
+            serverPs.setString(2, productNameTextField.getText());
+            serverPs.setString(3, descriptionTextArea.getText());
             if (validateStock(stockTextField.getText())) {
                 ps.setDouble(4, Double.parseDouble(stockTextField.getText()));
+                serverPs.setDouble(4, Double.parseDouble(stockTextField.getText()));
             }
 
             if (validateAmount(priceTextField.getText())) {
                 ps.setDouble(5, Double.parseDouble(priceTextField.getText()));
+                serverPs.setDouble(5, Double.parseDouble(priceTextField.getText()));
             }
 
             ps.setString(6, categoryComboBox.getSelectionModel().getSelectedItem());
+            serverPs.setString(6, categoryComboBox.getSelectionModel().getSelectedItem());
             ps.executeUpdate();
+            serverPs.executeUpdate();
 
             TrayNotification notification = new TrayNotification();
             notification.setTray("New Product", "Successfully Added", NotificationType.SUCCESS);
@@ -930,7 +947,8 @@ public class ProductsControllerAdmin implements Initializable {
     }
 
     private void updateRecord() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
+        Connection serverCon = DBConnection.serverConnection();
         try {
             //first get all categories from database
             try {
@@ -953,21 +971,30 @@ public class ProductsControllerAdmin implements Initializable {
                 e.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement("UPDATE products SET barcodeField=?,productName=?,salePrice=?,stock=?,description=?,category=? WHERE productName =? ");
+            PreparedStatement ps = con.prepareStatement("UPDATE products SET barcode=?,productName=?,salePrice=?,stock=?,description=?,category=? WHERE productName =? ");
+            PreparedStatement serverPs = serverCon.prepareStatement("UPDATE products SET barcodeField=?,productName=?,salePrice=?,stock=?,description=?,category=? WHERE productName =? ");
             ps.setString(1, barcodeField.getText());
+            serverPs.setString(1, barcodeField.getText());
             ps.setString(2, productNameTextField.getText());
+            serverPs.setString(2, productNameTextField.getText());
             Double salePrice = 0.0;
             if (!priceTextField.getText().equals("")) {
                 salePrice = Double.valueOf(priceTextField.getText());
             }
 
             ps.setDouble(3, salePrice);
+            serverPs.setDouble(3, salePrice);
             ps.setDouble(4, Double.valueOf(stockTextField.getText()));
+            serverPs.setDouble(4, Double.valueOf(stockTextField.getText()));
             ps.setString(5, descriptionTextArea.getText());
+            serverPs.setString(5, descriptionTextArea.getText());
             ps.setString(6, categoryComboBox.getValue());
+            serverPs.setString(6, categoryComboBox.getValue());
             ps.setString(7, oldProductName);
+            serverPs.setString(7, oldProductName);
 
             ps.executeUpdate();
+            serverPs.executeUpdate();
             TrayNotification notification = new TrayNotification();
             notification.setTray("Success", " Item updated", NotificationType.SUCCESS);
             notification.showAndDismiss(Duration.seconds(3));
@@ -1014,7 +1041,7 @@ public class ProductsControllerAdmin implements Initializable {
     //getCategories from db
     public void getCategories(JFXComboBox<String> comboBox) {
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         ObservableList<String> categories = FXCollections.observableArrayList();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from categories");
@@ -1045,7 +1072,7 @@ public class ProductsControllerAdmin implements Initializable {
 
 
             while (resultSet.next()) {
-                String barcode = resultSet.getString("barcodeField");
+                String barcode = resultSet.getString("barcode");
                 String productName = resultSet.getString("productName");
                 Double price = resultSet.getDouble("salePrice");
                 String descriptionS = resultSet.getString("description");
@@ -1086,7 +1113,7 @@ public class ProductsControllerAdmin implements Initializable {
                 ResultSet resultSet = selectPreparedStatement.executeQuery();
                 searchWithCategory.clear();
                 while (resultSet.next()) {
-                    searchWithCategory.addAll(new Item(resultSet.getString("barcodeField"),
+                    searchWithCategory.addAll(new Item(resultSet.getString("barcode"),
                             resultSet.getString("productName"),
                             resultSet.getDouble("salePrice"),
                             resultSet.getDouble("purchasedPrice"),
@@ -1110,7 +1137,7 @@ public class ProductsControllerAdmin implements Initializable {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 searchWithPrice.clear();
                 while (resultSet.next()) {
-                    searchWithPrice.addAll(new Item(resultSet.getString("barcodeField"),
+                    searchWithPrice.addAll(new Item(resultSet.getString("barcode"),
                             resultSet.getString("productName"),
                             resultSet.getDouble("salePrice"),
                             resultSet.getDouble("purchasedPrice"),
@@ -1246,7 +1273,7 @@ public class ProductsControllerAdmin implements Initializable {
     public void insertIntoPrintCategory() {
         for (Item items : searchWithCategory) {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printproductcat`(`barcodeField`, `productName`, `salePrice`, `purchasedPrice`, `stock`, `description`, `category`, `dateAdded`) VALUES (?,?,?,?,?,?,?,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `printproductcat`(`barcode`, `productName`, `salePrice`, `purchasedPrice`, `stock`, `description`, `category`, `dateAdded`) VALUES (?,?,?,?,?,?,?,?)");
                 preparedStatement.setString(1, items.getBarcode());
                 preparedStatement.setString(2, items.getName());
                 preparedStatement.setDouble(3, items.getSalePrice());

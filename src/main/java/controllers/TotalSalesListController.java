@@ -1,6 +1,5 @@
 package main.java.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -13,8 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.java.entity.Sale;
 import main.java.others.DBConnection;
-import main.java.printing.PDFPrinter;
-import main.java.printing.Printer;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -77,7 +74,7 @@ public class TotalSalesListController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializeTableColumns();
         today.setText(LocalDate.now().toString());
-        connection = DBConnection.getConnection();
+        connection = DBConnection.serverConnection();
         todaySales.setText("Today's Sales");
         clearFields.setOnAction(e -> setClearFields());
         searchButton.setOnAction(e -> searchWithDate());
@@ -108,7 +105,7 @@ public class TotalSalesListController implements Initializable {
 
 
     private void print() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
         if (!searchField.getText().equals("")&& !salesTableView.getItems().isEmpty()) {
 
@@ -363,7 +360,7 @@ public class TotalSalesListController implements Initializable {
         employeeName.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
 
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         ResultSet salesList;
 
 

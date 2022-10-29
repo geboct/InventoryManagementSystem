@@ -66,7 +66,7 @@ public class TransactionListController implements Initializable {
         rentalID.setCellValueFactory(new PropertyValueFactory<>("purchaseOrRentID"));
         trIssuedR.setCellValueFactory(new PropertyValueFactory<>("issuedBy"));
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM financialtronpurchase");
             PreparedStatement ps2 = con.prepareStatement("SELECT * FROM financialtronrental");

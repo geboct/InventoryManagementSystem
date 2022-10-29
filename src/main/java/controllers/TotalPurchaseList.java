@@ -1,3 +1,4 @@
+/*
 package main.java.controllers;
 
 
@@ -95,7 +96,7 @@ public class TotalPurchaseList implements Initializable {
                     preparedStatement.setString(1, purchases.getProductName());
                     System.out.println();
                     preparedStatement.setDouble(2, purchases.getQuantity());
-                    preparedStatement.setDouble(3, purchases.getTotal();
+                    preparedStatement.setDouble(3, purchases.getTotal());
                     preparedStatement.setDouble(4, purchases.getTotal());
                     preparedStatement.setString(5, String.valueOf(purchases.getDate()));
                     preparedStatement.setString(6, purchases.getEmployeeName());
@@ -418,3 +419,4 @@ public class TotalPurchaseList implements Initializable {
 
 
 }
+*/

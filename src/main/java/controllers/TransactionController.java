@@ -74,7 +74,7 @@ public class TransactionController implements Initializable {
     }
 
     private void loadTransactionWindowContents() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT firstName, lastName FROM customers WHERE customerID =" + cusID);
             ResultSet rs = preparedStatement.executeQuery();
@@ -149,7 +149,7 @@ public class TransactionController implements Initializable {
     }
 
     private void finalizePurchase() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         //Updating Purchase
         try {
@@ -203,7 +203,7 @@ public class TransactionController implements Initializable {
     }
 
     private void finalizeRental() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         //Updating Purchase
         try {

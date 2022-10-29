@@ -2,7 +2,6 @@ package main.java.admin;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -50,10 +49,13 @@ public class EmployeeListController implements Initializable {
 
     @FXML
     void deleteEmp(ActionEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
+        Connection serverCon = DBConnection.localConnection();
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM user WHERE username='"+txtUser.getText()+"'");
+            PreparedStatement serverPs = con.prepareStatement("DELETE FROM user WHERE username='"+txtUser.getText()+"'");
             ps.executeUpdate();
+            serverPs.executeUpdate();
 
             txtUser.getScene().getWindow().hide();
             new PromptDialogController("Operation Successful", "Record deleted");
@@ -66,12 +68,19 @@ public class EmployeeListController implements Initializable {
 
     @FXML
     void updateEmp(ActionEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
+        Connection serverConnection = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("UPDATE user SET username = ?, email = ?, accessLevel = ? WHERE username = '"+txtUser.getText()+"'");
             ps.setString(1, txtUser.getText());
             ps.setString(2, txtEmail.getText());
             ps.setString(3, cboAccessLevel.getValue());
+
+            PreparedStatement serverPs = serverConnection.prepareStatement("UPDATE user SET username = ?, email = ?, accessLevel = ? WHERE username = '"+txtUser.getText()+"'");
+            serverPs.setString(1, txtUser.getText());
+            serverPs.setString(2, txtEmail.getText());
+            serverPs.setString(3, cboAccessLevel.getValue());
+            serverPs.executeUpdate();
             ps.executeUpdate();
 
             txtUser.getScene().getWindow().hide();
@@ -101,7 +110,7 @@ public class EmployeeListController implements Initializable {
     }
 
     private void loadTableData() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         ObservableList<Employee> list = FXCollections.observableArrayList();
 
         // Setting cell value factories to populate table with database query result set

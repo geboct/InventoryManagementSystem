@@ -16,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.controlsfx.control.textfield.TextFields;
 import main.java.others.DBConnection;
 import main.java.others.Purchase;
 
@@ -81,7 +80,7 @@ public class SalesController implements Initializable{
 
     private void generateLineChart() {
         lineChart.getData().clear();
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT purchaseDate, sum(payAmount) FROM purchases WHERE User_username='"+ LogInController.loggerUsername+"' GROUP BY purchaseDate ORDER BY UNIX_TIMESTAMP(purchaseDate) DESC LIMIT 15");
             ResultSet rs = ps.executeQuery();
@@ -138,7 +137,7 @@ public class SalesController implements Initializable{
     @FXML
     void loadAgain(ActionEvent event) {
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         PreparedStatement getSellsList = null;
         try {
@@ -203,7 +202,7 @@ public class SalesController implements Initializable{
         btnProcced.setTooltip(tooltip);
 
         // Getting new connection to db to set new purchaseID
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         try{
             PreparedStatement ps = con.prepareStatement("SELECT MAX(purchaseID) FROM purchases");
@@ -260,7 +259,7 @@ public class SalesController implements Initializable{
                 TransactionController.due = Double.valueOf(lblCost.getText()) - paid;
 
 
-                Connection connection = DBConnection.getConnection();
+                Connection connection = DBConnection.serverConnection();
 
                 //Checking for stock availability
                 PreparedStatement checkItemStock = connection.prepareStatement("SELECT stock FROM item WHERE itemID = "+Integer.valueOf(txtItemId.getText()));
@@ -380,7 +379,7 @@ public class SalesController implements Initializable{
                 }
 
                 if(flag) {
-                    Connection con = DBConnection.getConnection();
+                    Connection con = DBConnection.serverConnection();
                     try {
                         PreparedStatement ps = con.prepareStatement("SELECT salePrice FROM item WHERE itemID = " + Integer.valueOf(txtItemId.getText()));
                         ResultSet rs = ps.executeQuery();

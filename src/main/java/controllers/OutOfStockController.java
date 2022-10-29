@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import main.java.others.DBConnection;
 import main.java.others.Item;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -28,7 +27,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class OutOfStockController implements Initializable {
@@ -62,7 +60,7 @@ public class OutOfStockController implements Initializable {
     public static ArrayList<String> itemNames = new ArrayList<>();
     ObservableList<Item> outOfStk = FXCollections.observableArrayList();
     ObservableList<Item> listOfOutOfStock = FXCollections.observableArrayList();
-    Connection con = DBConnection.getConnection();
+    Connection con = DBConnection.localConnection();
 
 
     @Override

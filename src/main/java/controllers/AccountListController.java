@@ -56,7 +56,7 @@ public class AccountListController implements Initializable {
 
     @FXML
     void deleteAcc(ActionEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM accounts WHERE acccountID = "+Integer.valueOf(txtAccID.getText()));
             ps.executeUpdate();
@@ -72,7 +72,7 @@ public class AccountListController implements Initializable {
 
     @FXML
     void updateAcc(ActionEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("UPDATE accounts SET acccountID = ?, accountName = ?, Customers_customerID = ?, User_username = ?, payMethod = ? WHERE acccountID = "+Integer.valueOf(txtAccID.getText()));
             ps.setInt(1, Integer.valueOf(txtAccID.getText()));
@@ -101,7 +101,7 @@ public class AccountListController implements Initializable {
             }
         });
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         ObservableList<Account> list = FXCollections.observableArrayList();
 
         accID.setCellValueFactory(new PropertyValueFactory<>("accID"));

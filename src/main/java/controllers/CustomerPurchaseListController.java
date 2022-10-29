@@ -57,7 +57,7 @@ public class CustomerPurchaseListController implements Initializable {
         empName.setCellValueFactory(new PropertyValueFactory<>("user"));
 
         try {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.serverConnection();
             PreparedStatement getSellsList = con.prepareStatement("SELECT * FROM purchases WHERE Customers_customerID = "+customerID);
             ResultSet sellsList = getSellsList.executeQuery();
 

@@ -73,7 +73,7 @@ public class AdminDashboardController implements Initializable {
      * select all users
      */
     private void selectAllUsers() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT( *) FROM `user`");
@@ -91,7 +91,7 @@ public class AdminDashboardController implements Initializable {
      * select all categories
      */
     private void selectAllCategories() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT( *) FROM `categories`");
@@ -108,7 +108,7 @@ public class AdminDashboardController implements Initializable {
      * select all products out of stock
      */
     private void SelectAllOutOfStock() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from products where stock <5 ORDER by productName DESC ");
@@ -131,7 +131,7 @@ public class AdminDashboardController implements Initializable {
      * select all products
      */
     private void selectAllProducts() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT( productName) as productName FROM `products`");
@@ -153,7 +153,7 @@ public class AdminDashboardController implements Initializable {
      * select all sales
      */
     private void selectAllSales() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT( *) FROM `sales`");
@@ -171,7 +171,7 @@ public class AdminDashboardController implements Initializable {
      * select all high selling products
      */
     private void selectAllHighSellingProducts() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             ObservableList<Product> order = FXCollections.observableArrayList();
@@ -191,7 +191,7 @@ public class AdminDashboardController implements Initializable {
      * select all high selling products
      */
     private void selectRecentlyAddedProducts() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
 
             ObservableList<Product> recentlyAdded = FXCollections.observableArrayList();

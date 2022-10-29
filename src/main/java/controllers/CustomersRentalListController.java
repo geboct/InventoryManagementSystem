@@ -50,7 +50,7 @@ public class CustomersRentalListController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         today.setText(LocalDate.now().toString());
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         //Setting up table columns
         rentID.setCellValueFactory(new PropertyValueFactory<>("rentID"));
         itemID.setCellValueFactory(new PropertyValueFactory<>("itemID"));

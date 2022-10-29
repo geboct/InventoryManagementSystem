@@ -57,7 +57,7 @@ public class NewEmployeeController implements Initializable {
         }
 
         else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO user(userID, username, password, email, phone, accessLevel) VALUES (?,?,?,?,?,?)");
                ps.setInt(1, Integer.parseInt(txtUserID.getText()));

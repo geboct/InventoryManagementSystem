@@ -51,7 +51,7 @@ public class LogInController implements Initializable {
     private static final String RED = "-fx-text-fill: red";
     public static String loggerUsername = "";
     public static String loggerAccessLevel = "";
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.localConnection();
 
     @FXML
     void ctrlLogInCheck(ActionEvent event) {
@@ -102,9 +102,9 @@ public class LogInController implements Initializable {
      */
     @Override
     public void initialize(java.net.URL location, ResourceBundle resources) {
+txtPasswordShown.setVisible(false);
 
-
-        try {
+       /* try {
             PreparedStatement getCredents = connection.prepareStatement("SELECT * FROM usercredents");
             ResultSet resultSet = getCredents.executeQuery();
 
@@ -130,7 +130,7 @@ public class LogInController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+*/
 
        
 
@@ -196,9 +196,7 @@ public class LogInController implements Initializable {
                             base.getIcons().setAll(new Image("/images/logo.png"));
                             base.getIcons().add(new Image("/main/resources/icons/inventory.png"));
                             base.setScene(scene);
-                            base.setOnCloseRequest(ee -> {
-                                ee.consume();
-                            });
+                            base.setOnCloseRequest(ee -> ee.consume());
                             base.setMaximized(true);
                             base.show();
                             Stage logIn = (Stage) btnLogIn.getScene().getWindow(); //Getting current window

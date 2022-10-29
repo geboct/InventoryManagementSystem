@@ -138,7 +138,7 @@ public class RentalsController implements Initializable {
                 TransactionController.payAmount = paid;
                 TransactionController.due = Double.valueOf(lblCost.getText()) - paid;
 
-                Connection connection = DBConnection.getConnection();
+                Connection connection = DBConnection.serverConnection();
 
                 //Checking for stock availability
                 PreparedStatement checkItemStock = connection.prepareStatement("SELECT stock FROM item WHERE itemID = "+Integer.valueOf(txtItemId.getText()));
@@ -266,7 +266,7 @@ public class RentalsController implements Initializable {
 
             if (flag) {
                 //Getting rental rate from database for the item
-                Connection connection = DBConnection.getConnection();
+                Connection connection = DBConnection.serverConnection();
                 try {
                     PreparedStatement ps = connection.prepareStatement("SELECT rentRate FROM item WHERE itemID = "+Integer.valueOf(txtItemId.getText()));
                     ResultSet resultSet = ps.executeQuery();
@@ -294,7 +294,7 @@ public class RentalsController implements Initializable {
     @FXML
     void loadAgain(ActionEvent event) {
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         PreparedStatement getSellsList = null;
         try {
@@ -345,7 +345,7 @@ public class RentalsController implements Initializable {
 
     private void generateLineChart() {
         lineChart.getData().clear();
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT rentalDate, sum(paid) FROM rentals WHERE User_username ='"+ LogInController.loggerUsername+"' GROUP BY rentalDate ORDER BY UNIX_TIMESTAMP(rentalDate) DESC LIMIT 15");
             ResultSet rs = ps.executeQuery();
@@ -394,7 +394,7 @@ public class RentalsController implements Initializable {
         txtRentalDate.setValue(LocalDate.now()); //Initializing with current date
 
         //Getting new connection to db to set new rentalID
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         try{
             PreparedStatement ps = con.prepareStatement("SELECT MAX(rentalID) FROM rentals");

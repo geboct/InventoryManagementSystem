@@ -1,14 +1,12 @@
 package main.java.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.others.DBConnection;
@@ -34,7 +32,7 @@ import java.util.ResourceBundle;
 
 public class CheckoutController implements Initializable {
 
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.serverConnection();
 
     @FXML
     private JFXTextField customerNameField;
@@ -77,7 +75,7 @@ public class CheckoutController implements Initializable {
         //cart must be cleared to avoid duplication on when user clicks pay
         //deleting items from cart
 
-       // deleteItemsFromCart(connection);
+        // deleteItemsFromCart(connection);
 
 
     }
@@ -136,13 +134,13 @@ public class CheckoutController implements Initializable {
         if (checkFields()) {
 
 
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.localConnection();
             try {
 
 
                 assert connection != null;
-                PreparedStatement preparedStatement = connection.prepareStatement(" Select * from cart");
-                ResultSet resultSet = preparedStatement.executeQuery();
+                final PreparedStatement[] preparedStatement = {connection.prepareStatement(" Select * from cart")};
+                ResultSet resultSet = preparedStatement[0].executeQuery();
                 while (resultSet.next()) {
                     String productName = resultSet.getString("productName");
                     double salePrice = resultSet.getDouble("price");
@@ -155,8 +153,10 @@ public class CheckoutController implements Initializable {
 
                     //inserting the purchased product into sales
                     try {
+                        Connection serverConnection = DBConnection.serverConnection();
 
                         PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO sales( productName, price, quantity, total, grandTotal, amountPaid,balance,date,customerName,employeeName) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                        PreparedStatement serverInsertStatement = serverConnection.prepareStatement("INSERT INTO sales( productName, price, quantity, total, grandTotal, amountPaid,balance,date,customerName,employeeName) VALUES (?,?,?,?,?,?,?,?,?,?)");
 
                         insertStatement.setString(1, productName);
                         insertStatement.setDouble(2, salePrice);
@@ -168,6 +168,18 @@ public class CheckoutController implements Initializable {
                         insertStatement.setDate(8, Date.valueOf(LocalDate.now()));
                         insertStatement.setString(9, customerNameField.getText());
                         insertStatement.setString(10, LogInController.loggerUsername);
+
+                        serverInsertStatement.setString(1, productName);
+                        serverInsertStatement.setDouble(2, salePrice);
+                        serverInsertStatement.setDouble(3, quantity);
+                        serverInsertStatement.setDouble(4, total);
+                        serverInsertStatement.setDouble(5, grandTotal);
+                        serverInsertStatement.setDouble(6, amountPaid);
+                        serverInsertStatement.setDouble(7, change);
+                        serverInsertStatement.setDate(8, Date.valueOf(LocalDate.now()));
+                        serverInsertStatement.setString(9, customerNameField.getText());
+                        serverInsertStatement.setString(10, LogInController.loggerUsername);
+                        serverInsertStatement.executeUpdate();
                         insertStatement.executeUpdate();
                         System.out.println("insert into sales successful");
 
@@ -175,7 +187,6 @@ public class CheckoutController implements Initializable {
                         updateStock();
 
 
-                        //inserting into print invoice table
                         insertIntoPrintInvoice(
                                 productName,
                                 salePrice,
@@ -185,7 +196,10 @@ public class CheckoutController implements Initializable {
                                 amountPaid,
                                 change,
                                 LogInController.loggerUsername,
-                                customerNameField.getText(),"Brills Innovation");
+                                customerNameField.getText());
+
+                        //inserting into print invoice table
+
 
                         //since payment has been made, our cart is supposed to be empty
                         //deleting items from cart
@@ -198,6 +212,30 @@ public class CheckoutController implements Initializable {
                         Stage stage = (Stage) makePaymentButton.getScene().getWindow();
                         stage.close();
 
+                        try {
+                            JasperDesign jasperDesign = JRXmlLoader.load("receipt.jrxml");
+                            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
+
+                            JasperViewer.viewReport(jasperPrint, false);
+                            // new Printer(jasperPrint, "EPSON TM-T20II Receipt");
+                            System.out.println("printing done");
+
+
+                            String query = "delete from printinvoice";
+
+                            preparedStatement[0] = connection.prepareStatement(query);
+
+                            preparedStatement[0].executeUpdate();
+                            System.out.println("New Sale deleted from print Invoice Table after printing");
+                        } catch (Exception ee) {
+                            TrayNotification notification = new TrayNotification();
+                            notification.setTray("Cannot Locate Report", ee.getMessage(), NotificationType.ERROR);
+                            notification.showAndDismiss(Duration.seconds(3));
+                            // new PromptDialogController("Cannot Locate Report", "Specify report location");
+                            ee.printStackTrace();
+                        }
+
 
                     } catch (Exception e) {
                         e.getMessage();
@@ -207,30 +245,6 @@ public class CheckoutController implements Initializable {
 
                 }
 
-
-                try {
-                    JasperDesign jasperDesign = JRXmlLoader.load("receipt.jrxml");
-                    JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
-
-                    JasperViewer.viewReport(jasperPrint, false);
-                    // new Printer(jasperPrint, "EPSON TM-T20II Receipt");
-                    System.out.println("printing done");
-
-
-                    String query = "delete from printinvoice";
-
-                    preparedStatement = connection.prepareStatement(query);
-
-                    preparedStatement.executeUpdate();
-                    System.out.println("New Sale deleted from print Invoice Table after printing");
-                } catch (Exception ee) {
-                    TrayNotification notification=new TrayNotification();
-                    notification.setTray("Cannot Locate Report",ee.getMessage(),NotificationType.ERROR);
-                    notification.showAndDismiss(Duration.seconds(3));
-                   // new PromptDialogController("Cannot Locate Report", "Specify report location");
-                    ee.printStackTrace();
-                }
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -246,8 +260,8 @@ public class CheckoutController implements Initializable {
 
         try {
             //getting the names of product and quantity from cart
-
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from cart");
+            Connection localConnection = DBConnection.localConnection();
+            PreparedStatement preparedStatement = localConnection.prepareStatement("select * from cart");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 productName = resultSet.getString("productName");
@@ -266,12 +280,16 @@ public class CheckoutController implements Initializable {
 
                 //inserting the new stock into database
                 //NOTE: the already stock will be replaced with the new one
-                PreparedStatement insertNewStockStatement = connection.prepareStatement("UPDATE `products` SET stock=? WHERE productName=?  ");
+                PreparedStatement insertNewStockStatement = localConnection.prepareStatement("UPDATE `products` SET stock=? WHERE productName=?  ");
                 insertNewStockStatement.setDouble(1, remainingStock);
                 insertNewStockStatement.setString(2, productName);
+                PreparedStatement serverInsertNewStockStatement = connection.prepareStatement("UPDATE `products` SET stock=? WHERE productName=?  ");
+                serverInsertNewStockStatement.setDouble(1, remainingStock);
+                serverInsertNewStockStatement.setString(2, productName);
                 insertNewStockStatement.executeUpdate();
+                serverInsertNewStockStatement.executeUpdate();
 
-
+                System.out.println("stock updated");
             }
 
 
@@ -342,10 +360,10 @@ public class CheckoutController implements Initializable {
      * inserting the sale into the print invoice table
      **/
 
-    public void insertIntoPrintInvoice(String productName, double unitPrice, double quantity, double total, double grandTotal, double amountPaid, double balance, String employeeName, String customername,String companyName) {
+    public void insertIntoPrintInvoice(String productName, double unitPrice, double quantity, double total, double grandTotal, double amountPaid, double balance, String employeeName, String customername) {
         try {
-
-            String query = "insert into printInvoice( productName, unitPrice, quantity, Total,grandTotal,amountPaid,balance,employeeName,customerName,companyname) values(?,?,?,?,?,?,?,?,?,?)";
+Connection connection=DBConnection.localConnection();
+            String query = "insert into printinvoice( productName, unitPrice, quantity, Total,grandTotal,amountPaid,balance,employeeName,customerName) values(?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productName);
@@ -357,7 +375,6 @@ public class CheckoutController implements Initializable {
             preparedStatement.setDouble(7, balance);
             preparedStatement.setString(8, employeeName);
             preparedStatement.setString(9, customername);
-            preparedStatement.setString(10,companyName);
             preparedStatement.executeUpdate();
             System.out.println("new Sale inserted into invoice success");
         } catch (Exception ee) {

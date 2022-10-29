@@ -71,7 +71,8 @@ public class adminBaseController implements Initializable {
     private JFXButton temp = null;
     private JFXButton recover = null;
     private static boolean anchorFlag = false;
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.serverConnection();
+    Connection localConnection = DBConnection.localConnection();
     /**
      * FXML_URL will be used to store locations of
      * main.resources.view files and it will be used to navigate

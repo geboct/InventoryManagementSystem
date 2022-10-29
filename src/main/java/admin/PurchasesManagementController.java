@@ -177,7 +177,7 @@ public class PurchasesManagementController implements Initializable {
     private main.java.others.Item onView = null;
     String currentBC;
 
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.serverConnection();
     /**
      * addFlag will differentiate b/w Adding a new entry
      * and updating an existing entry.
@@ -224,7 +224,7 @@ public class PurchasesManagementController implements Initializable {
      * select all purchases from db
      */
     private void selectAllPurchases() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from purchases");
@@ -297,7 +297,7 @@ public class PurchasesManagementController implements Initializable {
 
     @FXML
     private void checkItemExistence(KeyEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String barcode = "", productName = "", description = "", category = "";
         Double salePrice = 0.00, stock = 0.00;
@@ -424,7 +424,7 @@ public class PurchasesManagementController implements Initializable {
 
     private void reloadRecords() {
         itemList.clear();
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement getItemList = connection.prepareStatement("SELECT *" +
                     "FROM products ORDER BY barcodeField");
@@ -530,7 +530,7 @@ public class PurchasesManagementController implements Initializable {
 
         } else {
             try {
-                Connection con = DBConnection.getConnection();
+                Connection con = DBConnection.serverConnection();
                 ObservableList<String> list = FXCollections.observableArrayList();
                 PreparedStatement preparedStatement = con.prepareStatement("select * from categories");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -560,7 +560,7 @@ public class PurchasesManagementController implements Initializable {
 
 
     public void setRemoveProduct() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
 
         if (productNameTextField.getText().isEmpty()) {
@@ -631,7 +631,7 @@ public class PurchasesManagementController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = connection.prepareStatement("DELETE FROM  products WHERE barcode = " + barcodeField.getText());
                 ps.executeUpdate();
@@ -737,7 +737,7 @@ public class PurchasesManagementController implements Initializable {
 
 
         } else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT max(itemID) FROM products");
                 ResultSet rs = ps.executeQuery();
@@ -781,7 +781,7 @@ public class PurchasesManagementController implements Initializable {
      * @return: The search result of the query
      */
     private ObservableList<main.java.others.Item> searchWithID(Long id) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String idSQL = "SELECT * FROM products WHERE barcodeField like  ?";
 
@@ -827,7 +827,7 @@ public class PurchasesManagementController implements Initializable {
      */
 
     private ObservableList<main.java.others.Item> searchWithName(String name) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String nameSQL = "SELECT * FROM products WHERE productName like ? ";
 
@@ -1198,7 +1198,7 @@ public class PurchasesManagementController implements Initializable {
     //getCategories from db
     public void getCategories(JFXComboBox<String> comboBox) {
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         ObservableList<String> categories = FXCollections.observableArrayList();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from categories");

@@ -16,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import main.java.admin.SalesModel.SalesModel;
 import main.java.controllers.CheckoutController;
@@ -125,7 +124,7 @@ public class SalesManagementController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
     //pos properties end here
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.localConnection();
 
 
     ObservableList<Product> listAllProducts = FXCollections.observableArrayList();
@@ -136,7 +135,7 @@ public class SalesManagementController implements Initializable {
 
 
     private void onCartItemClicked(MouseEvent event) {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         if (event.getClickCount() == 2) {
             if (posCartTableView.getSelectionModel().getSelectedItem() == null) {
 
@@ -217,7 +216,7 @@ public class SalesManagementController implements Initializable {
     }
 
     private void insertIntoCart(String productName, double price, double quantity, double total) {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO cart(productName, price, quantity, total) VALUES (?,?,?,?)");
@@ -536,7 +535,7 @@ public class SalesManagementController implements Initializable {
 
     @FXML
     private void onProductsTableClicked() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
             PreparedStatement preparedStatement = null;
             if (connection != null) {
@@ -553,7 +552,7 @@ public class SalesManagementController implements Initializable {
                     posQuantityTextField.setDisable(false);
                     posQuantityTextField.setText("");
                     addButton.setText("Add");
-                    posBarcodeTextField.setText(resultSet.getString("barcodeField"));
+                    posBarcodeTextField.setText(resultSet.getString("barcode"));
                     posDescriptionTextArea.setText(resultSet.getString("description"));
                     posProductNameTextField.setText(resultSet.getString("productName"));
                     posPriceTextField.setText(String.valueOf(resultSet.getDouble("salePrice")));
@@ -601,7 +600,7 @@ public class SalesManagementController implements Initializable {
     public void selectAllProducts() {
         Connection connection;
         try {
-            connection = DBConnection.getConnection();
+            connection = DBConnection.localConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement("select * from products ");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -648,13 +647,13 @@ public class SalesManagementController implements Initializable {
      * select all sales from db
      */
     private void selectAllSales() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from sales");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                listOfSales.addAll(new SalesModel(resultSet.getString("barcode"),
+                listOfSales.addAll(new SalesModel(resultSet.getString("invoiceNumber"),
                         resultSet.getString("productName"),
                         resultSet.getDouble("price"),
                         resultSet.getDouble("quantity"),

@@ -234,7 +234,7 @@ public class CustomerController implements Initializable {
      */
 
     private Double setDue(Integer id) {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         Double purchaseDue = 0.0;
         Double rentalDue = 0.0;
         try {
@@ -384,7 +384,7 @@ public class CustomerController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.get() == ButtonType.OK) {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = connection.prepareStatement("DELETE FROM  customers WHERE customerID = "+Integer.valueOf(customerID.getText()));
                 ps.executeUpdate();
@@ -401,7 +401,7 @@ public class CustomerController implements Initializable {
     }
 
     private void reloadRecords() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement getCustomerList = connection.prepareStatement("SELECT * FROM customers");
             ResultSet customerResultSet = getCustomerList.executeQuery();
@@ -434,7 +434,7 @@ public class CustomerController implements Initializable {
      * @return: The search result of the query
      */
     private ObservableList<Customer> searchWithID(Integer id) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String idSQL = "SELECT * FROM customers WHERE customerID = ?";
 
@@ -478,7 +478,7 @@ public class CustomerController implements Initializable {
      */
 
     private ObservableList<Customer> searchWithName(String name) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         String nameSQL = "SELECT * FROM customers " +
                 "WHERE firstName COLLATE UTF8_GENERAL_CI like ? " +
                 "OR " +
@@ -591,7 +591,7 @@ public class CustomerController implements Initializable {
             btnEditModeToggle(new ActionEvent());
 
         } else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT max(customerID) FROM customers");
                 ResultSet rs = ps.executeQuery();
@@ -666,7 +666,7 @@ public class CustomerController implements Initializable {
     }
 
     private void addRecordToDatabase() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("INSERT INTO customers VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setInt(1, Integer.valueOf(customerID.getText()));
@@ -694,7 +694,7 @@ public class CustomerController implements Initializable {
     }
 
     private void updateRecord() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("UPDATE customers SET customerID = ?, firstName = ?, lastName = ?, address = ?," +
                     "phone = ?, email = ?, photo = ?, gender = ?, memberSince = ? WHERE customerID =" + Integer.valueOf(customerID.getText()));

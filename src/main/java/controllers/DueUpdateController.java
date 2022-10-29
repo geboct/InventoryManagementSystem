@@ -70,7 +70,7 @@ public class DueUpdateController implements Initializable {
         Double newAmount = Double.valueOf(txtNewPayRental.getText());
         Double newDue = Double.valueOf(txtRentalDue.getText()) - newAmount;
         Double totalPaid = Double.valueOf(txtPaidRental.getText()) + newAmount;
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE rentals SET paid = "+totalPaid+", amountDue = "+newDue+"WHERE rentalID = "+Integer.valueOf(txtRentalID.getText()));
             ps.executeUpdate();
@@ -95,7 +95,7 @@ public class DueUpdateController implements Initializable {
     void btnSearchActionRental(ActionEvent event) {
         Integer sId = Integer.valueOf(txtRentalID.getText());
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM rentals WHERE rentalID ="+sId);
             ResultSet rs = ps.executeQuery();
@@ -125,7 +125,7 @@ public class DueUpdateController implements Initializable {
     void btnSearchAction(ActionEvent event) {
         Integer sId = Integer.valueOf(txtSellId.getText());
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM purchases WHERE purchaseID ="+sId);
             ResultSet rs = ps.executeQuery();
@@ -152,7 +152,7 @@ public class DueUpdateController implements Initializable {
         Double newAmount = Double.valueOf(txtNewPay.getText());
         Double newDue = Double.valueOf(txtDue.getText()) - newAmount;
         Double totalPaid = Double.valueOf(txtPaid.getText()) + newAmount;
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE purchases SET payAmount = "+totalPaid+", amountDue = "+newDue+"WHERE purchaseID = "+Integer.valueOf(txtSellId.getText()));
             ps.executeUpdate();

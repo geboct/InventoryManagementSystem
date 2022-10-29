@@ -24,10 +24,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import main.java.controllers.PromptDialogController;
 import main.java.entity.Product;
-import main.java.entity.Purchases;
 import main.java.others.DBConnection;
 import main.java.others.Item;
-import main.java.others.Purchase;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -125,7 +123,7 @@ public class NewPurchase implements Initializable {
     private Item onView = null;
     String currentBC;
 
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.serverConnection();
     ObservableList<Product> searchList = FXCollections.observableArrayList();
 
     private static boolean addFlag = false;
@@ -155,7 +153,7 @@ public class NewPurchase implements Initializable {
 
     @FXML
     private void checkItemExistence(KeyEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String barcode = "", productName = "", description = "", category = "";
         Double salePrice = 0.00, stock = 0.00;
@@ -297,7 +295,7 @@ public class NewPurchase implements Initializable {
 
     private void reloadRecords() {
         itemList.clear();
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement getItemList = connection.prepareStatement("SELECT *" +
                     "FROM products ORDER BY barcodeField");
@@ -403,7 +401,7 @@ public class NewPurchase implements Initializable {
 
         } else {
             try {
-                Connection con = DBConnection.getConnection();
+                Connection con = DBConnection.serverConnection();
                 ObservableList<String> list = FXCollections.observableArrayList();
                 PreparedStatement preparedStatement = con.prepareStatement("select * from categories");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -433,7 +431,7 @@ public class NewPurchase implements Initializable {
 
 
     public void setRemoveProduct() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
 
         if (productNameTextField.getText().isEmpty()) {
@@ -498,7 +496,7 @@ public class NewPurchase implements Initializable {
         unEditableFields();
 
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
         btnGoBack.setOnAction(e -> {
             itemListPane.setVisible(false);  //Setting item list pane visible
@@ -540,7 +538,7 @@ public class NewPurchase implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = connection.prepareStatement("DELETE FROM  products WHERE barcode = " + barcodeField.getText());
                 ps.executeUpdate();
@@ -566,7 +564,7 @@ public class NewPurchase implements Initializable {
             itemPane.setVisible(true); //Setting item pane visible
         });
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM products WHERE stock <=" + 5);
             ResultSet itemResultSet = ps.executeQuery();
@@ -646,7 +644,7 @@ public class NewPurchase implements Initializable {
 
 
         } else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.serverConnection();
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT max(itemID) FROM products");
                 ResultSet rs = ps.executeQuery();
@@ -690,7 +688,7 @@ public class NewPurchase implements Initializable {
      * @return: The search result of the query
      */
     private ObservableList<Item> searchWithID(Long id) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String idSQL = "SELECT * FROM products WHERE barcodeField like  ?";
 
@@ -736,7 +734,7 @@ public class NewPurchase implements Initializable {
      */
 
     private ObservableList<Item> searchWithName(String name) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String nameSQL = "SELECT * FROM products WHERE productName like ? ";
 
@@ -903,7 +901,7 @@ public class NewPurchase implements Initializable {
     }
 
     private void addRecordToDatabase() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("INSERT INTO products(barcodeField, productName, description, stock, salePrice, category) VALUES( ?, ?, ?, ?,?, ?)");
 
@@ -933,7 +931,7 @@ public class NewPurchase implements Initializable {
     }
 
     private void updateRecord() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             //first get all categories from database
             try {
@@ -1017,7 +1015,7 @@ public class NewPurchase implements Initializable {
     //getCategories from db
     public void getCategories(JFXComboBox<String> comboBox) {
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         ObservableList<String> categories = FXCollections.observableArrayList();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from categories");

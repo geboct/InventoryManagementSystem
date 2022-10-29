@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import main.java.others.DBConnection;
@@ -64,7 +63,7 @@ public class CategoryController implements Initializable {
 
 
     public void addCategory() {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
         try {
             if (categoryName.getText()!="") {
                 PreparedStatement stmtInsert = con.prepareStatement("INSERT INTO categories VALUES(?)");
@@ -97,14 +96,19 @@ public class CategoryController implements Initializable {
     public void updateCategory(String selectedCategory) {
 
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
+        Connection localCon = DBConnection.localConnection();
         try {
             PreparedStatement updateCategory = con.prepareStatement("UPDATE categories SET categoryName = ? WHERE categoryName = ?");
+            PreparedStatement localUpdateCategory = localCon.prepareStatement("UPDATE categories SET categoryName = ? WHERE categoryName = ?");
 
             updateCategory.setString(1, categoryName.getText());
             updateCategory.setString(2, selectedCategory);
+            localUpdateCategory.setString(1, categoryName.getText());
+            localUpdateCategory.setString(2, selectedCategory);
 
             updateCategory.executeUpdate();
+            localUpdateCategory.executeUpdate();
             setTableData();
             con.close();
 
@@ -125,13 +129,17 @@ public class CategoryController implements Initializable {
 
     @FXML
     void deleteCategory(ActionEvent event) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
+        Connection localCon = DBConnection.localConnection();
         try {
             PreparedStatement deleteCat = con.prepareStatement("DELETE FROM categories WHERE categoryname = ?");
+            PreparedStatement localDeleteCat = localCon.prepareStatement("DELETE FROM categories WHERE categoryname = ?");
 
             deleteCat.setString(1, categoryTable.getSelectionModel().getSelectedItem().getCategoryName());
+            localDeleteCat.setString(1, categoryTable.getSelectionModel().getSelectedItem().getCategoryName());
 
             deleteCat.executeUpdate();
+            localDeleteCat.executeUpdate();
             setTableData();
             con.close();
             TrayNotification notification = new TrayNotification();
@@ -163,7 +171,7 @@ public class CategoryController implements Initializable {
         totalItems.setCellValueFactory(new PropertyValueFactory<>("totalItems"));
 
         //Getting Data From Database
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.localConnection();
         ObservableList<Categories> listOfCategories = FXCollections.observableArrayList();
 
 

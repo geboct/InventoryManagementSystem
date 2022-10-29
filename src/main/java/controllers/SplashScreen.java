@@ -13,14 +13,13 @@ import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SplashScreen implements Initializable {
+    Stage primaryStage = new Stage();
     @FXML
     private AnchorPane anchorpane;
-    Stage primaryStage = new Stage();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,17 +38,17 @@ public class SplashScreen implements Initializable {
                 primaryStage.setTitle("Log In Prompt");
                 primaryStage.getIcons().setAll(new Image("/images/logo.png"));
                 primaryStage.setScene(scene);
-               // primaryStage.getIcons().add(new Image("/main/resources/icons/inventory.png"));
+                // primaryStage.getIcons().add(new Image("/main/resources/icons/inventory.png"));
                 primaryStage.setResizable(false);
                 primaryStage.show();
                 Stage stage = (Stage) anchorpane.getScene().getWindow();
                 stage.close();
             } catch (Exception ee) {
-               /* new PromptDialogController("Error!", "Error occurred. Failed to initialize system.");*/
-                TrayNotification notification=new TrayNotification();
-                notification.setTray("Error!"," Database server is offline.", NotificationType.ERROR);
+                /* new PromptDialogController("Error!", "Error occurred. Failed to initialize system.");*/
+                TrayNotification notification = new TrayNotification();
+                notification.setTray("Error!", " Database server is offline.", NotificationType.ERROR);
                 notification.showAndDismiss(Duration.seconds(3));
-                Stage stage=(Stage)anchorpane.getScene().getWindow();
+                Stage stage = (Stage) anchorpane.getScene().getWindow();
                 stage.close();
                 ee.printStackTrace();
             }

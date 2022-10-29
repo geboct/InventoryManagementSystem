@@ -62,7 +62,8 @@ public class EmployeeAccountController implements Initializable {
     private TextField newPhoneField;
     @FXML
     private Button savePhoneButton;
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.serverConnection();
+    Connection localConnection = DBConnection.localConnection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -225,12 +226,18 @@ public class EmployeeAccountController implements Initializable {
     @FXML
     private void saveUsername() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("update user set username=? where username=?");
+            PreparedStatement preparedStatement = localConnection.prepareStatement("update user set username=? where username=?");
             preparedStatement.setString(1, newUsername.getText());
             preparedStatement.setString(2, currentUsername.getText());
+
+            PreparedStatement serverPreparedStatement = connection.prepareStatement("update user set username=? where username=?");
+            serverPreparedStatement.setString(1, newUsername.getText());
+            serverPreparedStatement.setString(2, currentUsername.getText());
+            serverPreparedStatement.executeUpdate();
             preparedStatement.executeUpdate();
-            LogInController.loggerUsername=newUsername.getText();
-            EmployeeBaseController controller=new EmployeeBaseController();
+
+            LogInController.loggerUsername = newUsername.getText();
+            EmployeeBaseController controller = new EmployeeBaseController();
             controller.getLoginUsername();
 
             setUsernameButton();
@@ -256,7 +263,14 @@ public class EmployeeAccountController implements Initializable {
             PreparedStatement preparedStatement = connection.prepareStatement("update user set password=? where username=?");
             preparedStatement.setString(1, newPassword.getText());
             preparedStatement.setString(2, currentUsername.getText());
+
+
+            PreparedStatement localPreparedStatement = localConnection.prepareStatement("update user set password=? where username=?");
+            localPreparedStatement.setString(1, newPassword.getText());
+            localPreparedStatement.setString(2, currentUsername.getText());
+
             preparedStatement.executeUpdate();
+            localPreparedStatement.executeUpdate();
             setChangePassword();
             newPassword.setText("");
             confirmPassword.setText("");
@@ -274,9 +288,6 @@ public class EmployeeAccountController implements Initializable {
     }
 
 
-
-
-
     @FXML
     private void savePPhone() {
         try {
@@ -284,6 +295,11 @@ public class EmployeeAccountController implements Initializable {
             preparedStatement.setString(1, newPhoneField.getText());
             preparedStatement.setString(2, currentUsername.getText());
             preparedStatement.executeUpdate();
+
+            PreparedStatement localPreparedStatement = localConnection.prepareStatement("update user set phone=? where username=?");
+            localPreparedStatement.setString(1, newPhoneField.getText());
+            localPreparedStatement.setString(2, currentUsername.getText());
+            localPreparedStatement.executeUpdate();
             setChangePassword();
 
 

@@ -53,7 +53,7 @@ public class RentalListController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         today.setText(LocalDate.now().toString());
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         if(todayFlag) {
             lblHeader.setText("Today's Rentals Report");

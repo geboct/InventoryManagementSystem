@@ -17,7 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import main.java.others.Account;
-import org.controlsfx.control.textfield.TextFields;
 import main.java.others.DBConnection;
 import java.net.URL;
 import java.sql.Connection;
@@ -81,7 +80,7 @@ public class AccountController implements Initializable {
     private void initiate() {
 
         //Getting highest account ID to set the next
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT max(acccountID) FROM accounts");
             ResultSet rs = ps.executeQuery();
@@ -111,7 +110,7 @@ public class AccountController implements Initializable {
             btnSearch.setTooltip(new Tooltip("Search with customers name or id"));
             btnSearchIcon.setGlyphName("SEARCH");
         } else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.localConnection();
 
             String SQL = "SELECT  customers.firstName, customers.lastName, accounts.acccountID, accounts.accountName, accounts.paymethod " +
                     "FROM accounts, customers WHERE accounts.Customers_customerID = customerID AND accountName COLLATE UTF8_GENERAL_CI like ?";
@@ -157,7 +156,7 @@ public class AccountController implements Initializable {
     void reloadAll(ActionEvent event) {
         ObservableList<Account> accountListByUser = FXCollections.observableArrayList();
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
 
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT max(acccountID) FROM accounts");
@@ -212,7 +211,7 @@ public class AccountController implements Initializable {
             JFXSnackbar snackbar = new JFXSnackbar(accountPane);
             snackbar.show("Fields required!", 3000);
         } else {
-            Connection con = DBConnection.getConnection();
+            Connection con = DBConnection.localConnection();
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO accounts VALUES (?, ?, ?, ?, ?)");
                 ps.setInt(1, Integer.valueOf(lblId.getText()));

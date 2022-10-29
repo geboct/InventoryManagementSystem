@@ -74,7 +74,7 @@ public class DashboardControllerBoth implements Initializable {
 
 
     private void loadTodaySales() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*), SUM(total) FROM sales WHERE date = '" + Date.valueOf(LocalDate.now()) + "'");
@@ -94,7 +94,7 @@ public class DashboardControllerBoth implements Initializable {
     }
 
     private void thisMonthSales() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         LocalDate currentDate = LocalDate.now();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*), SUM(total) FROM sales WHERE year ='" + currentDate.getYear() + "' and  month  = '" + currentDate.getMonth() + "' ");
@@ -114,7 +114,7 @@ public class DashboardControllerBoth implements Initializable {
     }
 
     private void loadTodayPurchases() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*), SUM(total) FROM purchases WHERE date = '" + Date.valueOf(LocalDate.now()) + "'");
@@ -136,7 +136,7 @@ public class DashboardControllerBoth implements Initializable {
     }
 
     private void thisMonthPurchases() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         LocalDate currentDate = LocalDate.now();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*), SUM(total) FROM purchases WHERE year ='" + currentDate.getYear() + "' and  month  = '" + currentDate.getMonth() + "' ");
@@ -158,7 +158,7 @@ public class DashboardControllerBoth implements Initializable {
     }
 
     private void outOfStock() {
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         stockOut = 0;
         try {
             PreparedStatement getOutOfStock = connection.prepareStatement("SELECT * FROM products WHERE  stock <= ?");

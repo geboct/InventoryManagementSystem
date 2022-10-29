@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class retrieveCart {
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.localConnection();
 
 
 

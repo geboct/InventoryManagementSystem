@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import main.java.others.DBConnection;
 import main.java.admin.usersModel.UsersModel;
-import main.java.others.Item;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
@@ -73,11 +72,15 @@ public class UserManagementController implements Initializable {
             notification.setTray("Error", "Please select user to delete", NotificationType.ERROR);
             notification.showAndDismiss(Duration.seconds(3));
         } else {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.serverConnection();
+            Connection localConnection = DBConnection.localConnection();
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from user where userID=?");
-                preparedStatement.setString(1, usersTableView.getSelectionModel().getSelectedItem().getId());
-                preparedStatement.executeUpdate();
+                PreparedStatement serverPreparedStatement = connection.prepareStatement("delete from user where userID=?");
+                PreparedStatement localPreparedStatement = localConnection.prepareStatement("delete from user where userID=?");
+                localPreparedStatement.setString(1, usersTableView.getSelectionModel().getSelectedItem().getId());
+                serverPreparedStatement.setString(1, usersTableView.getSelectionModel().getSelectedItem().getId());
+                localPreparedStatement.executeUpdate();
+                serverPreparedStatement.executeUpdate();
                 selectAllUsers();
             } catch (SQLException e) {
 
@@ -96,22 +99,31 @@ public class UserManagementController implements Initializable {
     @FXML
     private void setNewUserSubmitButton() {
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
+        Connection localConnection = DBConnection.localConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `user`(/*`userID`,*/ `fullName`, `username`, `phone`, `password`, `accessLevel`, `status`) VALUES (?,?,?,?,?,?)");
+            PreparedStatement localPreparedStatement = localConnection.prepareStatement("INSERT INTO `user`(/*`userID`,*/ `fullName`, `username`, `phone`, `password`, `accessLevel`, `status`) VALUES (?,?,?,?,?,?)");
             //   preparedStatement.setString(1, );
             preparedStatement.setString(1, fullNameField.getText());
             preparedStatement.setString(2, usernameField.getText());
+            localPreparedStatement.setString(1, fullNameField.getText());
+            localPreparedStatement.setString(2, usernameField.getText());
             if (phoneNumberField.getText().length() > 10) {
 
             } else if (phoneNumberField.getText().length() == 10) {
                 preparedStatement.setString(3, phoneNumberField.getText());
+                localPreparedStatement.setString(3, phoneNumberField.getText());
 
             }
             preparedStatement.setString(4, "1234");
+            localPreparedStatement.setString(4, "1234");
             preparedStatement.setString(5, String.valueOf(accessLevelComboBox.getValue()));
+            localPreparedStatement.setString(5, String.valueOf(accessLevelComboBox.getValue()));
             preparedStatement.setString(6, String.valueOf(statusComboBox.getValue()));
+            localPreparedStatement.setString(6, String.valueOf(statusComboBox.getValue()));
             preparedStatement.executeUpdate();
+            localPreparedStatement.executeUpdate();
 
             TrayNotification notification = new TrayNotification();
             notification.setTray("Success", fullNameField.getText() + " added successfully", NotificationType.SUCCESS);
@@ -147,7 +159,7 @@ public class UserManagementController implements Initializable {
 
     private void selectAllUsers() {
 
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.localConnection();
         try {
             /**
              * creating delete and edit icons

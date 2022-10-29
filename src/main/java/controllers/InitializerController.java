@@ -54,7 +54,7 @@ public class InitializerController implements Initializable {
     class LoadRecords extends Task {
         @Override
         protected Object call() throws Exception {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnection.serverConnection();
 
             //Creating OLs to save values from result set
             ObservableList<Customer> customersList = FXCollections.observableArrayList();

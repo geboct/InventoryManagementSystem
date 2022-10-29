@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import main.java.controllers.PromptDialogController;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -27,7 +24,6 @@ import org.controlsfx.control.textfield.TextFields;
 import main.java.others.DBConnection;
 import main.java.others.Item;
 
-import java.io.File;
 import java.net.URL;
 
 import java.sql.*;
@@ -104,7 +100,7 @@ public class productsControllerEmployee implements Initializable {
     public static ArrayList<String> itemNames = new ArrayList<>();
     public static ObservableList<String> itemTypeName = FXCollections.observableArrayList();
     ObservableList <Item>listOfProducts=FXCollections.observableArrayList();
-    Connection connection = DBConnection.getConnection();
+    Connection connection = DBConnection.serverConnection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -118,7 +114,7 @@ public class productsControllerEmployee implements Initializable {
 
     private void reloadRecords() {
         itemList.clear();
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
         try {
             PreparedStatement getItemList = connection.prepareStatement("SELECT *" +
                     "FROM products ORDER BY barcode");
@@ -222,7 +218,7 @@ public class productsControllerEmployee implements Initializable {
     public void listAllItems() {
 
         listOfProducts.clear();
-        Connection connection = DBConnection.getConnection();
+        Connection connection = DBConnection.serverConnection();
 
         btnGoBack.setOnAction(e -> {
             itemListPane.setVisible(false);  //Setting item list pane visible
@@ -264,7 +260,7 @@ public class productsControllerEmployee implements Initializable {
             itemPane.setVisible(true); //Setting item pane visible
         });
 
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM products WHERE  stock <=" + 5);
             ResultSet itemResultSet = ps.executeQuery();
@@ -318,7 +314,7 @@ public class productsControllerEmployee implements Initializable {
      * @return: The search result of the query
      */
     private ObservableList<Item> searchWithID(Integer id) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         ObservableList<Item> searchResult = FXCollections.observableArrayList(); //list to hold search result
 
@@ -360,7 +356,7 @@ public class productsControllerEmployee implements Initializable {
      */
 
     private ObservableList<Item> searchWithName(String name) {
-        Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.serverConnection();
 
         String nameSQL = "SELECT * FROM products WHERE productName COLLATE UTF8_GENERAL_CI like ? ";
 
