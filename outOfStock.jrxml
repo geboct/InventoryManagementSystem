@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="outOfStock" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a37ccbd-cd47-4f89-92f2-60096aca5309">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (4)"/>
@@ -70,25 +70,25 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="193" y="21" width="172" height="32" uuid="a83caba5-b8b7-44af-9c10-42d82d3f6887"/>
+				<reportElement x="140" y="21" width="287" height="32" uuid="27dc6542-781e-4e02-acae-33673a788665"/>
 				<textElement textAlignment="Center">
-					<font size="18"/>
+					<font size="17"/>
 				</textElement>
-				<text><![CDATA[Electrical Centre]]></text>
+				<text><![CDATA[J.O.AGYAPONG LIMITED]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="218" y="43" width="128" height="19" uuid="ebe9e642-d68b-4717-bae0-2b6bb57c005b"/>
-				<text><![CDATA[Location: Oyibi-Mensah Bar]]></text>
+				<reportElement x="208" y="43" width="177" height="19" uuid="0352a443-8445-4d35-9201-d028b8563ec1"/>
+				<text><![CDATA[Location: Tantra Spot-M,Ofankor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="54" width="111" height="18" uuid="f5f8b046-6780-4a76-be07-54d89b13b756"/>
+				<reportElement x="223" y="54" width="111" height="18" uuid="68a81c87-4e95-405d-929a-fac7c5a19903"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Contact: 059-266-8993]]></text>
+				<text><![CDATA[Contact: 024-385-3864]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="219" y="67" width="68" height="12" uuid="5adcce5a-dd43-4a71-a88a-71c7ed284cd6">
+				<reportElement x="212" y="67" width="68" height="12" uuid="491c92c7-740e-49b4-a71f-868722a795d6">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -97,7 +97,7 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="260" y="67" width="86" height="12" uuid="a351aef9-abb0-468a-a194-2dbebb2b950c">
+				<reportElement x="253" y="67" width="86" height="12" uuid="07c8d576-da69-40ff-a98b-121bf3a2f162">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -229,18 +229,18 @@
 	<pageFooter>
 		<band height="50">
 			<staticText>
-				<reportElement x="368" y="12" width="180" height="18" uuid="1dde64ec-7055-470e-8962-ff8f70af44c5"/>
+				<reportElement x="390" y="12" width="122" height="18" uuid="1dde64ec-7055-470e-8962-ff8f70af44c5"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[DEVELOPED BY BRILS INNOVATION CENTRE]]></text>
+				<text><![CDATA[software by brills innovation]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="385" y="22" width="139" height="20" uuid="160856f6-b1e2-4ffc-8fb5-b7ca30d9bd25"/>
+				<reportElement x="393" y="22" width="105" height="20" uuid="160856f6-b1e2-4ffc-8fb5-b7ca30d9bd25"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[CONTACT :0243930223 / 0206948674]]></text>
+				<text><![CDATA[0243930223 / 0206948674]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

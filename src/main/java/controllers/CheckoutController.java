@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.java.admin.SalesManagementController;
 import main.java.others.DBConnection;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -181,7 +182,7 @@ public class CheckoutController implements Initializable {
                         serverInsertStatement.setString(10, LogInController.loggerUsername);
                         serverInsertStatement.executeUpdate();
                         insertStatement.executeUpdate();
-                        System.out.println("insert into sales successful");
+                       // System.out.println("insert into sales successful");
 
                         //updating stock
                         updateStock();
@@ -211,6 +212,7 @@ public class CheckoutController implements Initializable {
 
                         Stage stage = (Stage) makePaymentButton.getScene().getWindow();
                         stage.close();
+                        new SalesManagementController().setPrintingDone(true);
 
                         try {
                             JasperDesign jasperDesign = JRXmlLoader.load("receipt.jrxml");

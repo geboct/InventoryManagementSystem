@@ -133,6 +133,15 @@ public class SalesManagementController implements Initializable {
     ObservableList<SalesModel> listOfSales = FXCollections.observableArrayList();
     ObservableList<Item> cartSearch = FXCollections.observableArrayList();
 
+    public boolean printingDone=false;
+
+    public boolean isPrintingDone() {
+        return printingDone;
+    }
+
+    public void setPrintingDone(boolean printingDone) {
+        this.printingDone = printingDone;
+    }
 
     private void onCartItemClicked(MouseEvent event) {
         Connection connection = DBConnection.serverConnection();
@@ -719,6 +728,10 @@ public class SalesManagementController implements Initializable {
 
         selectAllSales();
         posCartTableView.setOnMouseClicked(this::onCartItemClicked);
+        if (isPrintingDone()){
+            posCartTableView.getItems().clear();
+            posCartTableView.refresh();
+        }
 
 
     }
